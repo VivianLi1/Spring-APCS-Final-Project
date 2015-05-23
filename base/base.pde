@@ -1,6 +1,5 @@
 //Player player;
-float x, y, minX, maxX, minY, maxY;
-float x2,y2;
+float x, y;
 boolean isUp, isLeft, isDown, isRight, isSpace;
 
 void setup(){
@@ -8,14 +7,6 @@ void setup(){
   background(35);
   x = width/2;
   y = height/2;
-  
-  x2 = width/2;
-  y2 = height/2;
-  
-  minX = width/2-174;
-  maxX = width/2+174;
-  minY = height/2-174;
-  maxY = height/2+174;
 }
 
 void draw(){
@@ -27,28 +18,28 @@ void draw(){
   fill(100);
   rect(width/2-200,height/2-200,width/2+200,height/2+200);
   
-  x2 = constrain(x2, width/2-200+24, width/2+200-24);
-  y2 = constrain(y2, height/2-200+24, height/2+200-24);
+  x = constrain(x, width/2-200+24, width/2+200-24);
+  y = constrain(y, height/2-200+24, height/2+200-24);
   
   ellipseMode(RADIUS);
   fill(255);
-  ellipse(x2, y2, 24, 24);
+  ellipse(x, y, 24, 24);
   
   move();
 }
 
 void move(){
   if (isUp){
-    y2 -= 2.0;
+    y -= 2.0;
   }
   if (isLeft){
-    x2 -= 2.0;
+    x -= 2.0;
   }
   if (isDown){
-    y2 += 2.0;
+    y += 2.0;
   }
   if (isRight){
-    x2 += 2.0;
+    x += 2.0;
   }
 }
 
