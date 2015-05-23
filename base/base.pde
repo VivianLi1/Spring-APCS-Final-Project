@@ -1,34 +1,54 @@
 //Player player;
-int x,y;
+float x, y, minX, maxX, minY, maxY;
+float x2,y2;
 boolean isUp, isLeft, isDown, isRight, isSpace;
 
 void setup(){
-  size(700,500);
+  size(1200,600);
   background(35);
   x = width/2;
   y = height/2;
+  
+  x2 = width/2;
+  y2 = height/2;
+  
+  minX = width/2-174;
+  maxX = width/2+174;
+  minY = height/2-174;
+  maxY = height/2+174;
 }
 
 void draw(){
   background(35);
   noStroke();
   smooth();
-  ellipse(x, y, 36, 36);
+  
+  rectMode(CORNERS);
+  fill(100);
+  rect(width/2-200,height/2-200,width/2+200,height/2+200);
+  
+  x2 = constrain(x2, width/2-200+24, width/2+200-24);
+  y2 = constrain(y2, height/2-200+24, height/2+200-24);
+  
+  ellipseMode(RADIUS);
+  fill(255);
+  ellipse(x2, y2, 24, 24);
+  
   move();
 }
 
 void move(){
   if (isUp){
-    y -= 2;
+    y2 -= 2.0;
   }
   if (isLeft){
-    x -= 2;
+    x2 -= 2.0;
   }
   if (isDown){
-    y += 2;
+    y2 += 2.0;
   }
   if (isRight){
-    x += 2;
+    x2 += 2.0;
   }
 }
 
