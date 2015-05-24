@@ -7,16 +7,14 @@ public class Knife {
     x = xcor;
     y = ycor;
     dir = direction;
-
-    //same constraints
-    x = constrain(x, width/2-200+24, width/2+200-24);
-    y = constrain(y, height/2-200+24, height/2+200-24);
-
+    
+    /*
     ellipseMode(RADIUS);
     fill(255);
     ellipse(x,y,16,16);
 
     move();
+    */
   }
   
   public float getX(){
@@ -40,6 +38,9 @@ public class Knife {
     if (dir == 68) {
       x += 5.0;
     }
+    x = constrain(x, width/2-200+16, width/2+200-16); 
+    y = constrain(y, height/2-200+16, height/2+200-16);
     //println(direction);
   }
+  
 }
