@@ -1,7 +1,8 @@
+//Player player;
 float x, y;
 boolean isUp, isLeft, isDown, isRight, isSpace;
 int knives;
-int direction;
+int direction = 87; //default: shoot up
 ArrayList<Knife> thrown = new ArrayList<Knife>();
 
 void setup() {
@@ -9,7 +10,7 @@ void setup() {
   background(35);
   x = width/2;
   y = height/2;
-  knives = 10;
+  knives = 100;
 }
 
 void draw() {
@@ -34,10 +35,8 @@ void draw() {
   if (isSpace && knives > 0) {
     knives--;
     Knife k = new Knife(x, y, direction);
-    println(thrown.size());
     thrown.add(k);
     println(thrown.size());
-    println("done");
   }
 }
 
@@ -75,9 +74,11 @@ void keyPressed() {
   if (keyCode == 68) {    // D - RIGHT - 68
     isRight = true;
   }
+  
   if (keyCode == 32) {    // SPACE - THROW - 32
     isSpace = true;
   }
+  
 }
 
 void keyReleased() {
