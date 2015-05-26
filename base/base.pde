@@ -5,12 +5,17 @@ int knives;
 int direction = 87; //default: shoot up
 ArrayList<Knife> thrown = new ArrayList<Knife>();
 
+Enemy test;
+
 void setup() {
   size(1200, 600);
   background(35);
   x = width/2;
   y = height/2;
   knives = 100;
+  
+  test = new Enemy(x - 10, y - 10, 10, 10);
+  test.spawn();
 }
 
 void draw() {
@@ -28,6 +33,8 @@ void draw() {
   ellipseMode(RADIUS);
   fill(255);
   ellipse(x, y, 24, 24);
+  
+  test.spawn();
 
   move();
   drawKnives();
