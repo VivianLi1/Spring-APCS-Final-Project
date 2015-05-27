@@ -35,6 +35,7 @@ void draw() {
   ellipse(x, y, 24, 24);
   
   test.spawn();
+  test.move(x, y);
 
   move();
   drawKnives();
@@ -45,6 +46,7 @@ void draw() {
     thrown.add(k);
     println(thrown.size());
   }
+  
 }
 
 void move() {
