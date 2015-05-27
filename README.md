@@ -15,3 +15,4 @@ TEAM NAME: Ocean Ravioli
 
 26/5
 - Began Enemy class
+- Enemy now follows Player
