@@ -1,21 +1,24 @@
 //Player player;
-float x, y;
 boolean isUp, isLeft, isDown, isRight, isSpace;
 int knives;
 int direction = 87; //default: shoot up
 ArrayList<Knife> thrown = new ArrayList<Knife>();
 
+Player player;
 Enemy test;
+Enemy test2;
 
 void setup() {
   size(1200, 600);
   background(35);
-  x = width/2;
-  y = height/2;
   knives = 100;
   
+  player = new Player(width/2, height/2, 24, 24);
+  
   test = new Enemy(x - 10, y - 10, 10, 10);
+  test2 = new Enemy(x - 50, y - 50, 15, 15);
   test.spawn();
+  test2.spawn();
 }
 
 void draw() {
@@ -29,14 +32,12 @@ void draw() {
 
   x = constrain(x, width/2-200+24, width/2+200-24);
   y = constrain(y, height/2-200+24, height/2+200-24);
-
-  ellipseMode(RADIUS);
-  fill(255);
-  ellipse(x, y, 24, 24);
   
   test.spawn();
+  test2.spawn();
   test.move(x, y);
-
+  test2.move(x, y);
+  
   move();
   drawKnives();
 
@@ -47,26 +48,6 @@ void draw() {
     println(thrown.size());
   }
   
-}
-
-void move() {
-  if (isUp) {
-    y -= 2.0;
-    direction = 87;
-  }
-  if (isLeft) {
-    x -= 2.0;
-    direction = 65;
-  }
-  if (isDown) {
-    y += 2.0;
-    direction = 83;
-  }
-  if (isRight) {
-    x += 2.0;
-    direction = 68;
-  }
-  //println(direction);
 }
 
 void keyPressed() {
@@ -111,6 +92,7 @@ void keyReleased() {
 void drawKnives() {
   for (Knife k : thrown) {
     k.move();
+    fill(133,0,12);
     ellipse(k.getX(),k.getY(),16,16);
   }
 }

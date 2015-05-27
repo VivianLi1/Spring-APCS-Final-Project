@@ -1,8 +1,5 @@
-public class Enemy{
+public class Enemy extends Killable{
   
-  private float x, y;
-  private int sizeX, sizeY;
-  private boolean isDead;
   private float dx, dy;
   private int speed = 1;
   
@@ -11,11 +8,7 @@ public class Enemy{
   }
   
   public Enemy(float x_, float y_, int sx, int sy){
-    x = x_;
-    y = y_;
-    sizeX = sx;
-    sizeY = sy;
-    isDead = false;
+    super(x_, y_, sx, sy);
   }  
  
  public void move(float xx, float yy){
