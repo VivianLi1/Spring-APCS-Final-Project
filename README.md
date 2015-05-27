@@ -16,6 +16,7 @@ TEAM NAME: Ocean Ravioli
 26/5
 - Began Enemy class
 - Enemy now follows Player
+
 27/5
 - Moved Player into its own seperate class
 - Implemented Killable class and extended it to Player and Enemy
