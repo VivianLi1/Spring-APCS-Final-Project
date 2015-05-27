@@ -1,5 +1,5 @@
 //Player player;
-boolean isUp, isLeft, isDown, isRight, isSpace;
+boolean isSpace;
 int knives;
 int direction = 87; //default: shoot up
 ArrayList<Knife> thrown = new ArrayList<Knife>();
@@ -15,8 +15,8 @@ void setup() {
   
   player = new Player(width/2, height/2, 24, 24);
   
-  test = new Enemy(x - 10, y - 10, 10, 10);
-  test2 = new Enemy(x - 50, y - 50, 15, 15);
+  test = new Enemy(player.getX() - 10, player.getY() - 10, 10, 10);
+  test2 = new Enemy(player.getX() - 50, player.getY() - 50, 15, 15);
   test.spawn();
   test2.spawn();
 }
@@ -29,21 +29,20 @@ void draw() {
   rectMode(CORNERS);
   fill(100);
   rect(width/2-200, height/2-200, width/2+200, height/2+200);
-
-  x = constrain(x, width/2-200+24, width/2+200-24);
-  y = constrain(y, height/2-200+24, height/2+200-24);
+  
+  player.spawn();
+  player.move();
   
   test.spawn();
   test2.spawn();
-  test.move(x, y);
-  test2.move(x, y);
+  test.move(player.getX(), player.getY());
+  test2.move(player.getX(), player.getY());
   
-  move();
   drawKnives();
 
   if (isSpace && knives > 0) {
     knives--;
-    Knife k = new Knife(x, y, direction);
+    Knife k = new Knife(player.getX(), player.getY(), direction);
     thrown.add(k);
     println(thrown.size());
   }
@@ -53,16 +52,16 @@ void draw() {
 void keyPressed() {
   //print(keyCode);
   if (keyCode == 87) {    // W - UP - 87
-    isUp = true;
+    player.setUp(true);
   }
   if (keyCode == 65) {    // A - LEFT - 65
-    isLeft = true;
+    player.setLeft(true);
   }
   if (keyCode == 83) {    // S - DOWN - 83
-    isDown = true;
+    player.setDown(true);
   }
   if (keyCode == 68) {    // D - RIGHT - 68
-    isRight = true;
+    player.setRight(true);
   }
   
   if (keyCode == 32) {    // SPACE - THROW - 32
@@ -73,16 +72,16 @@ void keyPressed() {
 
 void keyReleased() {
   if (keyCode == 87) {
-    isUp = false;
+    player.setUp(false);
   }
   if (keyCode == 65) {
-    isLeft = false;
+    player.setLeft(false);
   }
   if (keyCode == 83) {
-    isDown = false;
+    player.setDown(false);
   }
   if (keyCode == 68) {
-    isRight = false;
+    player.setRight(false);
   }
   if (keyCode == 32) {
     isSpace = false;

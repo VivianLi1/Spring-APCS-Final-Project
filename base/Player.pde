@@ -1,5 +1,7 @@
 public class Player extends Killable {
 
+  boolean isUp, isLeft, isDown, isRight = false;
+
   public Player(float x_, float y_, int sx, int sy) {
     super(x_, y_, sx, sy);
   } 
@@ -8,9 +10,6 @@ public class Player extends Killable {
     ellipseMode(RADIUS);
     fill(255);
     ellipse(x, y, 24, 24);
-    
-    x = constrain(x, width/2-200+16, width/2+200-16); 
-    y = constrain(y, height/2-200+16, height/2+200-16);
   }
 
   void move() {
@@ -31,6 +30,26 @@ public class Player extends Killable {
       direction = 68;
     }
     //println(direction);
+
+    x = constrain(x, width/2-200+16, width/2+200-16); 
+    y = constrain(y, height/2-200+16, height/2+200-16);
   }
+
+  void setUp(boolean b) {
+    isUp = b;
+  }
+
+  void setLeft(boolean b) {
+    isLeft = b;
+  }
+
+  void setDown(boolean b) {
+    isDown = b;
+  }
+
+  void setRight(boolean b) {
+    isRight = b;
+  }
+  
 }
 
