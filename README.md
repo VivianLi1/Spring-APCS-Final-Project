@@ -20,3 +20,6 @@ TEAM NAME: Ocean Ravioli
 27/5
 - Moved Player into its own seperate class
 - Implemented Killable class and extended it to Player and Enemy
+
+28/5
+- Created seperate Room class
