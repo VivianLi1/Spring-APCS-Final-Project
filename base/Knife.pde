@@ -25,7 +25,7 @@ public class Knife {
     return y;
   }
 
-  public void move() {
+  public void move(int roomx, int roomy) {
     if (dir == 87) {
       y -= 5.0;
     }
@@ -38,8 +38,9 @@ public class Knife {
     if (dir == 68) {
       x += 5.0;
     }
-    x = constrain(x, width/2-200+16, width/2+200-16); 
-    y = constrain(y, height/2-200+16, height/2+200-16);
+    
+    x = constrain(x, width/2-roomx+16, width/2+roomx-16); 
+    y = constrain(y, height/2-roomy+16, height/2+roomy-16);
     //println(direction);
   }
   

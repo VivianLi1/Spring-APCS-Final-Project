@@ -14,9 +14,12 @@ public class Killable {
   }  
 
   public Killable() {
+    this(width/2, height/2, 15, 15);
   }
 
-  void move() {
+  public void move(int roomx, int roomy) {
+    x = constrain(x, width/2-roomx+getSizeX(), width/2+roomx-getSizeY()); 
+    y = constrain(y, height/2-roomy+getSizeX(), height/2+roomy-getSizeY());
   }  
 
   public float getX() {
@@ -25,6 +28,18 @@ public class Killable {
 
   public float getY() {
     return y;
+  }
+
+  public int getSizeX() {
+    return sizeX;
+  }
+
+  public int getSizeY() {
+    return sizeY;
+  }
+
+  public boolean getIsDead() {
+    return isDead;
   }
 }
 

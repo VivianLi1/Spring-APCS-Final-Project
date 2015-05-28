@@ -4,6 +4,7 @@ int knives;
 int direction = 87; //default: shoot up
 ArrayList<Knife> thrown = new ArrayList<Knife>();
 
+Room room1;
 Player player;
 Enemy test;
 Enemy test2;
@@ -12,13 +13,13 @@ void setup() {
   size(1200, 600);
   background(35);
   knives = 100;
-  
+
+  room1 = new Room(300, 200);
+
   player = new Player(width/2, height/2, 24, 24);
-  
+
   test = new Enemy(player.getX() - 10, player.getY() - 10, 10, 10);
   test2 = new Enemy(player.getX() - 50, player.getY() - 50, 15, 15);
-  test.spawn();
-  test2.spawn();
 }
 
 void draw() {
@@ -26,18 +27,16 @@ void draw() {
   noStroke();
   smooth();
 
-  rectMode(CORNERS);
-  fill(100);
-  rect(width/2-200, height/2-200, width/2+200, height/2+200);
-  
+  room1.create();
+
   player.spawn();
-  player.move();
-  
+  player.move(room1.getSizeX(), room1.getSizeY());
+
   test.spawn();
   test2.spawn();
-  test.move(player.getX(), player.getY());
-  test2.move(player.getX(), player.getY());
-  
+  test.move(room1.getSizeX(), room1.getSizeY(), player.getX(), player.getY());
+  test2.move(room1.getSizeX(), room1.getSizeY(), player.getX(), player.getY());
+
   drawKnives();
 
   if (isSpace && knives > 0) {
@@ -46,7 +45,6 @@ void draw() {
     thrown.add(k);
     println(thrown.size());
   }
-  
 }
 
 void keyPressed() {
@@ -63,11 +61,10 @@ void keyPressed() {
   if (keyCode == 68) {    // D - RIGHT - 68
     player.setRight(true);
   }
-  
+
   if (keyCode == 32) {    // SPACE - THROW - 32
     isSpace = true;
   }
-  
 }
 
 void keyReleased() {
@@ -90,8 +87,9 @@ void keyReleased() {
 
 void drawKnives() {
   for (Knife k : thrown) {
-    k.move();
-    fill(133,0,12);
-    ellipse(k.getX(),k.getY(),16,16);
+    k.move(room1.getSizeX(), room1.getSizeY());
+    fill(133, 0, 12);
+    ellipse(k.getX(), k.getY(), 16, 16);
   }
 }
+

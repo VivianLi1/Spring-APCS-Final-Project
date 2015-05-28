@@ -12,7 +12,8 @@ public class Player extends Killable {
     ellipse(x, y, 24, 24);
   }
 
-  void move() {
+  void move(int roomx, int roomy) {
+    super.move(roomx, roomy);
     if (isUp) {
       y -= 2.0;
       direction = 87;
@@ -30,9 +31,6 @@ public class Player extends Killable {
       direction = 68;
     }
     //println(direction);
-
-    x = constrain(x, width/2-200+16, width/2+200-16); 
-    y = constrain(y, height/2-200+16, height/2+200-16);
   }
 
   void setUp(boolean b) {
