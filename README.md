@@ -24,3 +24,4 @@ TEAM NAME: Ocean Ravioli
 28/5
 - Created seperate Room class
 - Player dies from enemy collisions
+- Player can now pick up knives (knives dont kill enemies yet)
