@@ -2,7 +2,7 @@ public class Killable {
 
   public float x, y;
   public int sizeX, sizeY;
-  public boolean isDead = true;
+  public boolean isDead;
   public int knifeCount;
 
   public Killable(float x_, float y_, int sx, int sy) {

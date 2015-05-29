@@ -2,6 +2,8 @@ public class Knife {
 
   private float x, y;
   private int dir;
+  private boolean stopped;
+  private float boundUp, boundDown, boundLeft, boundRight;
 
   public Knife(float xcor, float ycor, int direction) {
     x = xcor;
@@ -30,10 +32,30 @@ public class Knife {
     if (dir == 68) {
       x += 5.0;
     }
+    boundLeft = width/2-roomx+16;
+    boundRight = width/2+roomx-16;
+    boundUp = height/2-roomy+16;
+    boundDown = height/2+roomy-16;
     
-    x = constrain(x, width/2-roomx+16, width/2+roomx-16); 
-    y = constrain(y, height/2-roomy+16, height/2+roomy-16);
+    x = constrain(x, boundLeft, boundRight); 
+    y = constrain(y, boundUp, boundDown);
+    
+    if (hitWall()){
+      stopped = true;
+    }
     //println(direction);
+  }
+  
+  public boolean hitWall(){
+    if (x == boundLeft || x == boundRight || y == boundUp || y == boundDown){
+      //print("HITTTTT");
+      return true;
+    }
+    return false;
+  }
+  
+  public boolean getStopped(){
+    return stopped;
   }
   
 }

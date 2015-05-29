@@ -1,6 +1,6 @@
-//Player player;
 boolean isSpace;
 int knives;
+int lives = 3;
 int direction = 87; //default: shoot up
 ArrayList<Knife> thrown = new ArrayList<Knife>();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -20,11 +20,10 @@ void setup() {
   room1 = new Room(300, 200);
 
   player = new Player(width/2, height/2, 24, 24);
-
-  //test = new Enemy(player.getX() - 10, player.getY() - 10, 10, 10);
-  test2 = new Enemy(player.getX() - 50, player.getY() - 50, 15, 15);
+  //test = new Enemy(player.getX() + 50, player.getY() - 50, 10, 10);
+  //test2 = new Enemy(player.getX() - 50, player.getY() - 50, 15, 15);
   //enemies.add(test);
-  enemies.add(test2);
+  //enemies.add(test2);
 }
 
 void draw() {
@@ -33,14 +32,14 @@ void draw() {
   smooth();
 
   room1.create();
-  if (player.getIsDead()) {
+  if (!player.getIsDead()) {
     player.spawn();
     player.move(room1.getSizeX(), room1.getSizeY());
 
     //test.spawn();
-    test2.spawn();
+    //test2.spawn();
     //test.move(room1.getSizeX(), room1.getSizeY(), player.getX(), player.getY());
-    test2.move(room1.getSizeX(), room1.getSizeY(), player.getX(), player.getY());
+    //test2.move(room1.getSizeX(), room1.getSizeY(), player.getX(), player.getY());
 
     drawKnives();
     enemyCollision();
@@ -51,8 +50,10 @@ void draw() {
       thrown.add(k);
       println(thrown.size());
     }
+
+    pickUpKnife();
   } else {
-    print ("GAME OVER");
+    println ("GAME OVER");
   }
 }
 
@@ -103,13 +104,24 @@ void drawKnives() {
 }
 
 void enemyCollision() {
-  //player radius = 24
-  //check radius = 23
   for (Enemy e : enemies) {
-    if (Math.abs(player.getX()-e.getX()) < 23 && Math.abs(player.getY()-e.getY()) < 23) {
-      //collisions++;
-      //println("COLLISSION " + collisions);
-      player.setIsDead(false);
+    if (Math.abs(player.getX()-e.getX()) < 25 && Math.abs(player.getY()-e.getY()) < 25) {
+      lives--;
+    }
+    if (lives == 0) {
+      player.setIsDead(true);
+    }
+  }
+}
+
+void pickUpKnife() {
+  for (int i = 0; i < thrown.size (); i++) {
+    Knife k = thrown.get(i);
+    if (k.getStopped()) {
+      if (Math.abs(player.getX()-k.getX()) < 25 && Math.abs(player.getY()-k.getY()) < 25) {
+        knives++;
+        thrown.remove(i);
+      }
     }
   }
 }
