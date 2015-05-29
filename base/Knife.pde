@@ -7,14 +7,6 @@ public class Knife {
     x = xcor;
     y = ycor;
     dir = direction;
-    
-    /*
-    ellipseMode(RADIUS);
-    fill(255);
-    ellipse(x,y,16,16);
-
-    move();
-    */
   }
   
   public float getX(){

@@ -2,7 +2,7 @@ public class Killable {
 
   public float x, y;
   public int sizeX, sizeY;
-  public boolean isDead;
+  public boolean isDead = true;
   public int knifeCount;
 
   public Killable(float x_, float y_, int sx, int sy) {
@@ -40,6 +40,10 @@ public class Killable {
 
   public boolean getIsDead() {
     return isDead;
+  }
+  
+  public void setIsDead(boolean dead){
+    isDead = dead;
   }
 }
 

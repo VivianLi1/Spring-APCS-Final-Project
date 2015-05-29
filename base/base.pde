@@ -3,11 +3,14 @@ boolean isSpace;
 int knives;
 int direction = 87; //default: shoot up
 ArrayList<Knife> thrown = new ArrayList<Knife>();
+ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
 Room room1;
 Player player;
 Enemy test;
 Enemy test2;
+
+int collisions = 0;
 
 void setup() {
   size(1200, 600);
@@ -18,8 +21,10 @@ void setup() {
 
   player = new Player(width/2, height/2, 24, 24);
 
-  test = new Enemy(player.getX() - 10, player.getY() - 10, 10, 10);
+  //test = new Enemy(player.getX() - 10, player.getY() - 10, 10, 10);
   test2 = new Enemy(player.getX() - 50, player.getY() - 50, 15, 15);
+  //enemies.add(test);
+  enemies.add(test2);
 }
 
 void draw() {
@@ -28,22 +33,26 @@ void draw() {
   smooth();
 
   room1.create();
+  if (player.getIsDead()) {
+    player.spawn();
+    player.move(room1.getSizeX(), room1.getSizeY());
 
-  player.spawn();
-  player.move(room1.getSizeX(), room1.getSizeY());
+    //test.spawn();
+    test2.spawn();
+    //test.move(room1.getSizeX(), room1.getSizeY(), player.getX(), player.getY());
+    test2.move(room1.getSizeX(), room1.getSizeY(), player.getX(), player.getY());
 
-  test.spawn();
-  test2.spawn();
-  test.move(room1.getSizeX(), room1.getSizeY(), player.getX(), player.getY());
-  test2.move(room1.getSizeX(), room1.getSizeY(), player.getX(), player.getY());
+    drawKnives();
+    enemyCollision();
 
-  drawKnives();
-
-  if (isSpace && knives > 0) {
-    knives--;
-    Knife k = new Knife(player.getX(), player.getY(), direction);
-    thrown.add(k);
-    println(thrown.size());
+    if (isSpace && knives > 0) {
+      knives--;
+      Knife k = new Knife(player.getX(), player.getY(), direction);
+      thrown.add(k);
+      println(thrown.size());
+    }
+  } else {
+    print ("GAME OVER");
   }
 }
 
@@ -90,6 +99,18 @@ void drawKnives() {
     k.move(room1.getSizeX(), room1.getSizeY());
     fill(133, 0, 12);
     ellipse(k.getX(), k.getY(), 16, 16);
+  }
+}
+
+void enemyCollision() {
+  //player radius = 24
+  //check radius = 23
+  for (Enemy e : enemies) {
+    if (Math.abs(player.getX()-e.getX()) < 23 && Math.abs(player.getY()-e.getY()) < 23) {
+      //collisions++;
+      //println("COLLISSION " + collisions);
+      player.setIsDead(false);
+    }
   }
 }
 
