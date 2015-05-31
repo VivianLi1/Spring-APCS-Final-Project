@@ -58,4 +58,8 @@ public class Knife {
     return stopped;
   }
   
+  public void setStopped(boolean stop) {
+    stopped = stop;
+  }
+  
 }
