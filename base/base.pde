@@ -30,6 +30,8 @@ void setup() {
   test2 = new Enemy(player.getX() - 50, player.getY() - 50, 15, 15);
   enemies.add(test);
   enemies.add(test2);
+  
+  player.spawn();
 }
 
 void draw() {
@@ -43,10 +45,10 @@ void draw() {
     player.spawn();
     player.move(currRoom.getSizeX(), currRoom.getSizeY());
 
-    //test.spawn();
-    //test2.spawn();
-    //test.move(room1.getSizeX(), room1.getSizeY(), player.getX(), player.getY());
-    //test2.move(room1.getSizeX(), room1.getSizeY(), player.getX(), player.getY());
+    test.spawn();
+    test2.spawn();
+    test.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
+    test2.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
 
     drawKnives();
     enemyCollision();
@@ -112,12 +114,17 @@ void drawKnives() {
 
 void enemyCollision() {
   for (Enemy e : enemies) {
-    if (Math.abs(player.getX()-e.getX()) < 25 && Math.abs(player.getY()-e.getY()) < 25) {
-      lives--;
-    }
-    if (lives == 0) {
-      player.setIsDead(true);
-    }
+    if (e.getIsDead() == true) {
+      continue;
+    }else{
+      if (Math.abs(player.getX()-e.getX()) < 25 && Math.abs(player.getY()-e.getY()) < 25) {
+        lives--;
+      }
+      if (lives == 0) {
+        player.setIsDead(true);
+      }
+      println((player.getX() - e.getX()) + " " + (player.getY() - e.getY()));
+    } 
   }
 }
 

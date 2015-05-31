@@ -10,7 +10,7 @@ public class Killable {
     y = y_;
     sizeX = sx;
     sizeY = sy;
-    isDead = false;
+    isDead = true;
   }  
 
   public Killable() {

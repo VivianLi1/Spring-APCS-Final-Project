@@ -7,6 +7,8 @@ public class Player extends Killable {
   } 
 
   void spawn() {
+    setIsDead(false);
+    
     ellipseMode(RADIUS);
     fill(255);
     ellipse(x, y, 24, 24);

@@ -26,6 +26,8 @@ public class Enemy extends Killable {
   }
 
   void spawn() {
+    setIsDead(false);
+    
     fill(255, 0, 0); 
     ellipse(x, y, sizeY, sizeX);
   }
