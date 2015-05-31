@@ -29,5 +29,7 @@ public class Enemy extends Killable {
     fill(255, 0, 0); 
     ellipse(x, y, sizeY, sizeX);
   }
+  
+  
 }
 

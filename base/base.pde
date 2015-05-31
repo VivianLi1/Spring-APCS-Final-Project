@@ -5,7 +5,8 @@ int direction = 87; //default: shoot up
 ArrayList<Knife> thrown = new ArrayList<Knife>();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
-Room room1;
+Floor currFloor;
+Room currRoom;
 Player player;
 Enemy test;
 Enemy test2;
@@ -17,24 +18,30 @@ void setup() {
   background(35);
   knives = 100;
 
-  room1 = new Room(300, 200);
+  currFloor = new Floor();
+  currRoom = new Room();
+
+  //floor1.chooseDir();
+  currFloor.connectRoom(currRoom);
+  currFloor.createRoom(currRoom);
 
   player = new Player(width/2, height/2, 24, 24);
-  //test = new Enemy(player.getX() + 50, player.getY() - 50, 10, 10);
-  //test2 = new Enemy(player.getX() - 50, player.getY() - 50, 15, 15);
-  //enemies.add(test);
-  //enemies.add(test2);
+  test = new Enemy(player.getX() + 50, player.getY() - 50, 10, 10);
+  test2 = new Enemy(player.getX() - 50, player.getY() - 50, 15, 15);
+  enemies.add(test);
+  enemies.add(test2);
 }
 
 void draw() {
   background(35);
-  noStroke();
+  //noStroke();
   smooth();
 
-  room1.create();
+  currRoom.create();
+  currRoom.drawDoors();
   if (!player.getIsDead()) {
     player.spawn();
-    player.move(room1.getSizeX(), room1.getSizeY());
+    player.move(currRoom.getSizeX(), currRoom.getSizeY());
 
     //test.spawn();
     //test2.spawn();
@@ -97,7 +104,7 @@ void keyReleased() {
 
 void drawKnives() {
   for (Knife k : thrown) {
-    k.move(room1.getSizeX(), room1.getSizeY());
+    k.move(currRoom.getSizeX(), currRoom.getSizeY());
     fill(133, 0, 12);
     ellipse(k.getX(), k.getY(), 16, 16);
   }
@@ -113,6 +120,8 @@ void enemyCollision() {
     }
   }
 }
+
+
 
 void pickUpKnife() {
   for (int i = 0; i < thrown.size (); i++) {
