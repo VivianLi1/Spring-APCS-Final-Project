@@ -35,3 +35,4 @@ TEAM NAME: Ocean Ravioli
 
 31/5
 - fixed bug where Player died after reaching a certain x and y coord
+- knives now kill enemies
