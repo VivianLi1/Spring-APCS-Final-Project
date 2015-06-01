@@ -1,3 +1,9 @@
+final int START = 0;
+final int PLAY = 1;
+final int GAMEOVER = 2;
+
+int mode = PLAY;
+
 boolean isSpace;
 int knives;
 int lives = 3;
@@ -37,11 +43,65 @@ void setup() {
 }
 
 void draw() {
+  switch(mode) {
+  case 1: 
+    play();
+    break;
+  case 2: 
+    gameOver();
+    break;
+  }
+}
+
+void keyPressed() {
+  if (mode == PLAY) {
+    //print(keyCode);
+    if (keyCode == 87) {    // W - UP - 87
+      player.setUp(true);
+    }
+    if (keyCode == 65) {    // A - LEFT - 65
+      player.setLeft(true);
+    }
+    if (keyCode == 83) {    // S - DOWN - 83
+      player.setDown(true);
+    }
+    if (keyCode == 68) {    // D - RIGHT - 68
+      player.setRight(true);
+    }
+
+    if (keyCode == 32) {    // SPACE - THROW - 32
+      isSpace = true;
+    }
+  }
+}
+
+void keyReleased() {
+  if (mode == PLAY) {
+    if (keyCode == 87) {
+      player.setUp(false);
+    }
+    if (keyCode == 65) {
+      player.setLeft(false);
+    }
+    if (keyCode == 83) {
+      player.setDown(false);
+    }
+    if (keyCode == 68) {
+      player.setRight(false);
+    }
+    if (keyCode == 32) {
+      isSpace = false;
+    }
+  }
+}
+
+void play() {
   background(35);
-  //noStroke();
+  noStroke();
   smooth();
 
   currRoom.create();
+  fill(0);
   currRoom.drawDoors();
   if (!player.getIsDead()) {
     player.spawn();
@@ -56,7 +116,7 @@ void draw() {
       enemies.add(test2);
       test2.spawn();
     }
-    
+
     /*
     test.spawn();
      //test2.spawn();
@@ -77,45 +137,16 @@ void draw() {
     pickUpKnife();
   } else {
     println ("GAME OVER");
+    mode = GAMEOVER;
   }
 }
 
-void keyPressed() {
-  //print(keyCode);
-  if (keyCode == 87) {    // W - UP - 87
-    player.setUp(true);
-  }
-  if (keyCode == 65) {    // A - LEFT - 65
-    player.setLeft(true);
-  }
-  if (keyCode == 83) {    // S - DOWN - 83
-    player.setDown(true);
-  }
-  if (keyCode == 68) {    // D - RIGHT - 68
-    player.setRight(true);
-  }
-
-  if (keyCode == 32) {    // SPACE - THROW - 32
-    isSpace = true;
-  }
-}
-
-void keyReleased() {
-  if (keyCode == 87) {
-    player.setUp(false);
-  }
-  if (keyCode == 65) {
-    player.setLeft(false);
-  }
-  if (keyCode == 83) {
-    player.setDown(false);
-  }
-  if (keyCode == 68) {
-    player.setRight(false);
-  }
-  if (keyCode == 32) {
-    isSpace = false;
-  }
+void gameOver() {
+  background(0);
+  fill(255);
+  textAlign(CENTER);
+  textSize(50);
+  text("GAME OVER", width/2, height/2);
 }
 
 void drawKnives() {
