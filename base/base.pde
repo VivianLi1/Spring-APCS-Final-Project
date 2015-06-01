@@ -1,3 +1,10 @@
+final int START = 0;
+final int PLAY = 1;
+final int GAMEOVER = 2;
+
+int mode = PLAY;
+
+
 boolean isSpace;
 int knives;
 int lives = 3;
@@ -30,18 +37,75 @@ void setup() {
   test2 = new Enemy(player.getX() - 50, player.getY() - 50, 15, 15);
   enemies.add(test);
   enemies.add(test2);
-  
+
   player.spawn();
 }
 
 void draw() {
+  switch(mode) {
+  case 1: 
+    play();
+    break;
+  case 2: 
+    gameOver();
+    break;
+  }
+}
+
+void keyPressed() {
+  if (mode == PLAY) {
+    //print(keyCode);
+    if (keyCode == 87) {    // W - UP - 87
+      player.setUp(true);
+    }
+    if (keyCode == 65) {    // A - LEFT - 65
+      player.setLeft(true);
+    }
+    if (keyCode == 83) {    // S - DOWN - 83
+      player.setDown(true);
+    }
+    if (keyCode == 68) {    // D - RIGHT - 68
+      player.setRight(true);
+    }
+
+    if (keyCode == 32) {    // SPACE - THROW - 32
+      isSpace = true;
+    }
+  }
+}
+
+void keyReleased() {
+  if (mode == PLAY) {
+    if (keyCode == 87) {
+      player.setUp(false);
+    }
+    if (keyCode == 65) {
+      player.setLeft(false);
+    }
+    if (keyCode == 83) {
+      player.setDown(false);
+    }
+    if (keyCode == 68) {
+      player.setRight(false);
+    }
+    if (keyCode == 32) {
+      isSpace = false;
+    }
+  }
+}
+
+public void play() {
   background(35);
-  //noStroke();
+  noStroke();
   smooth();
 
   currRoom.create();
+  fill(0);
   currRoom.drawDoors();
-  if (!player.getIsDead()) {
+  
+  if (player.getIsDead()) {
+    mode = GAMEOVER;
+  } else {
     player.spawn();
     player.move(currRoom.getSizeX(), currRoom.getSizeY());
 
@@ -61,48 +125,17 @@ void draw() {
     }
 
     pickUpKnife();
-  } else {
-    println ("GAME OVER");
   }
 }
 
-void keyPressed() {
-  //print(keyCode);
-  if (keyCode == 87) {    // W - UP - 87
-    player.setUp(true);
-  }
-  if (keyCode == 65) {    // A - LEFT - 65
-    player.setLeft(true);
-  }
-  if (keyCode == 83) {    // S - DOWN - 83
-    player.setDown(true);
-  }
-  if (keyCode == 68) {    // D - RIGHT - 68
-    player.setRight(true);
-  }
-
-  if (keyCode == 32) {    // SPACE - THROW - 32
-    isSpace = true;
-  }
+public void gameOver() {
+  background(0);
+  fill(255);
+  textAlign(CENTER);
+  textSize(50);
+  text("GAME OVER", width/2, height/2);
 }
 
-void keyReleased() {
-  if (keyCode == 87) {
-    player.setUp(false);
-  }
-  if (keyCode == 65) {
-    player.setLeft(false);
-  }
-  if (keyCode == 83) {
-    player.setDown(false);
-  }
-  if (keyCode == 68) {
-    player.setRight(false);
-  }
-  if (keyCode == 32) {
-    isSpace = false;
-  }
-}
 
 void drawKnives() {
   for (Knife k : thrown) {
@@ -116,15 +149,15 @@ void enemyCollision() {
   for (Enemy e : enemies) {
     if (e.getIsDead() == true) {
       continue;
-    }else{
+    } else {
       if (Math.abs(player.getX()-e.getX()) < 25 && Math.abs(player.getY()-e.getY()) < 25) {
         lives--;
       }
       if (lives == 0) {
         player.setIsDead(true);
       }
-      println((player.getX() - e.getX()) + " " + (player.getY() - e.getY()));
-    } 
+      //println((player.getX() - e.getX()) + " " + (player.getY() - e.getY()));
+    }
   }
 }
 

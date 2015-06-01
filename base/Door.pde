@@ -1,4 +1,4 @@
-public class Door{
+public class Door {
 
   private int x, y;
   private int sizeX, sizeY;
@@ -25,7 +25,7 @@ public class Door{
       rect(x - sizeX, y - sizeY/2, x - sizeX + 20, y + sizeY/2);
     }
   }
-  
+
   //need to do this
   public boolean inDoor(Player p) {
     return false;
