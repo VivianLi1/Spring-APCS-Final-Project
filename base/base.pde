@@ -36,8 +36,8 @@ void setup() {
 
   test = new Enemy(player.getX() + 50, player.getY() - 50, 10, 10);
   test2 = new Enemy(player.getX() - 50, player.getY() - 50, 15, 15);
-  //enemies.add(test);
-  //enemies.add(test2);
+  enemies.add(test);
+  enemies.add(test2);
 
   player.spawn();
 }
@@ -117,12 +117,12 @@ void play() {
       test2.spawn();
     }
 
-    /*
+
     test.spawn();
-     //test2.spawn();
-     //test.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
-     //test2.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
-     */
+    test2.spawn();
+    test.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
+    test2.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
+
 
     drawKnives();
     enemyCollision();
@@ -202,3 +202,5 @@ void pickUpKnife() {
   }
 }
 
+void doorCollision(){
+}
