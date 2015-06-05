@@ -3,6 +3,11 @@ Vivian Li and Mindy Ruan's Final Project for APCS
 
 TEAM NAME: Ocean Ravioli
 
+VERSIONS
+- version 1 - https://github.com/VivianLi1/Spring-APCS-Final-Project/tree/version1
+
+LOG
+
 23/5
 - Basic movement for Player
   - stays within walls, no movement delay
