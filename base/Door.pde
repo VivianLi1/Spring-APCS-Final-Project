@@ -1,47 +1,52 @@
 public class Door {
 
+  private final int NORTH = 0;
+  private final int SOUTH = 1;
+  private final int EAST = 2;
+  private final int WEST = 3;
+
   private float xcord, ycord;
-  private int x, y;
+  private float x, y;
   private int sizeX, sizeY;
   private int direction;
-  private int w = 20;
-  private int l = sizeX/2;
+  private int w;
+  private int l;
 
-  public Door(int x_, int y_, int sx, int sy, int dir) {
+  public Door(float x_, float y_, int sx, int sy, int dir) {
     x = x_;
     y = y_;
     sizeX = sx;
     sizeY = sy;
 
+    w = 20;
+    l = sizeX;
+
     direction = dir;
-    switch(dir) {
-    case 0: 
-      xcord = x - sizeX/2;
+    if (dir == NORTH) { 
+      xcord = (x - sizeX/2);
       ycord = y - sizeY;
-    case 1:
+    } else if (dir == SOUTH) {
       xcord = x - sizeX/2;
       ycord = y + sizeY - w;
-    case 2:
+    } else if (dir == EAST) {
       xcord = x + sizeX - w;
       ycord = y - sizeY/2;
-    case 3:
+    } else if (dir == WEST) {
       xcord = x - sizeX;
       ycord = y - sizeY/2;
     }
   }
 
-  public void createDoor(int dir) {
-    switch(dir) {
-    case 0:
+  public void createDoor() {
+    rectMode(CORNER);
+    //fill(0);
+    if (direction == NORTH || direction == SOUTH) {
       rect(xcord, ycord, l, w);
-    case 1:
-      rect(xcord, ycord, l, w);
-    case 2:
-      rect(xcord, ycord, l, w);
-    case 3:
-      rect(xcord, ycord, l, w);
+    } else {
+      rect(xcord, ycord, w, l);
     }
   }
+
 
   //need to do this
   public boolean inDoor(Player p) {

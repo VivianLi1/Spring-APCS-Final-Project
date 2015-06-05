@@ -105,18 +105,21 @@ public class Room {
   }
 
   public void drawDoors() {
-    rectMode(CORNERS);
     if (hasNorth) {
-      rect(x - sizeX/2, y - sizeY, x + sizeX/2, y - sizeY + 20);
+      Door doorNorth = new Door(x, y, sizeX, sizeY, NORTH);
+      doorNorth.createDoor();
     }
     if (hasSouth) {
-      rect(x - sizeX/2, y + sizeY - 20, x + sizeX/2, y + sizeY);
+      Door doorSouth = new Door(x, y, sizeX, sizeY, SOUTH);
+      doorSouth.createDoor();
     }
     if (hasEast) {
-      rect(x + sizeX - 20, y - sizeY/2, x + sizeX, y + sizeY/2);
+      Door doorEast = new Door(x, y, sizeX, sizeY, EAST);
+      doorEast.createDoor();
     }
     if (hasWest) {
-      rect(x - sizeX, y - sizeY/2, x - sizeX + 20, y + sizeY/2);
+      Door doorWest = new Door(x, y, sizeX, sizeY, WEST);
+      doorWest.createDoor();
     }
   }
 
