@@ -48,3 +48,4 @@ LOG
 
 4/6
 - door can be drawn now
+- door boundaries added for collisions
