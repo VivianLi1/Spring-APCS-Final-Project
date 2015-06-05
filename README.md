@@ -42,3 +42,9 @@ LOG
 - fixed bug where Player died after reaching a certain x and y coord
 - knives now kill enemies
 - added modes
+
+1/6
+- better Door class
+
+4/6
+- door can be drawn now
