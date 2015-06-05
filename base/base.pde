@@ -51,7 +51,7 @@ void draw() {
     gameOver();
     break;
   }
-  println(mouseX, mouseY);
+  //println(mouseX, mouseY);
 }
 
 void keyPressed() {

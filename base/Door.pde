@@ -50,7 +50,15 @@ public class Door {
 
   //need to do this
   public boolean inDoor(Player p) {
-    return false;
+    if (direction == NORTH) {
+      return (p.getX() < xcord + l && p.getX() > xcord && p.getY() < ycord + l);
+    } else if (direction == SOUTH) {
+      return (p.getX() < xcord + l && p.getX() > xcord && p.getY() > ycord + l);
+    } else if (direction == EAST) {
+      return (p.getX() < xcord + w && p.getY() > ycord && p.getY() < ycord + l);
+    } else {
+      return (p.getX() > xcord + w && p.getY() > ycord && p.getY() < ycord + l);
+    }
   }
 }
 
