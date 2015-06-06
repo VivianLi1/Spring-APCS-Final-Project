@@ -111,19 +111,14 @@ void play() {
     if (!test.getIsDead()) {
       enemies.add(test);
       test.spawn();
+      test.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
     }
 
     if (!test2.getIsDead()) {
       enemies.add(test2);
       test2.spawn();
+      test2.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
     }
-
-
-    test.spawn();
-    test2.spawn();
-    //test.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
-    //test2.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
-
 
     drawKnives();
     enemyCollision();
