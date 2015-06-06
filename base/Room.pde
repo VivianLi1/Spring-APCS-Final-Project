@@ -46,6 +46,7 @@ public class Room {
   }
 
   public Room() {
+    //this(width/2, height/2, 400, 250, false, false, false, false, 1);
     this(width/2, height/2, 200, 200, false, false, false, false, 1);
   }
 
