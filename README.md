@@ -52,3 +52,4 @@ LOG
 
 5/6
 - fixed mistake: knives now kill enemies again
+- fixed bug which caused knives to stop wherever enemies used to be
