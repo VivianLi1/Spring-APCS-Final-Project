@@ -18,8 +18,8 @@ public class Killable {
   }
 
   public void move(int roomx, int roomy) {
-    x = constrain(x, width/2-roomx+getSizeX(), width/2+roomx-getSizeY()); 
-    y = constrain(y, height/2-roomy+getSizeX(), height/2+roomy-getSizeY());
+    x = constrain(x, width/2-roomx+getSizeX(), width/2+roomx-getSizeX()); 
+    y = constrain(y, height/2-roomy+getSizeY(), height/2+roomy-getSizeY());
   }  
 
   public float getX() {

@@ -15,7 +15,7 @@ public class Player extends Killable {
   }
 
   void move(int roomx, int roomy) {
-    super.move(roomx, roomy);
+    //super.move(roomx, roomy);
     if (isUp) {
       y -= 2.0;
       direction = 87;
@@ -32,6 +32,7 @@ public class Player extends Killable {
       x += 2.0;
       direction = 68;
     }
+    super.move(roomx, roomy);
     //println(direction);
   }
 
