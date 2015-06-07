@@ -11,6 +11,7 @@ public class Room {
   private Room north, south, east, west;
   private int roomNum;
 
+  private Door doorNorth, doorSouth, doorEast, doorWest;
 
   public Room(float x_, float y_, int sx, int sy, boolean n, boolean s, boolean e, boolean w, int num) {
     x = x_;
@@ -30,6 +31,11 @@ public class Room {
     west = null;
 
     roomNum = num;
+
+    doorNorth = null; 
+    doorSouth = null; 
+    doorEast = null; 
+    doorWest = null;
   }
 
 
@@ -64,62 +70,72 @@ public class Room {
   }
 
   public void setHasDirection(int dir, boolean b) {
-    switch(dir) {
-    case 0: 
+    if (dir == NORTH) {
       hasNorth = b;
-    case 1: 
+    }
+    if (dir == SOUTH) {
       hasSouth = b;
-    case 2: 
+    }
+    if (dir == EAST) {
       hasEast = b;
-    case 3: 
+    }
+    if (dir == WEST) {
       hasWest = b;
     }
   }
 
   public boolean getHasDirection(int dir) {
-    boolean b = false;
-    switch(dir) {
-    case 0: 
-      b = hasNorth;
-    case 1: 
-      b = hasSouth;
-    case 2: 
-      b = hasEast;
-    case 3: 
-      b = hasWest;
+    if (dir == NORTH) {
+      return hasNorth;
+    } else if (dir == SOUTH) {
+      return hasSouth;
+    } else if (dir == EAST) {
+      return hasEast;
+    } else {
+      return hasWest;
     }
-    return b;
   }
 
   public void setRoom(int dir) {
-    switch(dir) {
-    case 0: 
+    if (dir == NORTH) {
       north = new Room(x, y-sizeY, false, true, false, false, roomNum++);
-    case 1: 
+    } else if (dir == SOUTH) {
       south = new Room(x, y+sizeY, true, false, false, false, roomNum++);
-    case 2: 
+    } else if (dir == EAST) {
       east = new Room(x+sizeX, y, false, false, false, true, roomNum++);
-    case 3: 
+    } else {
       west = new Room(x-sizeX, y, false, false, true, false, roomNum++);
     }
   }
 
   public void drawDoors() {
     if (hasNorth) {
-      Door doorNorth = new Door(x, y, sizeX, sizeY, NORTH);
+      doorNorth = new Door(x, y, sizeX, sizeY, NORTH);
       doorNorth.createDoor();
     }
     if (hasSouth) {
-      Door doorSouth = new Door(x, y, sizeX, sizeY, SOUTH);
+      doorSouth = new Door(x, y, sizeX, sizeY, SOUTH);
       doorSouth.createDoor();
     }
     if (hasEast) {
-      Door doorEast = new Door(x, y, sizeX, sizeY, EAST);
+      doorEast = new Door(x, y, sizeX, sizeY, EAST);
       doorEast.createDoor();
     }
     if (hasWest) {
-      Door doorWest = new Door(x, y, sizeX, sizeY, WEST);
+      doorWest = new Door(x, y, sizeX, sizeY, WEST);
       doorWest.createDoor();
+    }
+  }
+
+  public Door getDoor(int dir) {
+    if (dir == NORTH) {
+      return doorNorth;
+    } else if (dir == SOUTH) {
+      return doorSouth;
+    } else if (dir == EAST) {
+      return doorEast;
+    } else {
+      return doorWest;
     }
   }
 

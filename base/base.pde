@@ -127,7 +127,8 @@ void play() {
 
     drawKnives();
     enemyCollision();
-
+    doorCollision();
+    
     if (isSpace && knives > 0) {
       knives--;
       Knife k = new Knife(player.getX(), player.getY(), direction);
@@ -203,5 +204,22 @@ void pickUpKnife() {
   }
 }
 
-void doorCollision(){
+void doorCollision() {
+  boolean b = false;
+  while (b) {
+    if (currRoom.getHasDirection(0)) {
+      b = currRoom.getDoor(0).inDoor(player);
+    } 
+    if ( currRoom.getHasDirection(1)) {
+      b = currRoom.getDoor(1).inDoor(player);
+    } 
+    if (currRoom.getHasDirection(2)) {
+      b = currRoom.getDoor(2).inDoor(player);
+    }
+    if (currRoom.getHasDirection(3)) {
+      b = currRoom.getDoor(3).inDoor(player);
+    }
+  }
+  println(b);
 }
+

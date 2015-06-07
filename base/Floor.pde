@@ -24,29 +24,29 @@ public class Floor {
     //currRoomNum = 1;
   }
 
-/*
+  /*
   public void chooseDir() {
-    Random rand = new Random();
-    int dir = rand.nextInt(4);
-    switch(dir) {
-    case 0: 
-      direction = NORTH;
-      break;
-    case 1: 
-      direction = SOUTH;
-      break;
-    case 2: 
-      direction = EAST;
-      break;
-    case 3: 
-      direction = WEST;
-      break;
-    }
-  }
-  */
+   Random rand = new Random();
+   int dir = rand.nextInt(4);
+   switch(dir) {
+   case 0: 
+   direction = NORTH;
+   break;
+   case 1: 
+   direction = SOUTH;
+   break;
+   case 2: 
+   direction = EAST;
+   break;
+   case 3: 
+   direction = WEST;
+   break;
+   }
+   }
+   */
 
   public void connectRoom(Room r) {
-    Random rand = new Random();
+    Random rand = new Random(123);
     int direction = rand.nextInt(4);
     if (direction == NORTH && r.getHasDirection(NORTH) == false) {
       r.setHasDirection(NORTH, true);
@@ -69,6 +69,9 @@ public class Floor {
     } else if (r.getHasDirection(WEST) == true) {
       r.setRoom(WEST);
     }
+  }
+
+  public void checkDoors() {
   }
 }
 
