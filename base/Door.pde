@@ -45,19 +45,20 @@ public class Door {
     } else {
       rect(xcord, ycord, w, l);
     }
+    println(mouseX < xcord + l && mouseX > xcord && mouseY < ycord + w && mouseY > ycord);
   }
 
 
   //need to do this
   public boolean inDoor(Player p) {
     if (direction == NORTH) {
-      return (p.getX() < xcord + l && p.getX() > xcord && p.getY() < ycord + l);
+      return (p.getX() + p.getSizeX() <= xcord + l && p.getX() - p.getSizeX() >= xcord && p.getY() - p.getSizeY() <= ycord + w && p.getY() - p.getSizeY() >= ycord);
     } else if (direction == SOUTH) {
-      return (p.getX() < xcord + l && p.getX() > xcord && p.getY() > ycord + l);
+      return (p.getX() + p.getSizeX() <= xcord + l && p.getX() + p.getSizeX() >= xcord && p.getY() + p.getSizeY() <= ycord + w && p.getY() + p.getSizeY() >= ycord);
     } else if (direction == EAST) {
-      return (p.getX() < xcord + w && p.getY() > ycord && p.getY() < ycord + l);
+      return (p.getX() + p.getSizeX() <= xcord + w && p.getX() + p.getSizeX() >= xcord && p.getY() + p.getSizeY() >= ycord && p.getY() + p.getSizeY() <= ycord + l);
     } else {
-      return (p.getX() > xcord + w && p.getY() > ycord && p.getY() < ycord + l);
+      return (p.getX() + p.getSizeX() <= xcord + w && p.getX() + p.getSizeX() >= xcord && p.getY() + p.getSizeY() >= ycord && p.getY() + p.getSizeY() <= ycord + l);
     }
   }
 }

@@ -2,6 +2,11 @@ final int START = 0;
 final int PLAY = 1;
 final int GAMEOVER = 2;
 
+private final int NORTH = 0;
+private final int SOUTH = 1;
+private final int EAST = 2;
+private final int WEST = 3;
+
 int mode = PLAY;
 
 boolean isSpace;
@@ -127,7 +132,7 @@ void play() {
     drawEnemies();
     enemyCollision();
     doorCollision();
-    
+
     if (isSpace && knives > 0) {
       knives--;
       Knife k = new Knife(player.getX(), player.getY(), direction);
@@ -206,27 +211,35 @@ void pickUpKnife() {
   }
 }
 
-<<<<<<< HEAD
 void doorCollision() {
-  boolean b = false;
-  while (b) {
-    if (currRoom.getHasDirection(0)) {
-      b = currRoom.getDoor(0).inDoor(player);
-    } 
-    if ( currRoom.getHasDirection(1)) {
-      b = currRoom.getDoor(1).inDoor(player);
-    } 
-    if (currRoom.getHasDirection(2)) {
-      b = currRoom.getDoor(2).inDoor(player);
+  if (currRoom.getHasDirection(NORTH)) {
+    if (currRoom.getDoor(NORTH).inDoor(player)) {
+      currRoom = currRoom.getRoom(NORTH);
     }
-    if (currRoom.getHasDirection(3)) {
-      b = currRoom.getDoor(3).inDoor(player);
+  } 
+  if ( currRoom.getHasDirection(SOUTH)) {
+    if (currRoom.getDoor(SOUTH).inDoor(player)) {
+      currRoom = currRoom.getRoom(SOUTH);
+    }
+  } 
+  if (currRoom.getHasDirection(EAST)) {
+    if (currRoom.getDoor(EAST).inDoor(player)) {
+      currRoom = currRoom.getRoom(EAST);
     }
   }
-  println(b);
+  if (currRoom.getHasDirection(WEST)) {
+    if (currRoom.getDoor(WEST).inDoor(player)) {
+      currRoom = currRoom.getRoom(WEST);
+    }
+  }
+
+  println("NORTH:" + currRoom.getHasDirection(NORTH));
+  println("SOUTH:" + currRoom.getHasDirection(SOUTH));
+  println("EAST:" + currRoom.getHasDirection(EAST));
+  println("WEST:" + currRoom.getHasDirection(WEST));
 }
 
-=======
+
 void drawEnemies() {
   if (!test.getIsDead()) {
     //enemies.add(test);
@@ -241,7 +254,3 @@ void drawEnemies() {
   }
 }
 
-void doorCollision() {
-}
-
->>>>>>> f438c6b12678451554909261d044af2e412d9496

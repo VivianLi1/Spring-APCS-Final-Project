@@ -46,7 +46,7 @@ public class Floor {
    */
 
   public void connectRoom(Room r) {
-    Random rand = new Random(123);
+    Random rand = new Random();
     int direction = rand.nextInt(4);
     if (direction == NORTH && r.getHasDirection(NORTH) == false) {
       r.setHasDirection(NORTH, true);

@@ -98,6 +98,7 @@ public class Room {
   }
 
   public void setRoom(int dir) {
+    /*
     if (dir == NORTH) {
       north = new Room(x, y-sizeY, false, true, false, false, roomNum++);
     } else if (dir == SOUTH) {
@@ -106,6 +107,28 @@ public class Room {
       east = new Room(x+sizeX, y, false, false, false, true, roomNum++);
     } else {
       west = new Room(x-sizeX, y, false, false, true, false, roomNum++);
+    }
+    */
+    if (dir == NORTH) {
+      north = new Room(x, y, false, true, false, false, roomNum++);
+    } else if (dir == SOUTH) {
+      south = new Room(x, y, true, false, false, false, roomNum++);
+    } else if (dir == EAST) {
+      east = new Room(x, y, false, false, false, true, roomNum++);
+    } else {
+      west = new Room(x, y, false, false, true, false, roomNum++);
+    }
+  }
+
+  public Room getRoom(int dir) {
+    if (dir == NORTH) {
+      return north;
+    } else if (dir == SOUTH) {
+      return south;
+    } else if (dir == EAST) {
+      return east;
+    } else {
+      return west;
     }
   }
 
