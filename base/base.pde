@@ -238,7 +238,3 @@ void drawEnemies() {
     //test2.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
   }
 }
-
-void doorCollision() {
-}
-
