@@ -5,6 +5,7 @@ TEAM NAME: Ocean Ravioli
 
 VERSIONS
 - version 1 - https://github.com/VivianLi1/Spring-APCS-Final-Project/tree/version1
+- version 2 - https://github.com/VivianLi1/Spring-APCS-Final-Project/tree/version2
 
 LOG
 
@@ -53,3 +54,12 @@ LOG
 5/6
 - fixed mistake: knives now kill enemies again
 - fixed bug which caused knives to stop wherever enemies used to be
+
+6/6
+- started buddy system (collisions between enemies)
+- improved enemy collision
+
+7/6
+- Player can switch rooms
+   - BUG: null pointer exception when going north and west
+   - BUG: nothing happens when going east
