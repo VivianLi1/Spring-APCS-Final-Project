@@ -108,26 +108,11 @@ void play() {
     player.spawn();
     player.move(currRoom.getSizeX(), currRoom.getSizeY());
 
-    //drawEnemies();
-    /*
-    if (!test.getIsDead()) {
-     enemies.add(test);
-     test.spawn();
-     //test.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
-     }
-     
-     if (!test2.getIsDead()) {
-     enemies.add(test2);
-     test2.spawn();
-     //test2.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
-     }
-     */
-
     drawKnives();
     drawEnemies();
     enemyCollision();
     doorCollision();
-    
+
     if (isSpace && knives > 0) {
       knives--;
       Knife k = new Knife(player.getX(), player.getY(), direction);
@@ -167,7 +152,8 @@ void enemyCollision() {
     if (e.getIsDead() == true) {
       continue;
     } else {
-      if (Math.abs(player.getX()-e.getX()) < 25 && Math.abs(player.getY()-e.getY()) < 25) {
+      float overlap = Math.abs(5+e.getSizeX());
+      if (Math.abs(player.getX()-e.getX()) < overlap && Math.abs(player.getY()-e.getY()) < overlap) {
         lives--;
       }
       if (lives == 0) {
@@ -178,11 +164,16 @@ void enemyCollision() {
   }
 }
 
+void buddysystem(){ //so enemies don't overlap each other
+  //workin on it
+}
+
 boolean killEnemy(Knife k) {
   if (!k.getStopped()) {
     for (int i = 0; i < enemies.size (); i++) {
       Enemy e = enemies.get(i);
-      if (Math.abs(k.getX()-e.getX()) < 20 && Math.abs(k.getY()-e.getY()) < 20) {
+      float overlap = Math.abs(7+e.getSizeX());
+      if (Math.abs(k.getX()-e.getX()) < overlap && Math.abs(k.getY()-e.getY()) < overlap) {
         println("dong");
         println("numEnemies= " + enemies.size());
         e.setIsDead(true);
@@ -222,18 +213,16 @@ void doorCollision() {
       b = currRoom.getDoor(3).inDoor(player);
     }
   }
-  println(b);
+  //println(b);
 }
 
 void drawEnemies() {
   if (!test.getIsDead()) {
-    //enemies.add(test);
     test.spawn();
     //test.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
   }
 
   if (!test2.getIsDead()) {
-    //enemies.add(test2);
     test2.spawn();
     //test2.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
   }
