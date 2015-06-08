@@ -169,7 +169,7 @@ void enemyCollision() {
   }
 }
 
-void buddysystem(){ //so enemies don't overlap each other
+void buddysystem() { //so enemies don't overlap each other
   //workin on it
 }
 
@@ -179,6 +179,7 @@ boolean killEnemy(Knife k) {
       Enemy e = enemies.get(i);
       float overlap = Math.abs(7+e.getSizeX());
       if (Math.abs(k.getX()-e.getX()) < overlap && Math.abs(k.getY()-e.getY()) < overlap) {
+
         println("dong");
         println("numEnemies= " + enemies.size());
         e.setIsDead(true);
@@ -223,20 +224,15 @@ void doorCollision() {
       currRoom = currRoom.getRoom(WEST);
     }
   }
-<<<<<<< HEAD
 
   println("NORTH:" + currRoom.getHasDirection(NORTH));
   println("SOUTH:" + currRoom.getHasDirection(SOUTH));
   println("EAST:" + currRoom.getHasDirection(EAST));
   println("WEST:" + currRoom.getHasDirection(WEST));
 }
+//println(b);
 
 
-=======
-  //println(b);
-}
-
->>>>>>> 53802fadc404d155182a5a992a9cc29d7b9c5b03
 void drawEnemies() {
   if (!test.getIsDead()) {
     test.spawn();
@@ -248,7 +244,4 @@ void drawEnemies() {
     //test2.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
   }
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 53802fadc404d155182a5a992a9cc29d7b9c5b03
