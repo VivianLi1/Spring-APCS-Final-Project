@@ -206,7 +206,6 @@ void pickUpKnife() {
   }
 }
 
-<<<<<<< HEAD
 void doorCollision() {
   boolean b = false;
   while (b) {
@@ -226,7 +225,6 @@ void doorCollision() {
   println(b);
 }
 
-=======
 void drawEnemies() {
   if (!test.getIsDead()) {
     //enemies.add(test);
@@ -244,4 +242,3 @@ void drawEnemies() {
 void doorCollision() {
 }
 
->>>>>>> f438c6b12678451554909261d044af2e412d9496
