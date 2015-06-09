@@ -66,3 +66,4 @@ LOG
 
 8/6
 - made makeEnemies(int num) function (makes spawning easier)
+- added bullet delay so things aren't too crazy
