@@ -38,11 +38,14 @@ void setup() {
 
   player = new Player(width/2, height/2, 24, 24);
 
-
+  /*
   test = new Enemy(player.getX() + 50, player.getY() - 50, 10, 10);
-  test2 = new Enemy(player.getX() - 50, player.getY() - 50, 15, 15);
-  enemies.add(test);
-  enemies.add(test2);
+   test2 = new Enemy(player.getX() - 50, player.getY() - 50, 15, 15);
+   enemies.add(test);
+   enemies.add(test2);
+   */
+
+  makeEnemies(3);
 
   player.spawn();
 }
@@ -164,7 +167,6 @@ void enemyCollision() {
       if (lives == 0) {
         player.setIsDead(true);
       }
-      //println((player.getX() - e.getX()) + " " + (player.getY() - e.getY()));
     }
   }
 }
@@ -173,14 +175,21 @@ void buddysystem() { //so enemies don't overlap each other
   //workin on it
 }
 
+void makeEnemies(int num) {
+  int count = 0;
+  Random r = new Random();
+  for (int i = 0; i < num; i++) {
+    Enemy e = new Enemy(player.getX()-r.nextInt(100)-50, player.getY()+r.nextInt(100)-50, 20, 20);
+    enemies.add(e);
+  }
+}
+
 boolean killEnemy(Knife k) {
   if (!k.getStopped()) {
     for (int i = 0; i < enemies.size (); i++) {
       Enemy e = enemies.get(i);
       float overlap = Math.abs(7+e.getSizeX());
       if (Math.abs(k.getX()-e.getX()) < overlap && Math.abs(k.getY()-e.getY()) < overlap) {
-
-        println("dong");
         println("numEnemies= " + enemies.size());
         e.setIsDead(true);
         enemies.remove(i);
@@ -230,18 +239,14 @@ void doorCollision() {
   println("EAST:" + currRoom.getHasDirection(EAST));
   println("WEST:" + currRoom.getHasDirection(WEST));
 }
-//println(b);
 
 
 void drawEnemies() {
-  if (!test.getIsDead()) {
-    test.spawn();
-    //test.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
-  }
-
-  if (!test2.getIsDead()) {
-    test2.spawn();
-    //test2.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
+  for (Enemy e : enemies) {
+    if (!e.getIsDead()) {
+      e.spawn();
+      e.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
+    }
   }
 }
 
