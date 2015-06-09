@@ -22,12 +22,15 @@ Player player;
 Enemy test;
 Enemy test2;
 
+int time;
+int wait = 500;
+
 int collisions = 0;
 
 void setup() {
   size(1200, 600);
   background(35);
-  knives = 1;
+  knives = 100;
 
   currFloor = new Floor();
   currRoom = new Room();
@@ -38,16 +41,11 @@ void setup() {
 
   player = new Player(width/2, height/2, 24, 24);
 
-  /*
-  test = new Enemy(player.getX() + 50, player.getY() - 50, 10, 10);
-   test2 = new Enemy(player.getX() - 50, player.getY() - 50, 15, 15);
-   enemies.add(test);
-   enemies.add(test2);
-   */
-
-  makeEnemies(3);
+  makeEnemies(2);
 
   player.spawn();
+  
+  time = millis();
 }
 
 void draw() {
@@ -113,6 +111,7 @@ void play() {
   fill(0);
   currRoom.drawDoors();
   if (!player.getIsDead()) {
+    
     player.spawn();
     player.move(currRoom.getSizeX(), currRoom.getSizeY());
 
@@ -121,11 +120,19 @@ void play() {
     enemyCollision();
     doorCollision();
 
+    //println(time);
+    //println(millis());
+
+    //println(millis());
     if (isSpace && knives > 0) {
-      knives--;
-      Knife k = new Knife(player.getX(), player.getY(), direction);
-      thrown.add(k);
-      println(thrown.size());
+      if (millis() - time >= wait) {
+        println("THROWWWWWWW");
+        knives--;
+        Knife k = new Knife(player.getX(), player.getY(), direction);
+        thrown.add(k);
+        time = millis();
+        //println(thrown.size());
+      }
     }
 
     pickUpKnife();
@@ -190,9 +197,9 @@ boolean killEnemy(Knife k) {
       Enemy e = enemies.get(i);
       float overlap = Math.abs(7+e.getSizeX());
       if (Math.abs(k.getX()-e.getX()) < overlap && Math.abs(k.getY()-e.getY()) < overlap) {
-        println("numEnemies= " + enemies.size());
         e.setIsDead(true);
         enemies.remove(i);
+        println("numEnemies= " + enemies.size());
         return true;
       }
     }
@@ -234,10 +241,10 @@ void doorCollision() {
     }
   }
 
-  println("NORTH:" + currRoom.getHasDirection(NORTH));
-  println("SOUTH:" + currRoom.getHasDirection(SOUTH));
-  println("EAST:" + currRoom.getHasDirection(EAST));
-  println("WEST:" + currRoom.getHasDirection(WEST));
+  //println("NORTH:" + currRoom.getHasDirection(NORTH));
+  //println("SOUTH:" + currRoom.getHasDirection(SOUTH));
+  //println("EAST:" + currRoom.getHasDirection(EAST));
+  //println("WEST:" + currRoom.getHasDirection(WEST));
 }
 
 
