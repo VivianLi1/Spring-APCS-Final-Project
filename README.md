@@ -63,3 +63,6 @@ LOG
 - Player can switch rooms
    - BUG: null pointer exception when going north and west
    - BUG: nothing happens when going east
+
+8/6
+- made makeEnemies(int num) function (makes spawning easier)
