@@ -46,8 +46,8 @@ public class Door {
       rect(xcord, ycord, w, l);
     }
     //println(mouseX < xcord + l && mouseX > xcord && mouseY < ycord + w && mouseY > ycord);
+    println(mouseX <= xcord + w && mouseX >= xcord && mouseY >= ycord && mouseY <= ycord + l);
   }
-
 
   //need to do this
   public boolean inDoor(Player p) {
@@ -58,8 +58,16 @@ public class Door {
     } else if (direction == EAST) {
       return (p.getX() + p.getSizeX() <= xcord + w && p.getX() + p.getSizeX() >= xcord && p.getY() + p.getSizeY() >= ycord && p.getY() + p.getSizeY() <= ycord + l);
     } else {
-      return (p.getX() + p.getSizeX() <= xcord + w && p.getX() + p.getSizeX() >= xcord && p.getY() + p.getSizeY() >= ycord && p.getY() + p.getSizeY() <= ycord + l);
+      return (p.getX() - p.getSizeX() <= xcord + w && p.getX() + p.getSizeX() >= xcord && p.getY() + p.getSizeY() >= ycord && p.getY() - p.getSizeY() <= ycord + l);
     }
+  }
+
+  public float getX() {
+    return x;
+  }
+
+  public float getY() {
+    return y;
   }
 }
 

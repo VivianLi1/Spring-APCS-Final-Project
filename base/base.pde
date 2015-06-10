@@ -44,7 +44,7 @@ void setup() {
   makeEnemies(2);
 
   player.spawn();
-  
+
   time = millis();
 }
 
@@ -107,17 +107,18 @@ void play() {
   noStroke();
   smooth();
 
+  //currFloor.createRoom(currRoom);
   currRoom.create();
   fill(0);
   currRoom.drawDoors();
   if (!player.getIsDead()) {
-    
+
     player.spawn();
     player.move(currRoom.getSizeX(), currRoom.getSizeY());
 
     drawKnives();
-    drawEnemies();
-    enemyCollision();
+    //drawEnemies();
+    //enemyCollision();
     doorCollision();
 
     //println(time);
@@ -223,28 +224,38 @@ void doorCollision() {
   if (currRoom.getHasDirection(NORTH)) {
     if (currRoom.getDoor(NORTH).inDoor(player)) {
       currRoom = currRoom.getRoom(NORTH);
+      player.setX(currRoom.getX());
+      player.setY(currRoom.getY() + currRoom.getSizeY() / 2);
     }
   } 
   if ( currRoom.getHasDirection(SOUTH)) {
     if (currRoom.getDoor(SOUTH).inDoor(player)) {
       currRoom = currRoom.getRoom(SOUTH);
+      player.setX(currRoom.getX());
+      player.setY(currRoom.getY() - currRoom.getSizeY() / 2);
     }
   } 
   if (currRoom.getHasDirection(EAST)) {
     if (currRoom.getDoor(EAST).inDoor(player)) {
       currRoom = currRoom.getRoom(EAST);
+      player.setX(currRoom.getX() - currRoom.getSizeX() / 2);
+      player.setY(currRoom.getY());
     }
   }
+
   if (currRoom.getHasDirection(WEST)) {
     if (currRoom.getDoor(WEST).inDoor(player)) {
       currRoom = currRoom.getRoom(WEST);
+      player.setX(currRoom.getX() + currRoom.getSizeX() / 2);
+      player.setY(currRoom.getY());
     }
   }
+
 
   //println("NORTH:" + currRoom.getHasDirection(NORTH));
   //println("SOUTH:" + currRoom.getHasDirection(SOUTH));
   //println("EAST:" + currRoom.getHasDirection(EAST));
-  //println("WEST:" + currRoom.getHasDirection(WEST));
+  //println("WEST:" + currRoom.getDoor(WEST).inDoor(player));
 }
 
 

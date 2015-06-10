@@ -29,6 +29,14 @@ public class Killable {
   public float getY() {
     return y;
   }
+  
+  public void setX(float xx){
+    x = xx;
+  }
+  
+  public void setY(float yy){
+    y = yy;
+  }
 
   public int getSizeX() {
     return sizeX;

@@ -46,15 +46,15 @@ public class Floor {
    */
 
   public void connectRoom(Room r) {
-    Random rand = new Random();
+    Random rand = new Random(789567);
     int direction = rand.nextInt(4);
     if (direction == NORTH && r.getHasDirection(NORTH) == false) {
       r.setHasDirection(NORTH, true);
-    } else if (direction == SOUTH && r.getHasDirection(SOUTH) == false) {
+    }  if (direction == SOUTH && r.getHasDirection(SOUTH) == false) {
       r.setHasDirection(SOUTH, true);
-    } else if (direction == EAST && r.getHasDirection(EAST) == false) {
+    } if (direction == EAST && r.getHasDirection(EAST) == false) {
       r.setHasDirection(EAST, true);
-    } else if (direction == WEST && r.getHasDirection(WEST) == false) {
+    } if (direction == WEST && r.getHasDirection(WEST) == false) {
       r.setHasDirection(WEST, true);
     }
   }
@@ -62,14 +62,15 @@ public class Floor {
   public void createRoom(Room r) {
     if (r.getHasDirection(NORTH) == true) {
       r.setRoom(NORTH);
-    } else if (r.getHasDirection(SOUTH) == true) {
+    } if (r.getHasDirection(SOUTH) == true) {
       r.setRoom(SOUTH);
-    } else if (r.getHasDirection(EAST) == true) {
+    } if (r.getHasDirection(EAST) == true) {
       r.setRoom(EAST);
-    } else if (r.getHasDirection(WEST) == true) {
+    } if (r.getHasDirection(WEST) == true) {
       r.setRoom(WEST);
     }
   }
+  
 
   public void checkDoors() {
   }
