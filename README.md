@@ -67,3 +67,12 @@ LOG
 8/6
 - made makeEnemies(int num) function (makes spawning easier)
 - added bullet delay so things aren't too crazy
+
+9/6
+- working on doors and changing rooms
+  - changing rooms work when going left, then back through the right; also works when going down, then back up
+  - does not work when going right or up first
+
+10/6
+- loaded ravioli images onto player :^)
+- changed some dimensions to make things work the same
