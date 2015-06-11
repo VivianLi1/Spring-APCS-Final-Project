@@ -1,6 +1,10 @@
 public class Player extends Killable {
 
-  boolean isUp, isLeft, isDown, isRight = false;
+  boolean isUp, isLeft, isDown, isRight;
+  PImage imgUP = loadImage("ravioli1.png");
+  PImage imgRIGHT = loadImage("ravioli2.png");
+  PImage imgDOWN = loadImage("ravioli3.png");
+  PImage imgLEFT = loadImage("ravioli4.png");
 
   public Player(float x_, float y_, int sx, int sy) {
     super(x_, y_, sx, sy);
@@ -8,11 +12,22 @@ public class Player extends Killable {
 
   void spawn() {
     setIsDead(false);
-    
+    if (direction == 87) {
+      image(imgUP, getX()-24, getY()-24);
+    } else if (direction == 68) {
+      image(imgRIGHT, getX()-24, getY()-24);
+    } else if (direction == 83) {
+      image(imgDOWN, getX()-24, getY()-24);
+    } else if (direction == 65) {
+      image(imgLEFT, getX()-24, getY()-24);
+    }
+    /*
     ellipseMode(RADIUS);
-    fill(255);
-    ellipse(x, y, 24, 24);
+     fill(255);
+     ellipse(x, y, 24, 24);
+     */
   }
+  
 
   void move(int roomx, int roomy) {
     //super.move(roomx, roomy);
@@ -51,6 +66,5 @@ public class Player extends Killable {
   void setRight(boolean b) {
     isRight = b;
   }
-  
 }
 

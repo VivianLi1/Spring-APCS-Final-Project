@@ -32,10 +32,10 @@ public class Knife {
     if (dir == 68) {
       x += 5.0;
     }
-    boundLeft = width/2-roomx+16;
-    boundRight = width/2+roomx-16;
-    boundUp = height/2-roomy+16;
-    boundDown = height/2+roomy-16;
+    boundLeft = width/2-roomx+8;
+    boundRight = width/2+roomx-8;
+    boundUp = height/2-roomy+8;
+    boundDown = height/2+roomy-8;
     
     x = constrain(x, boundLeft, boundRight); 
     y = constrain(y, boundUp, boundDown);

@@ -75,7 +75,7 @@ public class Room {
 
   public void create() {
     rectMode(CORNERS);
-    fill(100);
+    fill(000,140,174);
     rect(width/2-sizeX, height/2-sizeY, width/2+sizeX, height/2+sizeY);
   }
 

@@ -41,7 +41,7 @@ void setup() {
 
   player = new Player(width/2, height/2, 24, 24);
 
-  makeEnemies(2);
+  makeEnemies(3);
 
   player.spawn();
 
@@ -117,8 +117,8 @@ void play() {
     player.move(currRoom.getSizeX(), currRoom.getSizeY());
 
     drawKnives();
-    //drawEnemies();
-    //enemyCollision();
+    drawEnemies();
+    enemyCollision();
     doorCollision();
 
     //println(time);
@@ -127,7 +127,7 @@ void play() {
     //println(millis());
     if (isSpace && knives > 0) {
       if (millis() - time >= wait) {
-        println("THROWWWWWWW");
+        //println("THROWWWWWWW");
         knives--;
         Knife k = new Knife(player.getX(), player.getY(), direction);
         thrown.add(k);
@@ -159,7 +159,8 @@ void drawKnives() {
       k.move(currRoom.getSizeX(), currRoom.getSizeY());
     }
     fill(133, 0, 12);
-    ellipse(k.getX(), k.getY(), 16, 16);
+    ellipseMode(RADIUS);
+    ellipse(k.getX(), k.getY(), 8, 8);
   }
 }
 
@@ -200,7 +201,7 @@ boolean killEnemy(Knife k) {
       if (Math.abs(k.getX()-e.getX()) < overlap && Math.abs(k.getY()-e.getY()) < overlap) {
         e.setIsDead(true);
         enemies.remove(i);
-        println("numEnemies= " + enemies.size());
+        //println("numEnemies= " + enemies.size());
         return true;
       }
     }
@@ -212,7 +213,7 @@ void pickUpKnife() {
   for (int i = 0; i < thrown.size (); i++) {
     Knife k = thrown.get(i);
     if (k.getStopped()) {
-      if (Math.abs(player.getX()-k.getX()) < 25 && Math.abs(player.getY()-k.getY()) < 25) {
+      if (Math.abs(player.getX()-k.getX()) < 20 && Math.abs(player.getY()-k.getY()) < 20) {
         knives++;
         thrown.remove(i);
       }
@@ -263,7 +264,7 @@ void drawEnemies() {
   for (Enemy e : enemies) {
     if (!e.getIsDead()) {
       e.spawn();
-      e.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
+      //e.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
     }
   }
 }

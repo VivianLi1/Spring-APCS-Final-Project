@@ -46,7 +46,7 @@ public class Door {
       rect(xcord, ycord, w, l);
     }
     //println(mouseX < xcord + l && mouseX > xcord && mouseY < ycord + w && mouseY > ycord);
-    println(mouseX <= xcord + w && mouseX >= xcord && mouseY >= ycord && mouseY <= ycord + l);
+    //println(mouseX <= xcord + w && mouseX >= xcord && mouseY >= ycord && mouseY <= ycord + l);
   }
 
   //need to do this
