@@ -22,7 +22,9 @@ int direction = 87; //default: shoot up
 ArrayList<Knife> thrown = new ArrayList<Knife>();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
-Floor currFloor;
+Floor2 currFloor;
+
+//Floor currFloor;
 Room currRoom;
 Player player;
 Enemy test;
@@ -41,12 +43,14 @@ void setup() {
   background(35);
   knives = 100;
 
-  currFloor = new Floor();
-  currRoom = new Room();
+  currFloor = new Floor2(6);
+  currFloor.generate();
+  //currFloor = new Floor();
+  currRoom = currFloor.getSpawn();
 
   //floor1.chooseDir();
-  currFloor.connectRoom(currRoom);
-  currFloor.createRoom(currRoom);
+  //currFloor.connectRoom(currRoom);
+  //currFloor.createRoom(currRoom);
 
   player = new Player(width/2, height/2, 24, 24);
 
@@ -55,19 +59,6 @@ void setup() {
   player.spawn();
   gameStart = true;
   time2 = millis();
-  /*
-  time2 = millis();
-   //println(gameStart);
-   while (gameStart) {
-   player.setInvincible(true);
-   println(player.getInvincible());
-   if (millis() - time2 >= invincibility) {
-   player.setInvincible(false);
-   gameStart = false;
-   }
-   }
-   println(player.getInvincible());
-   */
 }
 
 void draw() {
@@ -144,6 +135,7 @@ void invincible() {
   noStroke();
   smooth();
   currRoom.create();
+  currFloor.setDirections(currRoom);
   fill(0);
   currRoom.drawDoors();
   player.spawn();
@@ -154,7 +146,7 @@ void timer(int t, int ms){
   int countdown = ms;
   textSize(100);
   fill(255,255,255);
-  textAlign(CENTER);aaa
+  textAlign(CENTER);
   text("GET READY", width/2, height/2-75);
   
   textSize(150);
@@ -169,6 +161,7 @@ void play() {
 
   //currFloor.createRoom(currRoom);
   currRoom.create();
+  currFloor.setDirections(currRoom);
   fill(0);
   currRoom.drawDoors();
 
@@ -177,9 +170,9 @@ void play() {
     player.spawn();
     player.move(currRoom.getSizeX(), currRoom.getSizeY());
 
-    enemyCollision();
+    //enemyCollision();
     drawKnives();
-    drawEnemies(true);
+    //drawEnemies(true);
     //enemyCollision();
     doorCollision();
 
@@ -218,6 +211,8 @@ void gameOver() {
 void drawKnives() {
   for (Knife k : thrown) {
     if (killEnemy(k)) {
+      k.setStopped(true);
+    } else if (doors(k)) {
       k.setStopped(true);
     } else if (!k.getStopped()) {
       k.move(currRoom.getSizeX(), currRoom.getSizeY());
@@ -269,6 +264,22 @@ boolean killEnemy(Knife k) {
   return false;
 }
 
+boolean doors(Knife k){
+   if (k.getDir() == 87 && currRoom.getHasDirection(NORTH)){
+     if (k.hitDoor(currRoom.getDoor(NORTH))){
+       k.setY(k.getY()+1);
+       //k.setY(constrain(k.getY(), height/2-currRoom.getSizeX()+20+8, height/2+currRoom.getSizeX()-8));
+     }
+   }else if(k.getDir() == 65 && currRoom.getHasDirection(WEST)){
+     return k.hitDoor(currRoom.getDoor(WEST));
+   }else if(k.getDir() == 83 && currRoom.getHasDirection(SOUTH)){
+     return k.hitDoor(currRoom.getDoor(SOUTH));
+   }else if(k.getDir() == 68 && currRoom.getHasDirection(EAST)){
+     return k.hitDoor(currRoom.getDoor(EAST));
+   }
+   return false;
+}
+
 void pickUpKnife() {
   for (int i = 0; i < thrown.size (); i++) {
     Knife k = thrown.get(i);
@@ -281,24 +292,28 @@ void pickUpKnife() {
   }
 }
 
+
 void doorCollision() {
   if (currRoom.getHasDirection(NORTH)) {
     if (currRoom.getDoor(NORTH).inDoor(player)) {
-      currRoom = currRoom.getRoom(NORTH);
+      currRoom = currFloor.getRoom(currFloor.getIndX() + 1, currFloor.getIndY());
+      currFloor.setIndX(currFloor.getIndX() + 1);
       player.setX(currRoom.getX());
       player.setY(currRoom.getY() + currRoom.getSizeY() / 2);
     }
   } 
   if ( currRoom.getHasDirection(SOUTH)) {
     if (currRoom.getDoor(SOUTH).inDoor(player)) {
-      currRoom = currRoom.getRoom(SOUTH);
+      currRoom = currFloor.getRoom(currFloor.getIndX() - 1, currFloor.getIndY());
+      currFloor.setIndX(currFloor.getIndX() - 1);
       player.setX(currRoom.getX());
       player.setY(currRoom.getY() - currRoom.getSizeY() / 2);
     }
   } 
   if (currRoom.getHasDirection(EAST)) {
     if (currRoom.getDoor(EAST).inDoor(player)) {
-      currRoom = currRoom.getRoom(EAST);
+      currRoom = currFloor.getRoom(currFloor.getIndX(), currFloor.getIndY() + 1);
+      currFloor.setIndY(currFloor.getIndY() + 1);
       player.setX(currRoom.getX() - currRoom.getSizeX() / 2);
       player.setY(currRoom.getY());
     }
@@ -306,7 +321,8 @@ void doorCollision() {
 
   if (currRoom.getHasDirection(WEST)) {
     if (currRoom.getDoor(WEST).inDoor(player)) {
-      currRoom = currRoom.getRoom(WEST);
+      currRoom = currFloor.getRoom(currFloor.getIndX(), currFloor.getIndY() - 1);
+      currFloor.setIndY(currFloor.getIndY() - 1);
       player.setX(currRoom.getX() + currRoom.getSizeX() / 2);
       player.setY(currRoom.getY());
     }
@@ -316,62 +332,8 @@ void doorCollision() {
   //println("NORTH:" + currRoom.getHasDirection(NORTH));
   //println("SOUTH:" + currRoom.getHasDirection(SOUTH));
   //println("EAST:" + currRoom.getHasDirection(EAST));
-  //println("WEST:" + currRoom.getDoor(WEST).inDoor(player));
+  //println("WEST:" + currRoom.getHasDirection(WEST));
 }
-
-/*
-void buddySystem(int index) {
- Enemy e = enemies.get(0);
- Enemy f;
- Rectangle r1 = e.getBounds();
- //Rectangle r1 = new Rectangle((int)e.getCornerX(), (int)e.getCornerY(), 2*e.getSizeX(), 2*e.getSizeY());
- //rect((int)e.getCornerX(), (int)e.getCornerY(), 2*e.getSizeX(), 2*e.getSizeY());
- //println("r1 = "+(int)e.getCornerX()+" "+(int)e.getCornerY());
- //for (Enemy f : enemies) {
- for (int i = 0; i < enemies.size (); i++) {
- if (i != index) {
- f = enemies.get(1);
- //f = enemies.get(i);
- //Rectangle r1 = new Rectangle((int)e.getCornerX(), (int)e.getCornerY(), 2*e.getSizeX(), 2*e.getSizeY());
- //rect((int)e.getCornerX(), (int)e.getCornerY(), 2*e.getSizeX(), 2*e.getSizeY());
- Rectangle r2 = new Rectangle((int)f.getCornerX(), (int)f.getCornerY(), 2*f.getSizeX(), 2*f.getSizeY());
- //fill(0, 255, 0);
- //rect((int)f.getCornerX(), (int)f.getCornerY(), 2*f.getSizeX(), 2*f.getSizeY());
- 
- float avg = (e.getSizeX() + f.getSizeX())/2;
- //println(
- 
- if (r1.intersects (r2)) {
- rect((int)e.getCornerX(), (int)e.getCornerY(), 2*e.getSizeX(), 2*e.getSizeY());
- fill(0, 255, 0);
- rect((int)f.getCornerX(), (int)f.getCornerY(), 2*f.getSizeX(), 2*f.getSizeY());
- 
- println("BAM");
- if (e.getX() <= f.getX()) { //e left of f
- e.setX(e.getX()-avg);
- f.setX(f.getX()+avg);
- }
- if (f.getX() < e.getX()) { //f left of e
- e.setX(e.getX()+avg);
- f.setX(f.getX()-avg);
- }
- e.setCornerX(e.getX()-e.getSizeX());
- e.setCornerY(e.getY()-e.getSizeY());
- f.setCornerX(f.getX()-f.getSizeX());
- f.setCornerY(f.getY()-f.getSizeY());
- 
- r1 = new Rectangle((int)e.getCornerX(), (int)e.getCornerY(), 2*e.getSizeX(), 2*e.getSizeY());
- r2 = new Rectangle((int)f.getCornerX(), (int)f.getCornerY(), 2*f.getSizeX(), 2*f.getSizeY());
- 
- //rect((int)e.getCornerX(), (int)e.getCornerY(), 2*e.getSizeX(), 2*e.getSizeY());
- //fill(0, 255, 0);
- //rect((int)f.getCornerX(), (int)f.getCornerY(), 2*f.getSizeX(), 2*f.getSizeY());
- }
- }
- //println("r2 = "+(int)f.getCornerX()+" "+(int)f.getCornerY());
- }
- }
- */
 
 void buddySystem(int e1, int e2) {
   Enemy e = enemies.get(e1);
@@ -405,7 +367,6 @@ void buddySystem(int e1, int e2) {
   }
 }
 
-
 void drawEnemies(boolean move) {
   for (int i = 0; i < enemies.size (); i++) {
     Enemy e = enemies.get(i);
@@ -426,4 +387,3 @@ void drawEnemies(boolean move) {
     }
   }
 }
-
