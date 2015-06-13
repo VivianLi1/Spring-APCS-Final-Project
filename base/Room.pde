@@ -56,17 +56,8 @@ public class Room {
    //this(width/2, height/2, 400, 250, false, false, false, false, 1);
    this(width/2, height/2, 200, 200, false, false, false, false, null, null, null, null, 1);
    }
-   
-   
-   public float getX() {
-   return x;
-   }
-   
-   public float getY() {
-   return y;
-   }
    */
-
+   
   public Room(float x_, float y_, int sx, int sy, boolean n, boolean s, boolean e, boolean w, int num) {
     x = x_;
     y = y_;
@@ -90,6 +81,14 @@ public class Room {
     this(1);
   }
 
+  public float getX() {
+    return x;
+  }
+
+  public float getY() {
+    return y;
+  }
+  
   public int getSizeX() {
     return sizeX;
   }
@@ -188,12 +187,12 @@ public class Room {
       doorWest = new Door(x, y, sizeX, sizeY, WEST);
       doorWest.createDoor();
     }
-/*
+    /*
     println("NORTH: " + hasNorth);
-    println("SOUTH: " + hasSouth);
-    println("EAST: " + hasEast);
-    println("WEST: " + hasWest);
-    */
+     println("SOUTH: " + hasSouth);
+     println("EAST: " + hasEast);
+     println("WEST: " + hasWest);
+     */
   }
 
   public Door getDoor(int dir) {
