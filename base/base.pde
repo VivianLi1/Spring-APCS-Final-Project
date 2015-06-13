@@ -4,6 +4,7 @@ final int START = 0;
 final int PLAY = 1;
 final int GAMEOVER = 2;
 final int INVINCIBLE = 3;
+final int RESET = 4;
 
 private final int NORTH = 0;
 private final int SOUTH = 1;
@@ -12,8 +13,9 @@ private final int WEST = 3;
 
 boolean gameStart;
 
-int mode = INVINCIBLE;
-//int mode = PLAY;
+//int mode GAMEOVER;
+//int mode = INVINCIBLE;
+int mode = PLAY;
 
 boolean isSpace;
 int knives;
@@ -77,6 +79,9 @@ void draw() {
       mode = PLAY;
     }
     break;
+  case 4:
+    reset();
+    break;
   }
   //println(mouseX, mouseY);
 }
@@ -103,9 +108,7 @@ void keyPressed() {
   }
   if (mode == GAMEOVER) {
     if (keyCode == 32) {
-      mode = PLAY;
-      setup();
-      draw();
+      mode = RESET;
     }
   }
 }
@@ -172,8 +175,8 @@ void play() {
 
     //enemyCollision();
     drawKnives();
-    //drawEnemies(true);
-    //enemyCollision();
+    drawEnemies(true);
+    enemyCollision();
     doorCollision();
 
     //println(time);
@@ -206,6 +209,24 @@ void gameOver() {
   text("GAME OVER", width/2, height/2);
 
   //if(keyCode ==
+}
+
+void reset() {
+  isSpace = false;
+  knives = 100;
+  lives = 3;
+  direction = 87;
+  thrown = new ArrayList<Knife>();
+  enemies = new ArrayList<Enemy>();
+  currFloor = new Floor2(6);
+  currFloor.generate();
+  currRoom = currFloor.getSpawn();
+  player = new Player(width/2, height/2, 24, 24);
+  makeEnemies(3);
+  player.spawn();
+  gameStart = true;
+  time2 = millis();
+  mode = INVINCIBLE;
 }
 
 void drawKnives() {
