@@ -11,12 +11,20 @@ public class Knife {
     dir = direction;
   }
   
+  public void setY(float yy){
+    y = yy;
+  }
+  
   public float getX(){
     return x;
   }
   
   public float getY(){
     return y;
+  }
+  
+  public int getDir(){
+    return dir;
   }
 
   public void move(int roomx, int roomy) {
@@ -43,6 +51,7 @@ public class Knife {
     if (hitWall()){
       stopped = true;
     }
+    
     //println(direction);
   }
   
@@ -52,6 +61,24 @@ public class Knife {
       return true;
     }
     return false;
+  }
+  
+  public boolean hitDoor(Door d){
+    Rectangle r1 = new Rectangle((int)x-8, (int)y-8, 16, 16);
+    Rectangle r2 = d.getBounds();
+    if (r1.intersects(r2)){
+      if (dir == 87){
+        y = boundUp + 20;
+      }else if (dir == 65){
+        x = boundLeft + 20;
+      }else if (dir == 83){
+        y = boundDown - 20;
+      }else if (dir == 68){
+        x = boundRight - 20;
+      }
+      stopped = true;
+    }
+    return r1.intersects(r2);
   }
   
   public boolean getStopped(){
