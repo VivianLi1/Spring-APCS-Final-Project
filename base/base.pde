@@ -3,13 +3,17 @@ import java.awt.Rectangle;
 final int START = 0;
 final int PLAY = 1;
 final int GAMEOVER = 2;
+final int INVINCIBLE = 3;
 
 private final int NORTH = 0;
 private final int SOUTH = 1;
 private final int EAST = 2;
 private final int WEST = 3;
 
-int mode = PLAY;
+boolean gameStart;
+
+int mode = INVINCIBLE;
+//int mode = PLAY;
 
 boolean isSpace;
 int knives;
@@ -26,6 +30,9 @@ Enemy test2;
 
 int time;
 int wait = 500;
+
+int time2;
+int invincibility = 3000;
 
 int collisions = 0;
 
@@ -46,8 +53,21 @@ void setup() {
   makeEnemies(3);
 
   player.spawn();
-
-  time = millis();
+  gameStart = true;
+  time2 = millis();
+  /*
+  time2 = millis();
+   //println(gameStart);
+   while (gameStart) {
+   player.setInvincible(true);
+   println(player.getInvincible());
+   if (millis() - time2 >= invincibility) {
+   player.setInvincible(false);
+   gameStart = false;
+   }
+   }
+   println(player.getInvincible());
+   */
 }
 
 void draw() {
@@ -57,6 +77,14 @@ void draw() {
     break;
   case 2: 
     gameOver();
+    break;
+  case 3:
+    if (!(millis() - time2 >= invincibility)) {
+      invincible();
+      timer(invincibility, millis() - time2);
+    } else {
+      mode = PLAY;
+    }
     break;
   }
   //println(mouseX, mouseY);
@@ -111,6 +139,29 @@ void keyReleased() {
   }
 }
 
+void invincible() {
+  background(35);
+  noStroke();
+  smooth();
+  currRoom.create();
+  fill(0);
+  currRoom.drawDoors();
+  player.spawn();
+  drawEnemies(false);
+}
+
+void timer(int t, int ms){
+  int countdown = ms;
+  textSize(100);
+  fill(255,255,255);
+  textAlign(CENTER);aaa
+  text("GET READY", width/2, height/2-75);
+  
+  textSize(150);
+  textAlign(CENTER);
+  text(""+((t/1000)-(countdown/1000)), width/2, height/2+75);
+}
+
 void play() {
   background(35);
   noStroke();
@@ -120,14 +171,16 @@ void play() {
   currRoom.create();
   fill(0);
   currRoom.drawDoors();
-  if (!player.getIsDead()) {
 
+  if (!player.getIsDead()) {
+    //println(gameStart);
     player.spawn();
     player.move(currRoom.getSizeX(), currRoom.getSizeY());
 
-    drawKnives();
-    drawEnemies();
     enemyCollision();
+    drawKnives();
+    drawEnemies(true);
+    //enemyCollision();
     doorCollision();
 
     //println(time);
@@ -136,7 +189,7 @@ void play() {
     //println(millis());
     if (isSpace && knives > 0) {
       if (millis() - time >= wait) {
-        //println("THROWWWWWWW");
+        //enemyCollision();
         knives--;
         Knife k = new Knife(player.getX(), player.getY(), direction);
         thrown.add(k);
@@ -189,10 +242,6 @@ void enemyCollision() {
       }
     }
   }
-}
-
-void buddysystem() { //so enemies don't overlap each other
-  //workin on it
 }
 
 void makeEnemies(int num) {
@@ -331,7 +380,7 @@ void buddySystem(int e1, int e2) {
   Rectangle r2 = f.getBounds();
 
   if (r1.intersects (r2)) {
-    println("BAM");
+    //println("BAM");
 
     if (e.getX() <= f.getX()) { //e left of f
       e.setX(e.getX()-0.4);
@@ -357,7 +406,7 @@ void buddySystem(int e1, int e2) {
 }
 
 
-void drawEnemies() {
+void drawEnemies(boolean move) {
   for (int i = 0; i < enemies.size (); i++) {
     Enemy e = enemies.get(i);
     if (!e.getIsDead()) {
@@ -370,7 +419,9 @@ void drawEnemies() {
       //Enemy f = enemies.get(j);
 
       //buddySystem(i);
-      e.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
+      if (move) {
+        e.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
+      }
       //buddySystem(i);
     }
   }

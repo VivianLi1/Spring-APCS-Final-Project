@@ -66,5 +66,6 @@ public class Player extends Killable {
   void setRight(boolean b) {
     isRight = b;
   }
+  
 }
 
