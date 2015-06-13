@@ -58,7 +58,7 @@ public class Floor {
       r.setHasDirection(WEST, true);
     }
   }
-
+/*
   public void createRoom(Room r) {
     if (r.getHasDirection(NORTH) == true) {
       r.setRoom(NORTH);
@@ -70,6 +70,7 @@ public class Floor {
       r.setRoom(WEST);
     }
   }
+  */
   
 
   public void checkDoors() {

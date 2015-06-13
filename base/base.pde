@@ -16,7 +16,9 @@ int direction = 87; //default: shoot up
 ArrayList<Knife> thrown = new ArrayList<Knife>();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
-Floor currFloor;
+Floor2 currFloor;
+
+//Floor currFloor;
 Room currRoom;
 Player player;
 Enemy test;
@@ -32,12 +34,14 @@ void setup() {
   background(35);
   knives = 100;
 
-  currFloor = new Floor();
-  currRoom = new Room();
+  currFloor = new Floor2(6);
+  currFloor.generate();
+  //currFloor = new Floor();
+  currRoom = currFloor.getSpawn();
 
   //floor1.chooseDir();
-  currFloor.connectRoom(currRoom);
-  currFloor.createRoom(currRoom);
+  //currFloor.connectRoom(currRoom);
+  //currFloor.createRoom(currRoom);
 
   player = new Player(width/2, height/2, 24, 24);
 
@@ -46,6 +50,7 @@ void setup() {
   player.spawn();
 
   time = millis();
+  
 }
 
 void draw() {
@@ -80,8 +85,8 @@ void keyPressed() {
       isSpace = true;
     }
   }
-  if(mode == GAMEOVER){
-    if(keyCode == 32){
+  if (mode == GAMEOVER) {
+    if (keyCode == 32) {
       mode = PLAY;
       setup();
       draw();
@@ -126,7 +131,7 @@ void play() {
     drawKnives();
     drawEnemies();
     enemyCollision();
-    doorCollision();
+    //doorCollision();
 
     //println(time);
     //println(millis());
@@ -156,8 +161,8 @@ void gameOver() {
   textAlign(CENTER);
   textSize(50);
   text("GAME OVER", width/2, height/2);
-  
-  //if(keyCode == 
+
+  //if(keyCode ==
 }
 
 void drawKnives() {
@@ -230,10 +235,11 @@ void pickUpKnife() {
   }
 }
 
+/*
 void doorCollision() {
   if (currRoom.getHasDirection(NORTH)) {
     if (currRoom.getDoor(NORTH).inDoor(player)) {
-      currRoom = currRoom.getRoom(NORTH);
+      currRoom = floor2[
       player.setX(currRoom.getX());
       player.setY(currRoom.getY() + currRoom.getSizeY() / 2);
     }
@@ -267,6 +273,7 @@ void doorCollision() {
   //println("EAST:" + currRoom.getHasDirection(EAST));
   //println("WEST:" + currRoom.getDoor(WEST).inDoor(player));
 }
+*/
 
 
 void drawEnemies() {
