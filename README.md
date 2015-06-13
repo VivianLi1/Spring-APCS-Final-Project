@@ -81,3 +81,4 @@ LOG
 - testing: using 2d arrays for room generation
 - enemy buddy system: enemies don't overlap anymore!
 - (still gotta fix overlap in y-direction; shouldn't be too hard)
+- buddy system now works for both x and y directions
