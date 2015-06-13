@@ -80,6 +80,13 @@ void keyPressed() {
       isSpace = true;
     }
   }
+  if(mode == GAMEOVER){
+    if(keyCode == 32){
+      mode = PLAY;
+      setup();
+      draw();
+    }
+  }
 }
 
 void keyReleased() {
@@ -149,6 +156,8 @@ void gameOver() {
   textAlign(CENTER);
   textSize(50);
   text("GAME OVER", width/2, height/2);
+  
+  //if(keyCode == 
 }
 
 void drawKnives() {

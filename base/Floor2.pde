@@ -28,31 +28,52 @@ public class Floor2 {
     floor[floor.length / 2][floor[0].length] = currRoom;
   }
 
+  /*
   void hasDirection(int dir) {
-    int b = rand.nextInt(2);
+   int b = rand.nextInt(2);
+   
+   if (b == 0) {
+   currRoom.setHasDirection(dir, true);
+   currRoom.setRoom(dir);
+   } else {
+   currRoom.setHasDirection(dir, false);
+   }
+   }
+   */
 
-    if (b == 0) {
-      currRoom.setHasDirection(dir, true);
-      currRoom.setRoom(dir);
-    } else {
-      currRoom.setHasDirection(dir, false);
-    }
-  }
+  boolean isOutOfBounds(int m, int n) {
+    return (m > floor.length - 1|| m < 0 || n > floor[0].length - 1 || n < 0);
+  } 
 
   void generate() {
     createCenter();
-    int connections = rand.nextInt(4) + 1;
-    int[] connect = new int[connections];
     int i = 0;
-    int j = 0; 
-    while (i < connections + 1 && j < 4) {
-      int b = rand.nextInt(2);
-      if (b == 0) {
-        currRoom.setHasDirection(j, true);
-        i++;
+    while (i < 5) {
+      int m = rand.nextInt(floor.length - 1);
+      int n = rand.nextInt(floor[0].length - 1);
+      if (floor[m][n] == null) {
+        if ( !(isOutOfBounds(m + 1, n))) {
+          if (floor[m + 1][n] != null) {
+            floor[m][n] = new Room(currRoom.getX(), currRoom.getY() + 200, i + 1);
+            i++;
+          }
+        } else if ( !(isOutOfBounds(m - 1, n))) {
+          if (floor[m - 1][n] != null) {
+            floor[m][n] = new Room(currRoom.getX(), currRoom.getY() + 200, i + 1);
+            i++;
+          }
+        } else if ( !(isOutOfBounds(m, n + 1))) {
+          if (floor[m][n + 1] != null) {
+            floor[m][n] = new Room(currRoom.getX(), currRoom.getY() + 200, i + 1);
+            i++;
+          }
+        } else if ( !(isOutOfBounds(m, n - 1))) {
+          if (floor[m][n - 1] != null) {
+            floor[m][n] = new Room(currRoom.getX(), currRoom.getY() + 200, i + 1);
+            i++;
+          }
+        }
       }
-      j++;
     }
   }
 }
-
