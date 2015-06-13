@@ -83,3 +83,5 @@ LOG
 - (still gotta fix overlap in y-direction; shouldn't be too hard)
 - buddy system now works for both x and y directions
 - added countdown right before game starts
+- knives now stop at doors
+- added restart option at gameover
