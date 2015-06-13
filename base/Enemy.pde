@@ -33,6 +33,24 @@ public class Enemy extends Killable {
     ellipse(x, y, sizeY, sizeX);
   }
   
+  void resetX(float xx, int mode) {
+    if (mode == 0) { //e left of f
+      x = constrain(x, width/2-roomX+getSizeX(), xx);
+    } else { //f left of e
+      x = constrain(x, xx, width/2+roomX-getSizeX());
+    }
+    x = constrain(x, width/2-roomX+getSizeX(), width/2+roomX-getSizeX());
+  }
+
+  void resetY(float yy, int mode) {
+    if (mode == 0) { //e above f
+      y = constrain(y, height/2-roomY+getSizeY(), yy);
+    } else { //f above e
+      y = constrain(y, yy, height/2+roomY-getSizeY());
+    }
+  }
+
+  
   
 }
 

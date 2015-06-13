@@ -4,6 +4,11 @@ public class Killable {
   public int sizeX, sizeY;
   public boolean isDead;
   public int knifeCount;
+  public int roomX;
+  public int roomY;
+  public float cornerX;
+  public float cornerY;
+
 
   public Killable(float x_, float y_, int sx, int sy) {
     x = x_;
@@ -11,6 +16,8 @@ public class Killable {
     sizeX = sx;
     sizeY = sy;
     isDead = false;
+    cornerX = x-sizeX;
+    cornerY = y-sizeY;
   }  
 
   public Killable() {
@@ -18,6 +25,8 @@ public class Killable {
   }
 
   public void move(int roomx, int roomy) {
+    roomX = roomx;
+    roomY = roomY;
     x = constrain(x, width/2-roomx+getSizeX(), width/2+roomx-getSizeX()); 
     y = constrain(y, height/2-roomy+getSizeY(), height/2+roomy-getSizeY());
   }  
@@ -53,5 +62,27 @@ public class Killable {
   public void setIsDead(boolean dead){
     isDead = dead;
   }
+  
+  public float getCornerX(){
+    return cornerX;
+  }
+  
+  public float getCornerY(){
+    return cornerY;
+  }
+  
+  public void setCornerX(float xx){
+    cornerX = xx;
+  }
+  
+  public void setCornerY(float yy){
+    cornerY = yy;
+  }
+  
+  public Rectangle getBounds(){
+   Rectangle r = new Rectangle((int)x-sizeX, (int)y-sizeY, sizeX*2, sizeY*2);
+   return r;
+  }
+  
 }
 

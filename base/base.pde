@@ -1,3 +1,5 @@
+import java.awt.Rectangle;
+
 final int START = 0;
 final int PLAY = 1;
 final int GAMEOVER = 2;
@@ -11,7 +13,7 @@ int mode = PLAY;
 
 boolean isSpace;
 int knives;
-int lives = 3;
+int lives = 3000;
 int direction = 87; //default: shoot up
 ArrayList<Knife> thrown = new ArrayList<Knife>();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -80,8 +82,8 @@ void keyPressed() {
       isSpace = true;
     }
   }
-  if(mode == GAMEOVER){
-    if(keyCode == 32){
+  if (mode == GAMEOVER) {
+    if (keyCode == 32) {
       mode = PLAY;
       setup();
       draw();
@@ -156,8 +158,8 @@ void gameOver() {
   textAlign(CENTER);
   textSize(50);
   text("GAME OVER", width/2, height/2);
-  
-  //if(keyCode == 
+
+  //if(keyCode ==
 }
 
 void drawKnives() {
@@ -268,13 +270,100 @@ void doorCollision() {
   //println("WEST:" + currRoom.getDoor(WEST).inDoor(player));
 }
 
+/*
+void buddySystem(int index) {
+ Enemy e = enemies.get(0);
+ Enemy f;
+ Rectangle r1 = e.getBounds();
+ //Rectangle r1 = new Rectangle((int)e.getCornerX(), (int)e.getCornerY(), 2*e.getSizeX(), 2*e.getSizeY());
+ //rect((int)e.getCornerX(), (int)e.getCornerY(), 2*e.getSizeX(), 2*e.getSizeY());
+ //println("r1 = "+(int)e.getCornerX()+" "+(int)e.getCornerY());
+ //for (Enemy f : enemies) {
+ for (int i = 0; i < enemies.size (); i++) {
+ if (i != index) {
+ f = enemies.get(1);
+ //f = enemies.get(i);
+ //Rectangle r1 = new Rectangle((int)e.getCornerX(), (int)e.getCornerY(), 2*e.getSizeX(), 2*e.getSizeY());
+ //rect((int)e.getCornerX(), (int)e.getCornerY(), 2*e.getSizeX(), 2*e.getSizeY());
+ Rectangle r2 = new Rectangle((int)f.getCornerX(), (int)f.getCornerY(), 2*f.getSizeX(), 2*f.getSizeY());
+ //fill(0, 255, 0);
+ //rect((int)f.getCornerX(), (int)f.getCornerY(), 2*f.getSizeX(), 2*f.getSizeY());
+ 
+ float avg = (e.getSizeX() + f.getSizeX())/2;
+ //println(
+ 
+ if (r1.intersects (r2)) {
+ rect((int)e.getCornerX(), (int)e.getCornerY(), 2*e.getSizeX(), 2*e.getSizeY());
+ fill(0, 255, 0);
+ rect((int)f.getCornerX(), (int)f.getCornerY(), 2*f.getSizeX(), 2*f.getSizeY());
+ 
+ println("BAM");
+ if (e.getX() <= f.getX()) { //e left of f
+ e.setX(e.getX()-avg);
+ f.setX(f.getX()+avg);
+ }
+ if (f.getX() < e.getX()) { //f left of e
+ e.setX(e.getX()+avg);
+ f.setX(f.getX()-avg);
+ }
+ e.setCornerX(e.getX()-e.getSizeX());
+ e.setCornerY(e.getY()-e.getSizeY());
+ f.setCornerX(f.getX()-f.getSizeX());
+ f.setCornerY(f.getY()-f.getSizeY());
+ 
+ r1 = new Rectangle((int)e.getCornerX(), (int)e.getCornerY(), 2*e.getSizeX(), 2*e.getSizeY());
+ r2 = new Rectangle((int)f.getCornerX(), (int)f.getCornerY(), 2*f.getSizeX(), 2*f.getSizeY());
+ 
+ //rect((int)e.getCornerX(), (int)e.getCornerY(), 2*e.getSizeX(), 2*e.getSizeY());
+ //fill(0, 255, 0);
+ //rect((int)f.getCornerX(), (int)f.getCornerY(), 2*f.getSizeX(), 2*f.getSizeY());
+ }
+ }
+ //println("r2 = "+(int)f.getCornerX()+" "+(int)f.getCornerY());
+ }
+ }
+ */
 
-void drawEnemies() {
-  for (Enemy e : enemies) {
-    if (!e.getIsDead()) {
-      e.spawn();
-      //e.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
+void buddySystem(int e1, int e2) {
+  Enemy e = enemies.get(e1);
+  Enemy f = enemies.get(e2);
+  Rectangle r1 = e.getBounds();
+  Rectangle r2 = f.getBounds();
+
+  if (r1.intersects (r2)) {
+    println("BAM");
+
+    if (e.getX() <= f.getX()) { //e left of f
+    e.setX(e.getX()-1);
+    f.setX(f.getX()+1);
     }
+    if (f.getX() < e.getX()) { //f left of e
+    e.setX(e.getX()+1);
+    f.setX(f.getX()-1);
+    }
+    e.setCornerX(e.getX()-e.getSizeX());
+    e.setCornerY(e.getY()-e.getSizeY());
+    f.setCornerX(f.getX()-f.getSizeX());
+    f.setCornerY(f.getY()-f.getSizeY());
   }
 }
 
+
+void drawEnemies() {
+  for (int i = 0; i < enemies.size (); i++) {
+    Enemy e = enemies.get(i);
+    if (!e.getIsDead()) {
+      e.spawn();
+      for (int j = 0; j < enemies.size (); j++) {
+        if ( i != j ) {
+          buddySystem(i, j);
+        }
+      }
+      //Enemy f = enemies.get(j);
+
+      //buddySystem(i);
+      e.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
+      //buddySystem(i);
+    }
+  }
+}
