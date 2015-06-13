@@ -69,5 +69,14 @@ public class Door {
   public float getY() {
     return y;
   }
+  
+  public Rectangle getBounds(){
+    Rectangle r;
+    if (direction == NORTH || direction == SOUTH) {
+      r = new Rectangle((int)xcord, (int)ycord, l, w);
+    }else{
+      r = new Rectangle((int)xcord, (int)ycord, w, l);
+    }
+    return r;
+  }
 }
-
