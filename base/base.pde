@@ -13,7 +13,7 @@ int mode = PLAY;
 
 boolean isSpace;
 int knives;
-int lives = 3000;
+int lives = 3;
 int direction = 87; //default: shoot up
 ArrayList<Knife> thrown = new ArrayList<Knife>();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -334,12 +334,20 @@ void buddySystem(int e1, int e2) {
     println("BAM");
 
     if (e.getX() <= f.getX()) { //e left of f
-    e.setX(e.getX()-1);
-    f.setX(f.getX()+1);
+      e.setX(e.getX()-0.4);
+      f.setX(f.getX()+0.4);
     }
     if (f.getX() < e.getX()) { //f left of e
-    e.setX(e.getX()+1);
-    f.setX(f.getX()-1);
+      e.setX(e.getX()+0.4);
+      f.setX(f.getX()-0.4);
+    }
+    if (e.getY() <= f.getY()) { //e above f
+      e.setY(e.getY()-0.4);
+      f.setY(f.getY()+0.4);
+    }
+    if (f.getY() < e.getY()) { //f above e
+      e.setY(e.getY()+0.4);
+      f.setY(f.getY()-0.4);
     }
     e.setCornerX(e.getX()-e.getSizeX());
     e.setCornerY(e.getY()-e.getSizeY());
@@ -367,3 +375,4 @@ void drawEnemies() {
     }
   }
 }
+
