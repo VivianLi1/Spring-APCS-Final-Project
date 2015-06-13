@@ -76,3 +76,8 @@ LOG
 10/6
 - loaded ravioli images onto player :^)
 - changed some dimensions to make things work the same
+
+13/6
+- testing: using 2d arrays for room generation
+- enemy buddy system: enemies don't overlap anymore!
+- (still gotta fix overlap in y-direction; shouldn't be too hard)
