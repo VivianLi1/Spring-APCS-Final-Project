@@ -19,21 +19,21 @@ public class Door {
     sizeY = sy;
 
     w = 20;
-    l = sizeX;
+    l = sizeX/2;
 
     direction = dir;
     if (dir == NORTH) { 
-      xcord = (x - sizeX/2);
+      xcord = (x - sizeX/4);
       ycord = y - sizeY;
     } else if (dir == SOUTH) {
-      xcord = x - sizeX/2;
+      xcord = x - sizeX/4;
       ycord = y + sizeY - w;
     } else if (dir == EAST) {
       xcord = x + sizeX - w;
-      ycord = y - sizeY/2;
+      ycord = y - sizeY/4;
     } else if (dir == WEST) {
       xcord = x - sizeX;
-      ycord = y - sizeY/2;
+      ycord = y - sizeY/4;
     }
   }
 
