@@ -89,3 +89,5 @@ LOG
 
 14/6
 - invincibility period after player is hit by enemy
+- new enemies spawned when player enters new room
+- made start and how to play screens
