@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class Floor {
 
   private final int NORTH = 0;
@@ -7,72 +5,129 @@ public class Floor {
   private final int EAST = 2;
   private final int WEST = 3;
 
-  //  ArrayList<Room> floor = new ArrayList<Room>();
-  private int totalRoomNum;
+  private Room[][] floor;
+  private Room spawn;
+  private int indX, indY;
   private int floorNum;
-  //private int direction;
-  //  private int currRoomNum;
+  private int totalRooms;
+
+  Random rand = new Random();
+
+  public Floor(int num) {
+    floorNum = num;
+    totalRooms = floorNum * 2;
+
+    if (floorNum < 2) {
+      totalRooms = 4;
+    }
+    if (floorNum > 5) {
+      totalRooms = 10;
+    }
+
+    floor = new Room[totalRooms][totalRooms];
+    spawn = new Room();
+    
+    indX = floor.length / 2;
+    indY = floor[0].length / 2;
+  }
+
 
   public Floor() {
     this(1);
   }
 
-  public Floor(int num) {
-    floorNum = num;
-    totalRoomNum = floorNum * 2;
-    //floor.add(new Room());
-    //currRoomNum = 1;
+  void createSpawn() {
+    floor[indX][indY] = spawn;
   }
 
-  /*
-  public void chooseDir() {
-   Random rand = new Random();
-   int dir = rand.nextInt(4);
-   switch(dir) {
-   case 0: 
-   direction = NORTH;
-   break;
-   case 1: 
-   direction = SOUTH;
-   break;
-   case 2: 
-   direction = EAST;
-   break;
-   case 3: 
-   direction = WEST;
-   break;
-   }
-   }
-   */
+  boolean isOutOfBounds(int m, int n) {
+    return (m > floor.length - 1|| m < 0 || n > floor[0].length - 1 || n < 0);
+  } 
 
-  public void connectRoom(Room r) {
-    Random rand = new Random();
-    int direction = rand.nextInt(4);
-    if (direction == NORTH && r.getHasDirection(NORTH) == false) {
-      r.setHasDirection(NORTH, true);
-    }  if (direction == SOUTH && r.getHasDirection(SOUTH) == false) {
-      r.setHasDirection(SOUTH, true);
-    } if (direction == EAST && r.getHasDirection(EAST) == false) {
-      r.setHasDirection(EAST, true);
-    } if (direction == WEST && r.getHasDirection(WEST) == false) {
-      r.setHasDirection(WEST, true);
+  void generate() {
+    createSpawn();
+    int i = 1;
+    while (i < totalRooms) {
+      int m = rand.nextInt(floor.length - 1);
+      int n = rand.nextInt(floor[0].length - 1);
+      if (floor[m][n] == null) {
+        if ( !(isOutOfBounds(m + 1, n))) {
+          if (floor[m + 1][n] != null) {
+            floor[m][n] = new Room(i + 1);
+            //floor[m][n].setHasDirection(NORTH, true);
+            i++;
+          }
+        } 
+        if ( !(isOutOfBounds(m - 1, n))) {
+          if (floor[m - 1][n] != null) {
+            floor[m][n] = new Room(i + 1);
+            //floor[m][n].setHasDirection(SOUTH, true);
+            i++;
+          }
+        } 
+        if ( !(isOutOfBounds(m, n + 1))) {
+          if (floor[m][n + 1] != null) {
+            floor[m][n] = new Room(i + 1);
+            //floor[m][n].setHasDirection(EAST, true);
+            i++;
+          }
+        } 
+        if ( !(isOutOfBounds(m, n - 1))) {
+          if (floor[m][n - 1] != null) {
+            floor[m][n] = new Room(i + 1);
+            //floor[m][n].setHasDirection(WEST, true);
+            i++;
+          }
+        }
+      }
+    }
+    //println(Arrays.deepToString(floor));
+  }
+
+  Room getSpawn() {
+    return spawn;
+  }
+
+  void setDirections(Room r) {
+    if ( !(isOutOfBounds(indX + 1, indY))) {
+      if (floor[indX + 1][indY] != null) {
+        floor[indX][indY].setHasDirection(NORTH, true);
+      }
+    }
+    if ( !(isOutOfBounds(indX - 1, indY))) {
+      if (floor[indX - 1][indY] != null) {
+        floor[indX][indY].setHasDirection(SOUTH, true);
+      }
+    }
+    if ( !(isOutOfBounds(indX, indY + 1))) {
+      if (floor[indX][indY + 1] != null) {
+        floor[indX][indY].setHasDirection(EAST, true);
+      }
+    }
+    if ( !(isOutOfBounds(indX , indY - 1))) {
+      if (floor[indX][indY - 1] != null) {
+        floor[indX][indY].setHasDirection(WEST, true);
+      }
     }
   }
-/*
-  public void createRoom(Room r) {
-    if (r.getHasDirection(NORTH) == true) {
-      r.setRoom(NORTH);
-    } if (r.getHasDirection(SOUTH) == true) {
-      r.setRoom(SOUTH);
-    } if (r.getHasDirection(EAST) == true) {
-      r.setRoom(EAST);
-    } if (r.getHasDirection(WEST) == true) {
-      r.setRoom(WEST);
-    }
-  }
-  */
   
-
-  public void checkDoors() {
+  int getIndX(){
+    return indX;
+  }
+  
+  int getIndY(){
+    return indY;
+  }
+  
+  void setIndX(int x){
+    indX = x;
+  }
+  
+  void setIndY(int y){
+    indY = y;
+  }
+  
+  Room getRoom(int x, int y){
+    return floor[x][y];
   }
 }

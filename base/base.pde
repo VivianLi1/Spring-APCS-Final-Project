@@ -1,4 +1,5 @@
 import java.awt.Rectangle;
+import java.util.*;
 
 final int START = 0;
 final int PLAY = 1;
@@ -24,9 +25,7 @@ int direction = 87; //default: shoot up
 ArrayList<Knife> thrown = new ArrayList<Knife>();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
-Floor2 currFloor;
-
-//Floor currFloor;
+Floor currFloor;
 Room currRoom;
 Player player;
 Enemy test;
@@ -45,14 +44,9 @@ void setup() {
   background(35);
   knives = 100;
 
-  currFloor = new Floor2(6);
+  currFloor = new Floor(6);
   currFloor.generate();
-  //currFloor = new Floor();
   currRoom = currFloor.getSpawn();
-
-  //floor1.chooseDir();
-  //currFloor.connectRoom(currRoom);
-  //currFloor.createRoom(currRoom);
 
   player = new Player(width/2, height/2, 24, 24);
 
@@ -162,7 +156,6 @@ void play() {
   noStroke();
   smooth();
 
-  //currFloor.createRoom(currRoom);
   currRoom.create();
   currFloor.setDirections(currRoom);
   fill(0);
@@ -208,7 +201,6 @@ void gameOver() {
   textSize(50);
   text("GAME OVER", width/2, height/2);
 
-  //if(keyCode ==
 }
 
 void reset() {
@@ -218,7 +210,7 @@ void reset() {
   direction = 87;
   thrown = new ArrayList<Knife>();
   enemies = new ArrayList<Enemy>();
-  currFloor = new Floor2(6);
+  currFloor = new Floor(6);
   currFloor.generate();
   currRoom = currFloor.getSpawn();
   player = new Player(width/2, height/2, 24, 24);
