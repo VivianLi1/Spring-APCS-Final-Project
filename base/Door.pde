@@ -18,7 +18,7 @@ public class Door {
     sizeX = sx;
     sizeY = sy;
 
-    w = 20;
+    w = 1;
     l = sizeX/2-2;
 
     direction = dir;

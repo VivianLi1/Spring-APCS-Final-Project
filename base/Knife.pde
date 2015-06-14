@@ -68,13 +68,13 @@ public class Knife {
     Rectangle r2 = d.getBounds();
     if (r1.intersects(r2)){
       if (dir == 87){
-        y = boundUp + 20;
+        y = boundUp + 1;
       }else if (dir == 65){
-        x = boundLeft + 20;
+        x = boundLeft + 1;
       }else if (dir == 83){
-        y = boundDown - 20;
+        y = boundDown - 1;
       }else if (dir == 68){
-        x = boundRight - 20;
+        x = boundRight - 1;
       }
       stopped = true;
     }
