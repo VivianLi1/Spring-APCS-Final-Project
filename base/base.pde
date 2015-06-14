@@ -1,3 +1,9 @@
+// COPY
+// COPY
+// COPY
+// COPY
+
+
 import java.awt.Rectangle;
 import java.util.*;
 
@@ -23,13 +29,12 @@ int knives;
 int lives = 3;
 int direction = 87; //default: shoot up
 ArrayList<Knife> thrown = new ArrayList<Knife>();
-ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+//ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+ArrayList<Enemy> enemies;
 
 Floor currFloor;
 Room currRoom;
 Player player;
-Enemy test;
-Enemy test2;
 PImage walls;
 PImage cave;
 
@@ -44,20 +49,21 @@ int invincibility = 3000;
 int collisions = 0;
 
 void setup() {
-  size(1200, 600);
+  size(1200, 600,P2D);
   background(35);
   knives = 100;
 
   walls = loadImage("walls.png");
   cave = loadImage("cave.png");
 
-  currFloor = new Floor(6);
+  player = new Player(width/2, height/2, 24, 24);
+
+  currFloor = new Floor(6,player);
   currFloor.generate();
   currRoom = currFloor.getSpawn();
 
-  player = new Player(width/2, height/2, 24, 24);
-
-  makeEnemies(3);
+  enemies = currRoom.getEnemies();
+  //makeEnemies(3);
 
   player.spawn();
   gameStart = true;
@@ -151,7 +157,7 @@ void invincible() {
     image(cave, width/2-45, height/2+156);
   }
   if (currRoom.getHasDirection(WEST)) {
-    image(cave, width/2-248, height/2-45);
+    image(cave, width/2-246, height/2-45);
   }
   if (currRoom.getHasDirection(EAST)) {
     image(cave, width/2+156, height/2-45);
@@ -201,7 +207,6 @@ void play() {
 
   currRoom.create();
   currFloor.setDirections(currRoom);
-
   fill(000, 140, 174);
   currRoom.drawDoors();
 
@@ -220,8 +225,8 @@ void play() {
       mode = PLAY;
     }
 
-    println(hit);
-    println(lives);
+    //println(hit);
+    //println(lives);
 
     drawKnives();
     drawEnemies(true);
@@ -273,12 +278,13 @@ void reset() {
   lives = 3;
   direction = 87;
   thrown = new ArrayList<Knife>();
-  enemies = new ArrayList<Enemy>();
-  currFloor = new Floor(6);
+  //enemies = new ArrayList<Enemy>();
+  currFloor = new Floor(6,player);
   currFloor.generate();
   currRoom = currFloor.getSpawn();
+  enemies = currRoom.getEnemies();
   player = new Player(width/2, height/2, 24, 24);
-  makeEnemies(3);
+  //makeEnemies(3);
   player.spawn();
   gameStart = true;
   time2 = millis();
@@ -341,7 +347,7 @@ void enemyCollision() {
   }
 }
 
-
+/*
 void makeEnemies(int num) {
   int count = 0;
   Random r = new Random();
@@ -350,6 +356,7 @@ void makeEnemies(int num) {
     enemies.add(e);
   }
 }
+*/
 
 boolean killEnemy(Knife k) {
   if (!k.getStopped()) {
@@ -400,6 +407,7 @@ void doorCollision() {
   if (currRoom.getHasDirection(NORTH)) {
     if (currRoom.getDoor(NORTH).inDoor(player)) {
       currRoom = currFloor.getRoom(currFloor.getIndX() + 1, currFloor.getIndY());
+      enemies = currRoom.getEnemies();
       currFloor.setIndX(currFloor.getIndX() + 1);
       player.setX(currRoom.getX());
       player.setY(currRoom.getY() + currRoom.getSizeY() / 2);
@@ -408,6 +416,7 @@ void doorCollision() {
   if ( currRoom.getHasDirection(SOUTH)) {
     if (currRoom.getDoor(SOUTH).inDoor(player)) {
       currRoom = currFloor.getRoom(currFloor.getIndX() - 1, currFloor.getIndY());
+      enemies = currRoom.getEnemies();
       currFloor.setIndX(currFloor.getIndX() - 1);
       player.setX(currRoom.getX());
       player.setY(currRoom.getY() - currRoom.getSizeY() / 2);
@@ -416,6 +425,7 @@ void doorCollision() {
   if (currRoom.getHasDirection(EAST)) {
     if (currRoom.getDoor(EAST).inDoor(player)) {
       currRoom = currFloor.getRoom(currFloor.getIndX(), currFloor.getIndY() + 1);
+      enemies = currRoom.getEnemies();
       currFloor.setIndY(currFloor.getIndY() + 1);
       player.setX(currRoom.getX() - currRoom.getSizeX() / 2);
       player.setY(currRoom.getY());
@@ -425,6 +435,7 @@ void doorCollision() {
   if (currRoom.getHasDirection(WEST)) {
     if (currRoom.getDoor(WEST).inDoor(player)) {
       currRoom = currFloor.getRoom(currFloor.getIndX(), currFloor.getIndY() - 1);
+      enemies = currRoom.getEnemies();
       currFloor.setIndY(currFloor.getIndY() - 1);
       player.setX(currRoom.getX() + currRoom.getSizeX() / 2);
       player.setY(currRoom.getY());

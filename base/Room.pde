@@ -8,57 +8,14 @@ public class Room {
   private float x, y;
   private int sizeX, sizeY;
   private boolean hasNorth, hasSouth, hasEast, hasWest;
-  //private Room north, south, east, west;
-  //private Room parNorth, parSouth, parEast, parWest;
   private int roomNum;
-
   private Door doorNorth, doorSouth, doorEast, doorWest;
-  /*
-  public Room(float x_, float y_, int sx, int sy, boolean n, boolean s, boolean e, boolean w, Room pN, Room pS, Room pE, Room pW, int num) {
-   x = x_;
-   y = y_;
+  
+  private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+  private Player player;
+  
    
-   sizeX = sx;
-   sizeY = sy;
-   
-   hasNorth = n;
-   hasSouth = s;
-   hasEast = e;
-   hasWest = w;
-   
-   north = pN;
-   south = pS;
-   east = pE;
-   west = pW;
-   
-   roomNum = num;
-   
-   doorNorth = null; 
-   doorSouth = null; 
-   doorEast = null; 
-   doorWest = null;
-   }
-   
-   
-   public Room(float x_, float y_, int sx, int sy, int num) {
-   this(x_, y_, sx, sy, false, false, false, false, null, null, null, null, num);
-   }
-   
-   public Room(float x_, float y_, boolean n, boolean s, boolean e, boolean w, int num) {
-   this(x_, y_, 200, 200, n, s, e, w, null, null, null, null, num);
-   }
-   
-   public Room(float x_, float y_, int num) {
-   this(x_, y_, 200, 200, false, false, false, false, null, null, null, null, num);
-   }
-   
-   public Room() {
-   //this(width/2, height/2, 400, 250, false, false, false, false, 1);
-   this(width/2, height/2, 200, 200, false, false, false, false, null, null, null, null, 1);
-   }
-   */
-   
-  public Room(float x_, float y_, int sx, int sy, boolean n, boolean s, boolean e, boolean w, int num) {
+  public Room(float x_, float y_, int sx, int sy, boolean n, boolean s, boolean e, boolean w, int num, Player p) {
     x = x_;
     y = y_;
 
@@ -71,14 +28,17 @@ public class Room {
     hasWest = w;
 
     roomNum = num;
+    
+    player = p;
+    makeEnemies(3);
   }
 
-  public Room(int num) {
-    this(width/2, height/2, 200, 200, false, false, false, false, num);
+  public Room(int num, Player p) {
+    this(width/2, height/2, 200, 200, false, false, false, false, num, p);
   }
 
-  public Room() {
-    this(1);
+  public Room(Player p) {
+    this(1, p);
   }
 
   public float getX() {
@@ -130,46 +90,6 @@ public class Room {
     }
   }
 
-  /*
-  public void setRoom(int dir) {
-   
-   if (dir == NORTH) {
-   north = new Room(x, y-sizeY, false, true, false, false, roomNum++);
-   } else if (dir == SOUTH) {
-   south = new Room(x, y+sizeY, true, false, false, false, roomNum++);
-   } else if (dir == EAST) {
-   east = new Room(x+sizeX, y, false, false, false, true, roomNum++);
-   } else {
-   west = new Room(x-sizeX, y, false, false, true, false, roomNum++);
-   }
-   
-   if (dir == NORTH) {
-   north = new Room(x, y, false, true, false, false, null, this, null, null, roomNum++);
-   } 
-   if (dir == SOUTH) {
-   south = new Room(x, y, true, false, false, false, this, null, null, null, roomNum++);
-   } 
-   if (dir == EAST) {
-   east = new Room(x, y, false, false, false, true, null, null, null, this, roomNum++);
-   } 
-   if (dir == WEST) {
-   west = new Room(x, y, false, false, true, false, null, null, this, null, roomNum++);
-   }
-   }
-   
-   public Room getRoom(int dir) {
-   if (dir == NORTH) {
-   return north;
-   } else if (dir == SOUTH) {
-   return south;
-   } else if (dir == EAST) {
-   return east;
-   } else {
-   return west;
-   }
-   }
-   */
-
   public void drawDoors() {
     if (hasNorth) {
       doorNorth = new Door(x, y, sizeX, sizeY, NORTH);
@@ -214,4 +134,18 @@ public class Room {
   public int getRoomNum() {
     return roomNum;
   }
+  
+  void makeEnemies(int num) {
+    int count = 0;
+    Random r = new Random();
+    for (int i = 0; i < num; i++) {
+      Enemy e = new Enemy(player.getX()-r.nextInt(100)-50, player.getY()+r.nextInt(100)-50, 20, 20);
+      enemies.add(e);
+    }
+  }
+  
+  ArrayList<Enemy> getEnemies(){
+    return enemies;
+  }
+  
 }

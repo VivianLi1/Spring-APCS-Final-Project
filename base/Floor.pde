@@ -10,10 +10,13 @@ public class Floor {
   private int indX, indY;
   private int floorNum;
   private int totalRooms;
+  private PShape exit;
+  private boolean isExit;
+  private Player player;
 
   Random rand = new Random();
 
-  public Floor(int num) {
+  public Floor(int num, Player p) {
     floorNum = num;
     totalRooms = floorNum * 2;
 
@@ -24,16 +27,19 @@ public class Floor {
       totalRooms = 10;
     }
 
+    player = p;
     floor = new Room[totalRooms][totalRooms];
-    spawn = new Room();
+    spawn = new Room(player);
     
     indX = floor.length / 2;
     indY = floor[0].length / 2;
+    exit = createShape(RECT, width / 2, height / 2, 50, 50);
+    isExit = false;
   }
 
 
-  public Floor() {
-    this(1);
+  public Floor(Player p) {
+    this(1,p);
   }
 
   void createSpawn() {
@@ -53,32 +59,35 @@ public class Floor {
       if (floor[m][n] == null) {
         if ( !(isOutOfBounds(m + 1, n))) {
           if (floor[m + 1][n] != null) {
-            floor[m][n] = new Room(i + 1);
+            floor[m][n] = new Room(i + 1, player);
             //floor[m][n].setHasDirection(NORTH, true);
             i++;
           }
         } 
         if ( !(isOutOfBounds(m - 1, n))) {
           if (floor[m - 1][n] != null) {
-            floor[m][n] = new Room(i + 1);
+            floor[m][n] = new Room(i + 1, player);
             //floor[m][n].setHasDirection(SOUTH, true);
             i++;
           }
         } 
         if ( !(isOutOfBounds(m, n + 1))) {
           if (floor[m][n + 1] != null) {
-            floor[m][n] = new Room(i + 1);
+            floor[m][n] = new Room(i + 1, player);
             //floor[m][n].setHasDirection(EAST, true);
             i++;
           }
         } 
         if ( !(isOutOfBounds(m, n - 1))) {
           if (floor[m][n - 1] != null) {
-            floor[m][n] = new Room(i + 1);
+            floor[m][n] = new Room(i + 1, player);
             //floor[m][n].setHasDirection(WEST, true);
             i++;
           }
         }
+      }
+      if (i == totalRooms - 1) {
+        shape(exit, 50, 50);
       }
     }
     //println(Arrays.deepToString(floor));
@@ -130,4 +139,10 @@ public class Floor {
   Room getRoom(int x, int y){
     return floor[x][y];
   }
+  
+  void drawExit() {
+    while (isExit) {
+    }
+  }
+  
 }
