@@ -33,6 +33,9 @@ public class Floor {
     
     indX = floor.length / 2;
     indY = floor[0].length / 2;
+    noStroke();
+    smooth();
+    fill(35);
     exit = createShape(RECT, width / 2, height / 2, 50, 50);
     isExit = false;
   }
@@ -86,7 +89,9 @@ public class Floor {
           }
         }
       }
+      
       if (i == totalRooms - 1) {
+        //fill(35);
         shape(exit, 50, 50);
       }
     }
