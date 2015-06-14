@@ -32,7 +32,7 @@ public class Enemy extends Killable {
     //ellipseMode(RADIUS);
     //fill(255, 0, 0); 
     //ellipse(x, y, sizeY, sizeX);
-    image(jelly, x, y);
+    image(jelly, x-sizeX, y-sizeY);
   }
   
   void resetX(float xx, int mode) {

@@ -15,8 +15,8 @@ private final int WEST = 3;
 boolean gameStart;
 
 //int mode GAMEOVER;
-//int mode = INVINCIBLE;
-int mode = PLAY;
+int mode = INVINCIBLE;
+//int mode = PLAY;
 
 boolean isSpace;
 int knives;
@@ -30,6 +30,7 @@ Room currRoom;
 Player player;
 Enemy test;
 Enemy test2;
+PImage walls;
 
 int time;
 int wait = 500;
@@ -43,6 +44,8 @@ void setup() {
   size(1200, 600);
   background(35);
   knives = 100;
+  
+  walls = loadImage("walls.png");
 
   currFloor = new Floor(6);
   currFloor.generate();
@@ -131,9 +134,12 @@ void invincible() {
   background(35);
   noStroke();
   smooth();
+  
+  image(walls, width/2-250, height/2-250);
+  
   currRoom.create();
   currFloor.setDirections(currRoom);
-  fill(0);
+  fill(0,67,105);
   currRoom.drawDoors();
   player.spawn();
   drawEnemies(false);
@@ -156,9 +162,11 @@ void play() {
   noStroke();
   smooth();
 
+  image(walls, width/2-250, height/2-250);
+
   currRoom.create();
   currFloor.setDirections(currRoom);
-  fill(0);
+  fill(0,67,105);
   currRoom.drawDoors();
 
   if (!player.getIsDead()) {
