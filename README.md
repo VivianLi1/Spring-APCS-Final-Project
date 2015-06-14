@@ -86,3 +86,6 @@ LOG
 - knives now stop at doors
 - added restart option at gameover (spacebar to restart)
 - drew jellyfish and walls and cave things
+
+14/6
+- invincibility period after player is hit by enemy
