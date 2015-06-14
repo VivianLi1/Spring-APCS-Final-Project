@@ -15,8 +15,8 @@ private final int WEST = 3;
 
 boolean gameStart;
 
-//int mode = START;
-int mode = INSTRUCTIONS;
+int mode = START;
+//int mode = INSTRUCTIONS;
 //int mode = INVINCIBLE;
 //int mode = PLAY;
 
@@ -100,7 +100,7 @@ void draw() {
 }
 
 void keyPressed() {
-  //println(keyCode);
+  println(keyCode);
   if (mode == PLAY) {
     if (keyCode == 87) {    // W - UP - 87
       player.setUp(true);
@@ -124,17 +124,17 @@ void keyPressed() {
       mode = RESET;
     }
   }
+  if (mode == INSTRUCTIONS){
+    if (keyCode == 82) {    // R - RETURN TO MENU
+      mode = START;
+    }
+  }
   if (mode == START) {
     if (keyCode == 32) {    // SPACE - START GAME
       mode = RESET;
-    }
-    if (keyCode == 81) {    // Q - HOW TO PLAY
+    }else if (keyCode == 81) {    // Q - HOW TO PLAY
+      //println("INST");
       mode = INSTRUCTIONS;
-    }
-  }
-  if (mode == INSTRUCTIONS){
-    if (keyCode == 81) {    // Q - RETURN TO MENU
-      mode = START;
     }
   }
 }
@@ -191,7 +191,7 @@ void instructions() {
   text(" D  -  RIGHT", width/2, height/2+40);
   text("SPACE  -  SHOOT     ", width/2, height/2+80);
   
-  text("PRESS 'Q' TO RETURN TO START MENU", width/2, height/2+150);
+  text("PRESS 'R' TO RETURN TO START MENU", width/2, height/2+150);
   
 }
 
