@@ -31,6 +31,7 @@ Player player;
 Enemy test;
 Enemy test2;
 PImage walls;
+PImage cave;
 
 int time;
 int wait = 500;
@@ -46,6 +47,7 @@ void setup() {
   knives = 100;
   
   walls = loadImage("walls.png");
+  cave = loadImage("cave.png");
 
   currFloor = new Floor(6);
   currFloor.generate();
@@ -136,10 +138,23 @@ void invincible() {
   smooth();
   
   image(walls, width/2-250, height/2-250);
+  if (currRoom.getHasDirection(NORTH)){
+    image(cave,width/2-45,height/2-246);
+  }
+  if (currRoom.getHasDirection(SOUTH)){
+    image(cave,width/2-45,height/2+156);
+  }
+  if (currRoom.getHasDirection(WEST)){
+    image(cave,width/2-248,height/2-45);
+  }
+  if (currRoom.getHasDirection(EAST)){
+    image(cave,width/2+156,height/2-45);
+  }
   
   currRoom.create();
   currFloor.setDirections(currRoom);
-  fill(0,67,105);
+  
+  fill(000, 140, 174);
   currRoom.drawDoors();
   player.spawn();
   drawEnemies(false);
@@ -163,10 +178,23 @@ void play() {
   smooth();
 
   image(walls, width/2-250, height/2-250);
+  if (currRoom.getHasDirection(NORTH)){
+    image(cave,width/2-45,height/2-246);
+  }
+  if (currRoom.getHasDirection(SOUTH)){
+    image(cave,width/2-45,height/2+156);
+  }
+  if (currRoom.getHasDirection(WEST)){
+    image(cave,width/2-246,height/2-45);
+  }
+  if (currRoom.getHasDirection(EAST)){
+    image(cave,width/2+156,height/2-45);
+  }
 
   currRoom.create();
   currFloor.setDirections(currRoom);
-  fill(0,67,105);
+  
+  fill(000, 140, 174);
   currRoom.drawDoors();
 
   if (!player.getIsDead()) {

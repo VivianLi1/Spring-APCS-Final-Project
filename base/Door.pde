@@ -19,7 +19,7 @@ public class Door {
     sizeY = sy;
 
     w = 20;
-    l = sizeX/2;
+    l = sizeX/2-2;
 
     direction = dir;
     if (dir == NORTH) { 
@@ -41,9 +41,9 @@ public class Door {
     rectMode(CORNER);
     //fill(0);
     if (direction == NORTH || direction == SOUTH) {
-      rect(xcord, ycord, l, w);
+      rect(xcord, ycord, l+0.5, w);
     } else {
-      rect(xcord, ycord, w, l);
+      rect(xcord, ycord, w, l+0.5);
     }
     //println(mouseX < xcord + l && mouseX > xcord && mouseY < ycord + w && mouseY > ycord);
     //println(mouseX <= xcord + w && mouseX >= xcord && mouseY >= ycord && mouseY <= ycord + l);
