@@ -80,9 +80,12 @@ LOG
 13/6
 - testing: using 2d arrays for room generation
 - enemy buddy system: enemies don't overlap anymore!
-- (still gotta fix overlap in y-direction; shouldn't be too hard)
+  - (still gotta fix overlap in y-direction; shouldn't be too hard)
 - buddy system now works for both x and y directions
 - added countdown right before game starts
 - knives now stop at doors
 - added restart option at gameover (spacebar to restart)
 - drew jellyfish and walls and cave things
+
+14/6
+- invincibility period after player is hit by enemy
