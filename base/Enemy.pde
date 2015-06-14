@@ -2,6 +2,7 @@ public class Enemy extends Killable {
 
   private float dx, dy;
   private int speed = 1;
+  PImage jelly = loadImage("jellyfish.png");
 
   public Enemy() {
     this(50, 50, 10, 10);
@@ -28,9 +29,10 @@ public class Enemy extends Killable {
   void spawn() {
     setIsDead(false);
     
-    ellipseMode(RADIUS);
-    fill(255, 0, 0); 
-    ellipse(x, y, sizeY, sizeX);
+    //ellipseMode(RADIUS);
+    //fill(255, 0, 0); 
+    //ellipse(x, y, sizeY, sizeX);
+    image(jelly, x, y);
   }
   
   void resetX(float xx, int mode) {
