@@ -5,9 +5,12 @@ public class Player extends Killable {
   PImage imgRIGHT = loadImage("ravioli2.png");
   PImage imgDOWN = loadImage("ravioli3.png");
   PImage imgLEFT = loadImage("ravioli4.png");
+  
+  int knives;
 
   public Player(float x_, float y_, int sx, int sy) {
     super(x_, y_, sx, sy);
+    knives = 100;
   } 
 
   void spawn() {
@@ -65,6 +68,14 @@ public class Player extends Killable {
 
   void setRight(boolean b) {
     isRight = b;
+  }
+  
+  void setKnives(int k){
+    knives = k;
+  }
+  
+  int getKnives(){
+    return knives;
   }
   
 }
