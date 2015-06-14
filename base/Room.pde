@@ -139,10 +139,32 @@ public class Room {
     int count = 0;
     Random r = new Random();
     for (int i = 0; i < num; i++) {
-      Enemy e = new Enemy(player.getX()-r.nextInt(100)-50, player.getY()+r.nextInt(100)-50, 20, 20);
+      Enemy e = new Enemy(player.getX()+(r.nextInt(300)-100), player.getY()+(r.nextInt(300)-100), 20, 20);
+      relocate(e);
       enemies.add(e);
     }
   }
+  
+  
+  void relocate(Enemy e){
+    if (e.getX() <= player.getX()) { 
+      float xx = constrain(e.getX(), width/2-sizeX+e.getSizeX(), player.getX()-100);
+      e.setX(xx);
+    }
+    if (e.getX() > player.getX()) {
+      float xx = constrain(e.getX(), player.getX()+100, width/2+sizeX-e.getSizeX());
+      e.setX(xx);
+    }
+    if (e.getY() <= player.getY()) {
+      float yy = constrain(e.getY(), height/2-sizeY+e.getSizeY(), player.getY()-100);
+      e.setY(yy);
+    }
+    if (e.getY() > player.getY()) {
+      float yy = constrain(e.getY(), player.getY()+100, height/2+sizeY-e.getSizeY());
+      e.setY(yy);
+    }
+  }
+  
   
   ArrayList<Enemy> getEnemies(){
     return enemies;

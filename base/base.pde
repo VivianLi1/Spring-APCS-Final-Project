@@ -100,7 +100,7 @@ void draw() {
 }
 
 void keyPressed() {
-  println(keyCode);
+  //println(keyCode);
   if (mode == PLAY) {
     if (keyCode == 87) {    // W - UP - 87
       player.setUp(true);
