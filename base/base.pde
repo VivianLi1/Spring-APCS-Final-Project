@@ -37,6 +37,8 @@ int time;
 int wait = 500;
 
 int time2;
+int time3;
+boolean hit;
 int invincibility = 3000;
 
 int collisions = 0;
@@ -45,7 +47,7 @@ void setup() {
   size(1200, 600);
   background(35);
   knives = 100;
-  
+
   walls = loadImage("walls.png");
   cave = loadImage("cave.png");
 
@@ -73,6 +75,10 @@ void draw() {
   case 3:
     if (!(millis() - time2 >= invincibility)) {
       invincible();
+      textSize(100);
+      fill(255, 255, 255);
+      textAlign(CENTER);
+      text("GET READY", width/2, height/2-75);
       timer(invincibility, millis() - time2);
     } else {
       mode = PLAY;
@@ -136,37 +142,39 @@ void invincible() {
   background(35);
   noStroke();
   smooth();
-  
+
   image(walls, width/2-250, height/2-250);
-  if (currRoom.getHasDirection(NORTH)){
-    image(cave,width/2-45,height/2-246);
+  if (currRoom.getHasDirection(NORTH)) {
+    image(cave, width/2-45, height/2-246);
   }
-  if (currRoom.getHasDirection(SOUTH)){
-    image(cave,width/2-45,height/2+156);
+  if (currRoom.getHasDirection(SOUTH)) {
+    image(cave, width/2-45, height/2+156);
   }
-  if (currRoom.getHasDirection(WEST)){
-    image(cave,width/2-248,height/2-45);
+  if (currRoom.getHasDirection(WEST)) {
+    image(cave, width/2-248, height/2-45);
   }
-  if (currRoom.getHasDirection(EAST)){
-    image(cave,width/2+156,height/2-45);
+  if (currRoom.getHasDirection(EAST)) {
+    image(cave, width/2+156, height/2-45);
   }
-  
+
   currRoom.create();
   currFloor.setDirections(currRoom);
-  
+
   fill(000, 140, 174);
   currRoom.drawDoors();
   player.spawn();
   drawEnemies(false);
 }
 
-void timer(int t, int ms){
+void timer(int t, int ms) {
   int countdown = ms;
+  /*
   textSize(100);
-  fill(255,255,255);
-  textAlign(CENTER);
-  text("GET READY", width/2, height/2-75);
-  
+   fill(255, 255, 255);
+   textAlign(CENTER);
+   text("GET READY", width/2, height/2-75);
+   */
+  fill(255, 255, 255);
   textSize(150);
   textAlign(CENTER);
   text(""+((t/1000)-(countdown/1000)), width/2, height/2+75);
@@ -178,22 +186,22 @@ void play() {
   smooth();
 
   image(walls, width/2-250, height/2-250);
-  if (currRoom.getHasDirection(NORTH)){
-    image(cave,width/2-45,height/2-246);
+  if (currRoom.getHasDirection(NORTH)) {
+    image(cave, width/2-45, height/2-246);
   }
-  if (currRoom.getHasDirection(SOUTH)){
-    image(cave,width/2-45,height/2+156);
+  if (currRoom.getHasDirection(SOUTH)) {
+    image(cave, width/2-45, height/2+156);
   }
-  if (currRoom.getHasDirection(WEST)){
-    image(cave,width/2-246,height/2-45);
+  if (currRoom.getHasDirection(WEST)) {
+    image(cave, width/2-246, height/2-45);
   }
-  if (currRoom.getHasDirection(EAST)){
-    image(cave,width/2+156,height/2-45);
+  if (currRoom.getHasDirection(EAST)) {
+    image(cave, width/2+156, height/2-45);
   }
 
   currRoom.create();
   currFloor.setDirections(currRoom);
-  
+
   fill(000, 140, 174);
   currRoom.drawDoors();
 
@@ -202,11 +210,32 @@ void play() {
     player.spawn();
     player.move(currRoom.getSizeX(), currRoom.getSizeY());
 
-    //enemyCollision();
+    if (!hit) {
+      enemyCollision();
+    } else if (!(millis() - time3 >= invincibility)) {
+      invincible();
+      timer(3000, millis() - time3);
+    } else {
+      hit = false;
+      mode = PLAY;
+    }
+
+    println(hit);
+    println(lives);
+
     drawKnives();
     drawEnemies(true);
-    enemyCollision();
+
+    /*
+    if(enemyCollision() && lives > 0){
+     mode = INVINCIBLE;
+     }
+     */
     doorCollision();
+
+    if (lives == 0) {
+      player.setIsDead(true);
+    }
 
     //println(time);
     //println(millis());
@@ -236,7 +265,6 @@ void gameOver() {
   textAlign(CENTER);
   textSize(50);
   text("GAME OVER", width/2, height/2);
-
 }
 
 void reset() {
@@ -272,14 +300,39 @@ void drawKnives() {
   }
 }
 
+/*
+void enemyCollision() {
+ for (Enemy e : enemies) {
+ if (e.getIsDead() == true) {
+ continue;
+ } else {
+ float overlap = Math.abs(5+e.getSizeX());
+ if (Math.abs(player.getX()-e.getX()) < overlap && Math.abs(player.getY()-e.getY()) < overlap) {
+ lives--;
+ }
+ }
+ }
+ //return false;
+ }
+ */
+
+/*
+if (!(millis() - time2 >= invincibility)) {
+ invincible();
+ timer(invincibility, millis() - time2);
+ */
+
 void enemyCollision() {
   for (Enemy e : enemies) {
+    //println(""+millis() + " "+time3 + ""+invincibility);
     if (e.getIsDead() == true) {
       continue;
     } else {
       float overlap = Math.abs(5+e.getSizeX());
       if (Math.abs(player.getX()-e.getX()) < overlap && Math.abs(player.getY()-e.getY()) < overlap) {
         lives--;
+        hit = true;
+        time3 = millis();
       }
       if (lives == 0) {
         player.setIsDead(true);
@@ -287,6 +340,7 @@ void enemyCollision() {
     }
   }
 }
+
 
 void makeEnemies(int num) {
   int count = 0;
@@ -313,20 +367,20 @@ boolean killEnemy(Knife k) {
   return false;
 }
 
-boolean doors(Knife k){
-   if (k.getDir() == 87 && currRoom.getHasDirection(NORTH)){
-     if (k.hitDoor(currRoom.getDoor(NORTH))){
-       k.setY(k.getY()+1);
-       //k.setY(constrain(k.getY(), height/2-currRoom.getSizeX()+20+8, height/2+currRoom.getSizeX()-8));
-     }
-   }else if(k.getDir() == 65 && currRoom.getHasDirection(WEST)){
-     return k.hitDoor(currRoom.getDoor(WEST));
-   }else if(k.getDir() == 83 && currRoom.getHasDirection(SOUTH)){
-     return k.hitDoor(currRoom.getDoor(SOUTH));
-   }else if(k.getDir() == 68 && currRoom.getHasDirection(EAST)){
-     return k.hitDoor(currRoom.getDoor(EAST));
-   }
-   return false;
+boolean doors(Knife k) {
+  if (k.getDir() == 87 && currRoom.getHasDirection(NORTH)) {
+    if (k.hitDoor(currRoom.getDoor(NORTH))) {
+      k.setY(k.getY()+1);
+      //k.setY(constrain(k.getY(), height/2-currRoom.getSizeX()+20+8, height/2+currRoom.getSizeX()-8));
+    }
+  } else if (k.getDir() == 65 && currRoom.getHasDirection(WEST)) {
+    return k.hitDoor(currRoom.getDoor(WEST));
+  } else if (k.getDir() == 83 && currRoom.getHasDirection(SOUTH)) {
+    return k.hitDoor(currRoom.getDoor(SOUTH));
+  } else if (k.getDir() == 68 && currRoom.getHasDirection(EAST)) {
+    return k.hitDoor(currRoom.getDoor(EAST));
+  }
+  return false;
 }
 
 void pickUpKnife() {
@@ -436,3 +490,4 @@ void drawEnemies(boolean move) {
     }
   }
 }
+
