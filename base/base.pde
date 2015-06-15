@@ -37,7 +37,7 @@ int floorNum;
 
 PImage walls;
 PImage cave;
-PImage knife1,knife2,knife3,knife4;
+PImage knife1, knife2, knife3, knife4;
 
 int time;
 int wait = 500;
@@ -220,9 +220,11 @@ void instructions() {
 
 void info() {
   fill(255, 255, 255);
-  textSize(40);
+  textSize(20);
   textAlign(LEFT);
   text("LIVES : " + lives, 50, height/2-140);
+  text("KNIVES REMAINING : " + player.getKnives(), 50, height/2-100);
+  text("FLOOR : " + floorNum, 50, height/2 - 180);
 }
 
 
@@ -336,8 +338,12 @@ void play() {
       player.setIsDead(true);
     }
 
-    if (isSpace && player.getKnives() > 0) {
-      currRoom.addKnives(player);
+    if (millis() - time2 > wait) {
+      if (isSpace && player.getKnives() > 0) {
+        player.setKnives(player.getKnives()-1);
+        currRoom.addKnives(player);
+        time2 = millis();
+      }
     }
 
     pickUpKnife();
@@ -391,25 +397,25 @@ void drawKnives() {
     } else if (!k.getStopped()) {
       k.move(currRoom.getSizeX(), currRoom.getSizeY());
     }
-    
-    if (k.getDir() == 87){
-      image(knife1,k.getX()-8,k.getY()-8);
+
+    if (k.getDir() == 87) {
+      image(knife1, k.getX()-8, k.getY()-8);
     }
-    if (k.getDir() == 65){
-      image(knife4,k.getX()-8,k.getY()-8);
+    if (k.getDir() == 65) {
+      image(knife4, k.getX()-8, k.getY()-8);
     }
-    if (k.getDir() == 83){
-      image(knife3,k.getX()-8,k.getY()-8);
+    if (k.getDir() == 83) {
+      image(knife3, k.getX()-8, k.getY()-8);
     }
-    if (k.getDir() == 68){
-      image(knife2,k.getX()-8,k.getY()-8);
+    if (k.getDir() == 68) {
+      image(knife2, k.getX()-8, k.getY()-8);
     }
-    
+
     /*
     fill(133, 0, 12);
-    ellipseMode(RADIUS);
-    ellipse(k.getX(), k.getY(), 8, 8);
-    */
+     ellipseMode(RADIUS);
+     ellipse(k.getX(), k.getY(), 8, 8);
+     */
   }
 }
 
