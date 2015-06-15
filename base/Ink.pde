@@ -61,7 +61,7 @@ public class Ink extends Knife {
   }
 
   public void spawn() {
-    fill(133, 0, 12);
+    fill(35);
     ellipseMode(RADIUS);
     ellipse(super.getX(), super.getY(), 8, 8);
   }

@@ -17,7 +17,7 @@ public class Squid extends Enemy {
   void spawn() {
     setIsDead(false);
     ellipseMode(RADIUS);
-    fill(35); 
+    fill(255,0,0); 
     ellipse(x, y, sizeY, sizeX);
   }
 
