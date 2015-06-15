@@ -6,6 +6,8 @@ public class Floor {
   private final int WEST = 3;
 
   private Room[][] floor;
+    private ArrayList<Room> rooms;
+
   private Room spawn;
   private int indX, indY;
   private int floorNum;
@@ -29,6 +31,7 @@ public class Floor {
 
     player = p;
     floor = new Room[totalRooms][totalRooms];
+        rooms = new ArrayList<Room>();
     spawn = new Room(player);
     
     indX = floor.length / 2;
@@ -63,36 +66,31 @@ public class Floor {
         if ( !(isOutOfBounds(m + 1, n))) {
           if (floor[m + 1][n] != null) {
             floor[m][n] = new Room(i + 1, player);
-            //floor[m][n].setHasDirection(NORTH, true);
+            rooms.add(floor[m][n]);
             i++;
           }
         } 
         if ( !(isOutOfBounds(m - 1, n))) {
           if (floor[m - 1][n] != null) {
             floor[m][n] = new Room(i + 1, player);
-            //floor[m][n].setHasDirection(SOUTH, true);
+            rooms.add(floor[m][n]);
             i++;
           }
         } 
         if ( !(isOutOfBounds(m, n + 1))) {
           if (floor[m][n + 1] != null) {
             floor[m][n] = new Room(i + 1, player);
-            //floor[m][n].setHasDirection(EAST, true);
+            rooms.add(floor[m][n]);
             i++;
           }
         } 
         if ( !(isOutOfBounds(m, n - 1))) {
           if (floor[m][n - 1] != null) {
             floor[m][n] = new Room(i + 1, player);
-            //floor[m][n].setHasDirection(WEST, true);
+            rooms.add(floor[m][n]);
             i++;
           }
         }
-      }
-      
-      if (i == totalRooms - 1) {
-        //fill(35);
-        shape(exit, 50, 50);
       }
     }
     //println(Arrays.deepToString(floor));
@@ -145,9 +143,8 @@ public class Floor {
     return floor[x][y];
   }
   
-  void drawExit() {
-    while (isExit) {
-    }
+  Room chooseExit() {
+    int i = rand.nextInt(rooms.size());
+    return rooms.get(i);
   }
-  
 }

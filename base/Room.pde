@@ -10,12 +10,12 @@ public class Room {
   private boolean hasNorth, hasSouth, hasEast, hasWest;
   private int roomNum;
   private Door doorNorth, doorSouth, doorEast, doorWest;
-  
+
   private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
   private ArrayList<Knife> thrown = new ArrayList<Knife>();
   private Player player;
-  
-   
+
+
   public Room(float x_, float y_, int sx, int sy, boolean n, boolean s, boolean e, boolean w, int num, Player p) {
     x = x_;
     y = y_;
@@ -29,7 +29,7 @@ public class Room {
     hasWest = w;
 
     roomNum = num;
-    
+
     player = p;
     makeEnemies(3);
   }
@@ -49,7 +49,7 @@ public class Room {
   public float getY() {
     return y;
   }
-  
+
   public int getSizeX() {
     return sizeX;
   }
@@ -135,7 +135,7 @@ public class Room {
   public int getRoomNum() {
     return roomNum;
   }
-  
+
   void makeEnemies(int num) {
     Random r = new Random();
     for (int i = 0; i < num-1; i++) {
@@ -148,13 +148,13 @@ public class Room {
       Squid s = new Squid(player.getX()+(r.nextInt(300)-100), player.getY()+(r.nextInt(300)-100), 15, 15);
       relocate(s);
       enemies.add(s);
-    }else{
+    } else {
       Enemy e = new Enemy(player.getX()+(r.nextInt(300)-100), player.getY()+(r.nextInt(300)-100), 20, 20);
       relocate(e);
       enemies.add(e);
     }
   }
-  
+
   void addKnives(Player p) {
     if (millis() - time >= wait) {
       //enemyCollision();
@@ -169,8 +169,8 @@ public class Room {
   ArrayList<Knife> getThrown() {
     return thrown;
   }
-  
-  void relocate(Enemy e){
+
+  void relocate(Enemy e) {
     if (e.getX() <= player.getX()) { 
       float xx = constrain(e.getX(), width/2-sizeX+e.getSizeX(), player.getX()-100);
       e.setX(xx);
@@ -188,10 +188,13 @@ public class Room {
       e.setY(yy);
     }
   }
-  
-  
-  ArrayList<Enemy> getEnemies(){
+
+  ArrayList<Enemy> getEnemies() {
     return enemies;
   }
-  
+
+  Exit getExit() {
+    return new Exit(x + sizeX / 2, y + sizeY / 2);
+  }
 }
+

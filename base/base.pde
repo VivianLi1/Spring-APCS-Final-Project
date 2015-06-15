@@ -15,10 +15,10 @@ private final int WEST = 3;
 
 boolean gameStart;
 
-int mode = START;
+//int mode = START;
 //int mode = INSTRUCTIONS;
 //int mode = INVINCIBLE;
-//int mode = PLAY;
+int mode = PLAY;
 
 boolean isSpace;
 int knives;
@@ -32,6 +32,9 @@ ArrayList<Enemy> enemies;
 Floor currFloor;
 Room currRoom;
 Player player;
+Room exit;
+int floorNum;
+
 PImage walls;
 PImage cave;
 
@@ -61,9 +64,11 @@ void setup() {
 
   player = new Player(width/2, height/2, 24, 24);
 
-  currFloor = new Floor(6, player);
+  floorNum = 1;
+  currFloor = new Floor(floorNum, player);
   currFloor.generate();
   currRoom = currFloor.getSpawn();
+  exit = currFloor.chooseExit();
 
   enemies = currRoom.getEnemies();
   thrown = currRoom.getThrown();
@@ -208,12 +213,13 @@ void instructions() {
   text("PRESS 'R' TO RETURN TO START MENU", width/2, height/2+150);
 }
 
-void info(){
+void info() {
   fill(255, 255, 255);
   textSize(40);
   textAlign(LEFT);
   text("LIVES : " + lives, 50, height/2-140);
 }
+
 
 void invincible() {
   background(35);
@@ -277,20 +283,24 @@ void play() {
   fill(000, 140, 174);
   currRoom.drawDoors();
 
-  info();
+info();
+
+  if (currRoom.equals(exit)) {
+    currRoom.getExit().drawExit();
+  }
 
   if (!player.getIsDead()) {
     //println(gameStart);
     player.spawn();
     player.move(currRoom.getSizeX(), currRoom.getSizeY());
 
-/*
+    /*
     if (millis() - time4 >= delay) {
-      //println("shoot");
-      test.shoot(player.getX(), player.getY());
-      time4 = millis();
-    }
-    */
+     //println("shoot");
+     test.shoot(player.getX(), player.getY());
+     time4 = millis();
+     }
+     */
 
     if (!hit) {
       enemyCollision();
@@ -310,7 +320,7 @@ void play() {
     }
 
     drawKnives();
-    if (hit){
+    if (hit) {
       drawEnemies(false);
     } else { 
       drawEnemies(true);
@@ -322,18 +332,14 @@ void play() {
     }
 
     if (isSpace && player.getKnives() > 0) {
-      /*if (millis() - time >= wait) {
-        //enemyCollision();
-        knives--;
-        Knife k = new Knife(player.getX(), player.getY(), direction);
-        thrown.add(k);
-        time = millis();
-        //println(thrown.size());
-      }*/
       currRoom.addKnives(player);
     }
 
     pickUpKnife();
+
+    if (currRoom.equals(exit)) {
+      exitCollision();
+    }
   } else {
     println ("GAME OVER");
     mode = GAMEOVER;
@@ -357,7 +363,8 @@ void reset() {
   direction = 87;
   //thrown = new ArrayList<Knife>();
   //enemies = new ArrayList<Enemy>();
-  currFloor = new Floor(6, player);
+  floorNum = 1;
+  currFloor = new Floor(floorNum, player);  
   currFloor.generate();
   currRoom = currFloor.getSpawn();
   enemies = currRoom.getEnemies();
@@ -578,7 +585,7 @@ void drawEnemies(boolean move) {
 
       //buddySystem(i);
       if (move) {
-        if(e.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY())){
+        if (e.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY())) {
           lives--;
           hit = true;
           time5 = millis();
@@ -588,3 +595,25 @@ void drawEnemies(boolean move) {
     }
   }
 }
+
+void exitCollision() {
+  if (currRoom.getExit().inExit(player)) {
+    currFloor = new Floor(floorNum + 1, player);
+    floorNum++;
+    setupNewFloor();
+  }
+}
+
+void setupNewFloor() {
+  currFloor = new Floor(floorNum, player);
+  currFloor.generate();
+  currRoom = currFloor.getSpawn();
+  exit = currFloor.chooseExit();
+
+  enemies = currRoom.getEnemies();
+  thrown = currRoom.getThrown();
+  //makeEnemies(3);
+
+  player.spawn();
+}
+
