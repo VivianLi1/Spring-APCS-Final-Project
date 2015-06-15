@@ -6,6 +6,7 @@ final int PLAY = 1;
 final int GAMEOVER = 2;
 final int INVINCIBLE = 3;
 final int RESET = 4;
+final int INSTRUCTIONS = 5;
 
 private final int NORTH = 0;
 private final int SOUTH = 1;
@@ -14,15 +15,17 @@ private final int WEST = 3;
 
 boolean gameStart;
 
-//int mode GAMEOVER;
-int mode = INVINCIBLE;
-//int mode = PLAY;
+//int mode = START;
+//int mode = INSTRUCTIONS;
+//int mode = INVINCIBLE;
+int mode = PLAY;
 
 boolean isSpace;
-//int knives;
+int knives;
 int lives = 3;
 int direction = 87; //default: shoot up
 //ArrayList<Knife> thrown = new ArrayList<Knife>();
+//ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<Knife> thrown;
 ArrayList<Enemy> enemies;
 
@@ -37,10 +40,16 @@ int wait = 500;
 
 int time2;
 int time3;
+int time4;
+int time5;
+int delay;
 boolean hit;
 int invincibility = 3000;
+boolean invincible;
 
 int collisions = 0;
+
+//Squid test;
 
 void setup() {
   size(1200, 600, P2D);
@@ -60,13 +69,22 @@ void setup() {
   thrown = currRoom.getThrown();
   //makeEnemies(3);
 
-  player.spawn();
+  //player.spawn();
   gameStart = true;
   time2 = millis();
+
+  //test = new Squid();
+  //enemies.add(test);
+
+  time4 = millis();
+  delay = 1000;
 }
 
 void draw() {
   switch(mode) {
+  case 0:
+    startGame();
+    break;
   case 1: 
     play();
     break;
@@ -88,13 +106,16 @@ void draw() {
   case 4:
     reset();
     break;
+  case 5:
+    instructions();
+    break;
   }
   //println(mouseX, mouseY);
 }
 
 void keyPressed() {
+  //println(keyCode);
   if (mode == PLAY) {
-    //print(keyCode);
     if (keyCode == 87) {    // W - UP - 87
       player.setUp(true);
     }
@@ -113,8 +134,21 @@ void keyPressed() {
     }
   }
   if (mode == GAMEOVER) {
-    if (keyCode == 32) {
+    if (keyCode == 32) {    // SPACE - RESTART
       mode = RESET;
+    }
+  }
+  if (mode == INSTRUCTIONS) {
+    if (keyCode == 82) {    // R - RETURN TO MENU
+      mode = START;
+    }
+  }
+  if (mode == START) {
+    if (keyCode == 32) {    // SPACE - START GAME
+      mode = RESET;
+    } else if (keyCode == 81) {    // Q - HOW TO PLAY
+      //println("INST");
+      mode = INSTRUCTIONS;
     }
   }
 }
@@ -137,6 +171,41 @@ void keyReleased() {
       isSpace = false;
     }
   }
+}
+
+void startGame() {
+  background(35);
+  noStroke();
+  smooth();
+
+  fill(255, 255, 255);
+  textAlign(CENTER);
+  textSize(150);
+  text("OCEAN RAVIOLI", width/2, height/2-75);
+
+  textSize(60);
+  text("PRESS SPACEBAR TO BEGIN", width/2, height/2+75);
+  text("PRESS 'Q' FOR HOW TO PLAY", width/2, height/2+136);
+}
+
+void instructions() {
+  background(35);
+  noStroke();
+  smooth();
+
+  fill(255, 255, 255);
+  textSize(75);
+  textAlign(CENTER);
+  text("HOW TO PLAY", width/2, height/2-140);
+
+  textSize(40);
+  text(" W  -     UP  ", width/2, height/2-80);
+  text(" A  -   LEFT ", width/2, height/2-40);
+  text("  S  -  DOWN", width/2, height/2);
+  text(" D  -  RIGHT", width/2, height/2+40);
+  text("SPACE  -  SHOOT     ", width/2, height/2+80);
+
+  text("PRESS 'R' TO RETURN TO START MENU", width/2, height/2+150);
 }
 
 void invincible() {
@@ -169,12 +238,6 @@ void invincible() {
 
 void timer(int t, int ms) {
   int countdown = ms;
-  /*
-  textSize(100);
-   fill(255, 255, 255);
-   textAlign(CENTER);
-   text("GET READY", width/2, height/2-75);
-   */
   fill(255, 255, 255);
   textSize(150);
   textAlign(CENTER);
@@ -210,48 +273,50 @@ void play() {
     player.spawn();
     player.move(currRoom.getSizeX(), currRoom.getSizeY());
 
+/*
+    if (millis() - time4 >= delay) {
+      //println("shoot");
+      test.shoot(player.getX(), player.getY());
+      time4 = millis();
+    }
+    */
+
     if (!hit) {
       enemyCollision();
-    } else if (!(millis() - time3 >= invincibility)) {
-      invincible();
-      timer(3000, millis() - time3);
     } else {
-      hit = false;
-      mode = PLAY;
+      if (!(millis() - time5 >= invincibility)) {
+        invincible();
+        timer(3000, millis() - time5);
+      } else if (!(millis() - time3 >= invincibility)) {
+        invincible();
+        timer(3000, millis() - time3);
+      } else {
+        hit = false;
+        mode = PLAY;
+      }
     }
 
-    //println(hit);
-    //println(lives);
-
     drawKnives();
-    drawEnemies(true);
-
-    /*
-    if(enemyCollision() && lives > 0){
-     mode = INVINCIBLE;
-     }
-     */
+    if (hit){
+      drawEnemies(false);
+    } else { 
+      drawEnemies(true);
+    }
     doorCollision();
 
-    if (lives == 0) {
+    if (lives < 0) {
       player.setIsDead(true);
     }
 
-    //println(time);
-    //println(millis());
-
-    //println(millis());
     if (isSpace && player.getKnives() > 0) {
-      /*
-      if (millis() - time >= wait) {
-       //enemyCollision();
-       player.setKnives(player.getKnives() - 1);
-       Knife k = new Knife(player.getX(), player.getY(), direction);
-       thrown.add(k);
-       time = millis();
-       //println(thrown.size());
-       }
-       */
+      /*if (millis() - time >= wait) {
+        //enemyCollision();
+        knives--;
+        Knife k = new Knife(player.getX(), player.getY(), direction);
+        thrown.add(k);
+        time = millis();
+        //println(thrown.size());
+      }*/
       currRoom.addKnives(player);
     }
 
@@ -266,8 +331,10 @@ void gameOver() {
   background(0);
   fill(255);
   textAlign(CENTER);
-  textSize(50);
-  text("GAME OVER", width/2, height/2);
+  textSize(150);
+  text("GAME OVER", width/2, height/2-75);
+  textSize(75);
+  text("PRESS SPACEBAR TO RESTART", width/2, height/2+75);
 }
 
 void reset() {
@@ -339,12 +406,23 @@ void enemyCollision() {
         hit = true;
         time3 = millis();
       }
-      if (lives == 0) {
+      if (lives < 0) {
         player.setIsDead(true);
       }
     }
   }
 }
+
+/*
+void makeEnemies(int num) {
+ int count = 0;
+ Random r = new Random();
+ for (int i = 0; i < num; i++) {
+ Enemy e = new Enemy(player.getX()-r.nextInt(100)-50, player.getY()+r.nextInt(100)-50, 20, 20);
+ enemies.add(e);
+ }
+ }
+ */
 
 boolean killEnemy(Knife k) {
   if (!k.getStopped()) {
@@ -487,10 +565,13 @@ void drawEnemies(boolean move) {
 
       //buddySystem(i);
       if (move) {
-        e.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY());
+        if(e.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY())){
+          lives--;
+          hit = true;
+          time5 = millis();
+        }
       }
       //buddySystem(i);
     }
   }
 }
-
