@@ -37,6 +37,7 @@ int floorNum;
 
 PImage walls;
 PImage cave;
+PImage knife1,knife2,knife3,knife4;
 
 int time;
 int wait = 500;
@@ -61,6 +62,10 @@ void setup() {
 
   walls = loadImage("walls.png");
   cave = loadImage("cave.png");
+  knife1 = loadImage("smoll1.png");
+  knife2 = loadImage("smoll2.png");
+  knife3 = loadImage("smoll3.png");
+  knife4 = loadImage("smoll4.png");
 
   player = new Player(width/2, height/2, 24, 24);
 
@@ -386,9 +391,25 @@ void drawKnives() {
     } else if (!k.getStopped()) {
       k.move(currRoom.getSizeX(), currRoom.getSizeY());
     }
+    
+    if (k.getDir() == 87){
+      image(knife1,k.getX()-8,k.getY()-8);
+    }
+    if (k.getDir() == 65){
+      image(knife4,k.getX()-8,k.getY()-8);
+    }
+    if (k.getDir() == 83){
+      image(knife3,k.getX()-8,k.getY()-8);
+    }
+    if (k.getDir() == 68){
+      image(knife2,k.getX()-8,k.getY()-8);
+    }
+    
+    /*
     fill(133, 0, 12);
     ellipseMode(RADIUS);
     ellipse(k.getX(), k.getY(), 8, 8);
+    */
   }
 }
 
