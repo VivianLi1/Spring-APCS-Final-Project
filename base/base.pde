@@ -15,10 +15,10 @@ private final int WEST = 3;
 
 boolean gameStart;
 
-//int mode = START;
+int mode = START;
 //int mode = INSTRUCTIONS;
 //int mode = INVINCIBLE;
-int mode = PLAY;
+//int mode = PLAY;
 
 boolean isSpace;
 int knives;

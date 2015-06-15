@@ -17,6 +17,8 @@ public class Squid extends Enemy {
 
   void spawn() {
     setIsDead(false);
+    x = constrain(x, width/2-200+16, width/2+200-16);
+    y = constrain(y, height/2-200+16, height/2+200-16);
     image(squid,x-20,y-20);
     /*
     ellipseMode(RADIUS);
@@ -69,6 +71,22 @@ public class Squid extends Enemy {
       return true;
     }
     return false;
+  }
+  
+  void setX(float xx) {
+    super.setX(xx);
+  }
+  
+  void setY(float yy) { 
+    super.setY(yy);
+  }
+  
+  float getX(){
+    return super.getX();
+  }
+  
+  float getY(){
+    return super.getY();
   }
   
 }
