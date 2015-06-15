@@ -7,6 +7,7 @@ final int GAMEOVER = 2;
 final int INVINCIBLE = 3;
 final int RESET = 4;
 final int INSTRUCTIONS = 5;
+final int CHEAT = 6;
 
 private final int NORTH = 0;
 private final int SOUTH = 1;
@@ -14,11 +15,14 @@ private final int EAST = 2;
 private final int WEST = 3;
 
 boolean gameStart;
+boolean newGame;
 
-int mode = START;
+//int mode = START;
 //int mode = INSTRUCTIONS;
 //int mode = INVINCIBLE;
 //int mode = PLAY;
+//int mode = CHEAT;
+int mode = GAMEOVER;
 
 boolean isSpace;
 int knives;
@@ -54,14 +58,12 @@ boolean hit;
 int invincibility = 3000;
 boolean invincible;
 
-int collisions = 0;
-
-//Squid test;
+int livesCheat;
+int knivesCheat;
 
 void setup() {
   size(1200, 600, P2D);
   background(35);
-  //knives = 100;
 
   walls = loadImage("walls.png");
   cave = loadImage("cave.png");
@@ -71,9 +73,12 @@ void setup() {
   knife4 = loadImage("smoll4.png");
 
   player = new Player(width/2, height/2, 24, 24);
+  player.setKnives(knivesCheat);
 
   floorNum = 1;
   enemiesKilled = 0;
+  knivesCheat = 1;
+  livesCheat = 3;
   currFloor = new Floor(floorNum, player);
   currFloor.generate();
   currRoom = currFloor.getSpawn();
@@ -81,14 +86,9 @@ void setup() {
 
   enemies = currRoom.getEnemies();
   thrown = currRoom.getThrown();
-  //makeEnemies(3);
 
-  //player.spawn();
   gameStart = true;
   time2 = millis();
-
-  //test = new Squid();
-  //enemies.add(test);
 
   time4 = millis();
   delay = 1000;
@@ -126,6 +126,9 @@ void draw() {
   case 5:
     instructions();
     break;
+  case 6:
+    cheat();
+    break;
   }
   //println(mouseX, mouseY);
 }
@@ -152,6 +155,7 @@ void keyPressed() {
   }
   if (mode == GAMEOVER) {
     if (keyCode == 32) {    // SPACE - RESTART
+      newGame = true;
       mode = RESET;
     }
   }
@@ -166,6 +170,8 @@ void keyPressed() {
     } else if (keyCode == 81) {    // Q - HOW TO PLAY
       //println("INST");
       mode = INSTRUCTIONS;
+    } else if (keyCode == 67) {    // C - CHEAT
+      mode = CHEAT;
     }
   }
 }
@@ -203,6 +209,7 @@ void startGame() {
   textSize(60);
   text("PRESS SPACEBAR TO BEGIN", width/2, height/2+75);
   text("PRESS 'Q' FOR HOW TO PLAY", width/2, height/2+136);
+  text("PRESS 'C' TO CHEAT", width/2, height/2+196);
 }
 
 void instructions() {
@@ -235,6 +242,65 @@ void info() {
   text("ENEMIES KILLED : " + enemiesKilled, 50, height/2 - 60);
 }
 
+void cheat() {
+  background(35);
+  noStroke();
+  smooth();
+
+  fill(255, 255, 255);
+  textSize(75);
+  textAlign(CENTER);
+  text("YOU'RE A CHEATER", width/2, height/2-140);
+  
+  textSize(40);
+  text("LIVES : " + livesCheat, width/2, height/2-80);
+  textSize(20);
+  text("PRESS 'A'/'D' TO ADJUST", width/2, height/2-60);
+  
+  textSize(40);
+  text("KNIVES : " + knivesCheat, width/2, height/2);
+  textSize(20);
+  text("PRESS 'W'/'S' TO ADJUST", width/2, height/2+20);
+  
+  textSize(40);
+  text("PRESS 'R' TO RETURN TO MENU", width/2, height/2+100);
+  
+  if (keyPressed == true) {
+    //println(key);
+    if (key == 'A' || key == 'a') {
+      livesCheat--;
+      if (livesCheat <= 3) {
+        livesCheat = 3;
+      }
+    }
+    if (key == 'D' || key == 'd') {
+      livesCheat++;
+      if (livesCheat > 100) {
+        livesCheat = 100;
+      }
+    }
+    if (key == 'W' || key == 'w') {
+      knivesCheat--;
+      if (knivesCheat <= 1) {
+        knivesCheat = 1;
+      }
+    }
+    if (key == 'S' || key == 's') {
+      knivesCheat++;
+      if (knivesCheat > 100) {
+        knivesCheat = 100;
+      }
+    }
+    if (key == 'R' || key == 'r') {
+      player.setKnives(knivesCheat);
+      lives = livesCheat;
+      //println(livesCheat);
+      //println(player.getKnives());
+      mode = START;
+      //break;
+    }
+  }
+}
 
 void invincible() {
   background(35);
@@ -263,6 +329,8 @@ void invincible() {
   fill(000, 140, 174);
   currRoom.drawDoors();
   player.spawn();
+  player.setKnives(knivesCheat);
+  lives = livesCheat;
   drawEnemies(false);
 }
 
@@ -298,13 +366,14 @@ void play() {
   fill(000, 140, 174);
   currRoom.drawDoors();
 
+  player.setKnives(knivesCheat);
+  lives = livesCheat;
   info();
 
   if ( currRoom.getIsExit()) {
     fill(0);
     exit.drawSpecial();
   }
-
   if ( currRoom.getIsKnifeRoom() && newKnife != null) {
     fill(255);
     newKnife.drawSpecial();
@@ -314,14 +383,6 @@ void play() {
     //println(gameStart);
     player.spawn();
     player.move(currRoom.getSizeX(), currRoom.getSizeY());
-
-    /*
-    if (millis() - time4 >= delay) {
-     //println("shoot");
-     test.shoot(player.getX(), player.getY());
-     time4 = millis();
-     }
-     */
 
     if (!hit) {
       enemyCollision();
@@ -339,7 +400,7 @@ void play() {
         mode = PLAY;
       }
     }
-
+    
     drawKnives();
     if (hit) {
       drawEnemies(false);
@@ -348,7 +409,7 @@ void play() {
     }
     doorCollision();
 
-    if (lives < 0) {
+    if (livesCheat < 0) {
       player.setIsDead(true);
     }
 
@@ -357,6 +418,7 @@ void play() {
         player.setKnives(player.getKnives()-1);
         currRoom.addKnives(player);
         time2 = millis();
+        knivesCheat--;
       }
     }
 
@@ -381,7 +443,11 @@ void gameOver() {
   textSize(150);
   text("GAME OVER", width/2, height/2-75);
   textSize(75);
-  text("PRESS SPACEBAR TO RESTART", width/2, height/2+75);
+  text("PRESS SPACEBAR TO RESTART", width/2, height/2+50);
+  
+  textSize(20);
+  text("FLOOR : " + floorNum, width/2, height/2 + 105);
+  text("ENEMIES KILLED : " + enemiesKilled, width/2, height/2 + 125);
 }
 
 void reset() {
@@ -393,6 +459,12 @@ void reset() {
   //enemies = new ArrayList<Enemy>();
   floorNum = 1;
   enemiesKilled = 0;
+  lives = 3;
+  if (newGame) {
+    knivesCheat = 1;
+    livesCheat = 3;
+    newGame = false;
+  }
   currFloor = new Floor(floorNum, player);  
   currFloor.generate();
   currRoom = currFloor.getSpawn();
@@ -401,9 +473,11 @@ void reset() {
   player = new Player(width/2, height/2, 24, 24);
   //makeEnemies(3);
   player.spawn();
+  player.setKnives(1);
   gameStart = true;
   time2 = millis();
   mode = INVINCIBLE;
+  //newGame = false;
 }
 
 void drawKnives() {
@@ -428,36 +502,8 @@ void drawKnives() {
     if (k.getDir() == 68) {
       image(knife2, k.getX()-8, k.getY()-8);
     }
-
-    /*
-    fill(133, 0, 12);
-     ellipseMode(RADIUS);
-     ellipse(k.getX(), k.getY(), 8, 8);
-     */
   }
 }
-
-/*
-void enemyCollision() {
- for (Enemy e : enemies) {
- if (e.getIsDead() == true) {
- continue;
- } else {
- float overlap = Math.abs(5+e.getSizeX());
- if (Math.abs(player.getX()-e.getX()) < overlap && Math.abs(player.getY()-e.getY()) < overlap) {
- lives--;
- }
- }
- }
- //return false;
- }
- */
-
-/*
-if (!(millis() - time2 >= invincibility)) {
- invincible();
- timer(invincibility, millis() - time2);
- */
 
 void enemyCollision() {
   for (Enemy e : enemies) {
@@ -467,27 +513,16 @@ void enemyCollision() {
     } else {
       float overlap = Math.abs(5+e.getSizeX());
       if (Math.abs(player.getX()-e.getX()) < overlap && Math.abs(player.getY()-e.getY()) < overlap) {
-        lives--;
+        livesCheat--;
         hit = true;
         time3 = millis();
       }
-      if (lives < 0) {
+      if (livesCheat < 0) {
         player.setIsDead(true);
       }
     }
   }
 }
-
-/*
-void makeEnemies(int num) {
- int count = 0;
- Random r = new Random();
- for (int i = 0; i < num; i++) {
- Enemy e = new Enemy(player.getX()-r.nextInt(100)-50, player.getY()+r.nextInt(100)-50, 20, 20);
- enemies.add(e);
- }
- }
- */
 
 boolean killEnemy(Knife k) {
   if (!k.getStopped()) {
@@ -529,11 +564,11 @@ void pickUpKnife() {
       if (Math.abs(player.getX()-k.getX()) < 20 && Math.abs(player.getY()-k.getY()) < 20) {
         player.setKnives(player.getKnives() + 1);
         thrown.remove(i);
+        knivesCheat++;
       }
     }
   }
 }
-
 
 void doorCollision() {
   if (currRoom.getHasDirection(NORTH)) {
@@ -577,12 +612,6 @@ void doorCollision() {
       player.setY(currRoom.getY());
     }
   }
-
-
-  //println("NORTH:" + currRoom.getHasDirection(NORTH));
-  //println("SOUTH:" + currRoom.getHasDirection(SOUTH));
-  //println("EAST:" + currRoom.getHasDirection(EAST));
-  //println("WEST:" + currRoom.getHasDirection(WEST));
 }
 
 void buddySystem(int e1, int e2) {
@@ -592,7 +621,6 @@ void buddySystem(int e1, int e2) {
   Rectangle r2 = f.getBounds();
 
   if (r1.intersects (r2)) {
-    //println("BAM");
 
     if (e.getX() <= f.getX()) { //e left of f
       e.setX(e.getX()-0.4);
@@ -627,17 +655,13 @@ void drawEnemies(boolean move) {
           buddySystem(i, j);
         }
       }
-      //Enemy f = enemies.get(j);
-
-      //buddySystem(i);
       if (move) {
         if (e.move(currRoom.getSizeX(), currRoom.getSizeY(), player.getX(), player.getY())) {
-          lives--;
+          livesCheat--;
           hit = true;
           time5 = millis();
         }
       }
-      //buddySystem(i);
     }
   }
 }
@@ -669,4 +693,3 @@ void setupNewFloor() {
 
   player.spawn();
 }
-
