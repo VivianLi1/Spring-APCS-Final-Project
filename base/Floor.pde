@@ -89,7 +89,7 @@ public class Floor {
         }
       }
     }
-
+    
     int m = rand.nextInt(floor.length);
     int n = rand.nextInt(floor[0].length);
     while (floor[m][n] == null || floor[m][n] == floor[indX][indY]) {
@@ -98,7 +98,7 @@ public class Floor {
     }
     floor[m][n].setIsExit(true);
     //println(Arrays.deepToString(floor));
-
+    
     if (floorNum % 3 == 0) {
       int j = rand.nextInt(floor.length);
       int k = rand.nextInt(floor[0].length);
@@ -109,6 +109,7 @@ public class Floor {
       floor[j][k].setIsKnifeRoom(true);
       //println(Arrays.deepToString(floor));
     }
+    
   }
 
   Room getSpawn() {
@@ -157,16 +158,15 @@ public class Floor {
   Room getRoom(int x, int y) {
     return floor[x][y];
   }
-  /*
+/*
   void chooseExit() {
-   int m = rand.nextInt(floor.length);
-   int n = rand.nextInt(floor[0].length);
-   while (floor[m][n] == null || floor[m][n] == floor[indX][indY]) {
-   m = rand.nextInt(floor.length);
-   n = rand.nextInt(floor[0].length);
-   }
-   floor[m][n].setIsExit(true);
-   }
-   */
+    int m = rand.nextInt(floor.length);
+    int n = rand.nextInt(floor[0].length);
+    while (floor[m][n] == null || floor[m][n] == floor[indX][indY]) {
+      m = rand.nextInt(floor.length);
+      n = rand.nextInt(floor[0].length);
+    }
+    floor[m][n].setIsExit(true);
+  }
+  */
 }
-
