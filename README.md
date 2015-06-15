@@ -138,4 +138,4 @@ LOG
 - made a scoreboard: keeps track of lives, knives, floor #, kills
 - player can now move down floors (using exit)
 - made a cheat menu for losers
-- Player attains new new every 3 floors
+- Player attains new knife every 3 floors
