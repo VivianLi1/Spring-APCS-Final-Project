@@ -32,7 +32,8 @@ ArrayList<Enemy> enemies;
 Floor currFloor;
 Room currRoom;
 Player player;
-Room exit;
+//Room exitRoom;
+Exit exit;
 int floorNum;
 
 PImage walls;
@@ -73,7 +74,7 @@ void setup() {
   currFloor = new Floor(floorNum, player);
   currFloor.generate();
   currRoom = currFloor.getSpawn();
-  exit = currFloor.chooseExit();
+  //currFloor.chooseExit();
 
   enemies = currRoom.getEnemies();
   thrown = currRoom.getThrown();
@@ -88,6 +89,8 @@ void setup() {
 
   time4 = millis();
   delay = 1000;
+
+  exit = new Exit(width/2, height/2);
 }
 
 void draw() {
@@ -292,8 +295,8 @@ void play() {
 
   info();
 
-  if (currRoom.equals(exit)) {
-    currRoom.getExit().drawExit();
+  if ( currRoom.getIsExit()) {
+    exit.drawExit();
   }
 
   if (!player.getIsDead()) {
@@ -348,7 +351,7 @@ void play() {
 
     pickUpKnife();
 
-    if (currRoom.equals(exit)) {
+    if (currRoom.getIsExit()) {
       exitCollision();
     }
   } else {
@@ -624,7 +627,7 @@ void drawEnemies(boolean move) {
 }
 
 void exitCollision() {
-  if (currRoom.getExit().inExit(player)) {
+  if (exit.inExit(player)) {
     currFloor = new Floor(floorNum + 1, player);
     floorNum++;
     setupNewFloor();
@@ -635,7 +638,7 @@ void setupNewFloor() {
   currFloor = new Floor(floorNum, player);
   currFloor.generate();
   currRoom = currFloor.getSpawn();
-  exit = currFloor.chooseExit();
+  //currFloor.chooseExit();
 
   enemies = currRoom.getEnemies();
   thrown = currRoom.getThrown();
@@ -643,4 +646,5 @@ void setupNewFloor() {
 
   player.spawn();
 }
+
 

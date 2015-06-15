@@ -14,9 +14,10 @@ public class Room {
   private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
   private ArrayList<Knife> thrown = new ArrayList<Knife>();
   private Player player;
+  private boolean isExit;
 
 
-  public Room(float x_, float y_, int sx, int sy, boolean n, boolean s, boolean e, boolean w, int num, Player p) {
+  public Room(float x_, float y_, int sx, int sy, boolean n, boolean s, boolean e, boolean w, int num, Player p, boolean b) {
     x = x_;
     y = y_;
 
@@ -32,10 +33,12 @@ public class Room {
 
     player = p;
     makeEnemies(3);
+
+    isExit = b;
   }
 
   public Room(int num, Player p) {
-    this(width/2, height/2, 200, 200, false, false, false, false, num, p);
+    this(width/2, height/2, 200, 200, false, false, false, false, num, p, false);
   }
 
   public Room(Player p) {
@@ -193,8 +196,16 @@ public class Room {
     return enemies;
   }
 
+  void setIsExit(boolean b) {
+    isExit = b;
+  }
+
+  boolean getIsExit() {
+    return isExit;
+  }
+
   Exit getExit() {
-    return new Exit(x + sizeX / 2, y + sizeY / 2);
+    return new Exit(width / 2, height / 2);
   }
 }
 

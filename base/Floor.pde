@@ -6,14 +6,12 @@ public class Floor {
   private final int WEST = 3;
 
   private Room[][] floor;
-    private ArrayList<Room> rooms;
+  private ArrayList<Room> rooms;
 
   private Room spawn;
   private int indX, indY;
   private int floorNum;
   private int totalRooms;
-  private PShape exit;
-  private boolean isExit;
   private Player player;
 
   Random rand = new Random();
@@ -31,21 +29,19 @@ public class Floor {
 
     player = p;
     floor = new Room[totalRooms][totalRooms];
-        rooms = new ArrayList<Room>();
+    rooms = new ArrayList<Room>();
     spawn = new Room(player);
-    
+
     indX = floor.length / 2;
     indY = floor[0].length / 2;
     noStroke();
     smooth();
     fill(35);
-    exit = createShape(RECT, width / 2, height / 2, 50, 50);
-    isExit = false;
   }
 
 
   public Floor(Player p) {
-    this(1,p);
+    this(1, p);
   }
 
   void createSpawn() {
@@ -93,7 +89,16 @@ public class Floor {
         }
       }
     }
+    
+    int m = rand.nextInt(floor.length);
+    int n = rand.nextInt(floor[0].length);
+    while (floor[m][n] == null || floor[m][n] == floor[indX][indY]) {
+      m = rand.nextInt(floor.length);
+      n = rand.nextInt(floor[0].length);
+    }
+    floor[m][n].setIsExit(true);
     //println(Arrays.deepToString(floor));
+    
   }
 
   Room getSpawn() {
@@ -116,35 +121,42 @@ public class Floor {
         floor[indX][indY].setHasDirection(EAST, true);
       }
     }
-    if ( !(isOutOfBounds(indX , indY - 1))) {
+    if ( !(isOutOfBounds(indX, indY - 1))) {
       if (floor[indX][indY - 1] != null) {
         floor[indX][indY].setHasDirection(WEST, true);
       }
     }
   }
-  
-  int getIndX(){
+
+  int getIndX() {
     return indX;
   }
-  
-  int getIndY(){
+
+  int getIndY() {
     return indY;
   }
-  
-  void setIndX(int x){
+
+  void setIndX(int x) {
     indX = x;
   }
-  
-  void setIndY(int y){
+
+  void setIndY(int y) {
     indY = y;
   }
-  
-  Room getRoom(int x, int y){
+
+  Room getRoom(int x, int y) {
     return floor[x][y];
   }
-  
-  Room chooseExit() {
-    int i = rand.nextInt(rooms.size());
-    return rooms.get(i);
+/*
+  void chooseExit() {
+    int m = rand.nextInt(floor.length);
+    int n = rand.nextInt(floor[0].length);
+    while (floor[m][n] == null || floor[m][n] == floor[indX][indY]) {
+      m = rand.nextInt(floor.length);
+      n = rand.nextInt(floor[0].length);
+    }
+    floor[m][n].setIsExit(true);
   }
+  */
 }
+
