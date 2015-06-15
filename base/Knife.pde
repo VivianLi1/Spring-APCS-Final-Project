@@ -11,6 +11,10 @@ public class Knife {
     dir = direction;
   }
   
+  public void setX(float xx){
+    x = xx;
+  }
+  
   public void setY(float yy){
     y = yy;
   }
