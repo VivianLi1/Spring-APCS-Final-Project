@@ -15,10 +15,10 @@ private final int WEST = 3;
 
 boolean gameStart;
 
-//int mode = START;
+int mode = START;
 //int mode = INSTRUCTIONS;
 //int mode = INVINCIBLE;
-int mode = PLAY;
+//int mode = PLAY;
 
 boolean isSpace;
 int knives;
@@ -208,6 +208,13 @@ void instructions() {
   text("PRESS 'R' TO RETURN TO START MENU", width/2, height/2+150);
 }
 
+void info(){
+  fill(255, 255, 255);
+  textSize(40);
+  textAlign(LEFT);
+  text("LIVES : " + lives, 50, height/2-140);
+}
+
 void invincible() {
   background(35);
   noStroke();
@@ -229,6 +236,8 @@ void invincible() {
 
   currRoom.create();
   currFloor.setDirections(currRoom);
+
+  info();
 
   fill(000, 140, 174);
   currRoom.drawDoors();
@@ -268,6 +277,8 @@ void play() {
   fill(000, 140, 174);
   currRoom.drawDoors();
 
+  info();
+
   if (!player.getIsDead()) {
     //println(gameStart);
     player.spawn();
@@ -286,9 +297,11 @@ void play() {
     } else {
       if (!(millis() - time5 >= invincibility)) {
         invincible();
+        textSize(150);
         timer(3000, millis() - time5);
       } else if (!(millis() - time3 >= invincibility)) {
         invincible();
+        textSize(150);
         timer(3000, millis() - time3);
       } else {
         hit = false;
