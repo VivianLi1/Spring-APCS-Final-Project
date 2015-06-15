@@ -4,6 +4,7 @@ public class Ink extends Knife {
   float dy;
   float angle;
   float boundLeft, boundRight, boundUp, boundDown;
+  PImage pellet = loadImage("ink.png");
 
   public Ink(float xcor, float ycor, int angle) {
     super(xcor, ycor, angle);
@@ -55,14 +56,14 @@ public class Ink extends Knife {
     super.setX(constrain(super.getX(), boundLeft, boundRight)); 
     super.setY(constrain(super.getY(), boundUp, boundDown));
     
-    
-
-    
   }
 
   public void spawn() {
+    image(pellet, super.getX()-8, super.getY()-8);
+    /*
     fill(35);
     ellipseMode(RADIUS);
     ellipse(super.getX(), super.getY(), 8, 8);
+    */
   }
 }
