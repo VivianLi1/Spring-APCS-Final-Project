@@ -36,4 +36,3 @@ public class Special {
       p.getY() + p.getSizeY() > y && p.getY() - p.getSizeY() < y + sizeY);
   }
 }
-
