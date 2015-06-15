@@ -152,6 +152,9 @@ void keyPressed() {
     if (keyCode == 32) {    // SPACE - THROW - 32
       isSpace = true;
     }
+    if (keyCode == 82) {   //R - return to menu 
+      mode = START;
+    }
   }
   if (mode == GAMEOVER) {
     if (keyCode == 32) {    // SPACE - RESTART
@@ -240,6 +243,8 @@ void info() {
   text("LIVES : " + lives, 50, height/2-140);
   text("KNIVES REMAINING : " + player.getKnives(), 50, height/2-100);
   text("ENEMIES KILLED : " + enemiesKilled, 50, height/2 - 60);
+  textSize(15);
+  text("PRESS R TO RETURN TO MENU", 50, height/2);
 }
 
 void cheat() {
@@ -251,20 +256,20 @@ void cheat() {
   textSize(75);
   textAlign(CENTER);
   text("YOU'RE A CHEATER", width/2, height/2-140);
-  
+
   textSize(40);
   text("LIVES : " + livesCheat, width/2, height/2-80);
   textSize(20);
   text("PRESS 'A'/'D' TO ADJUST", width/2, height/2-60);
-  
+
   textSize(40);
   text("KNIVES : " + knivesCheat, width/2, height/2);
   textSize(20);
   text("PRESS 'W'/'S' TO ADJUST", width/2, height/2+20);
-  
+
   textSize(40);
   text("PRESS 'R' TO RETURN TO MENU", width/2, height/2+100);
-  
+
   if (keyPressed == true) {
     //println(key);
     if (key == 'A' || key == 'a') {
@@ -400,7 +405,7 @@ void play() {
         mode = PLAY;
       }
     }
-    
+
     drawKnives();
     if (hit) {
       drawEnemies(false);
@@ -444,7 +449,7 @@ void gameOver() {
   text("GAME OVER", width/2, height/2-75);
   textSize(75);
   text("PRESS SPACEBAR TO RESTART", width/2, height/2+50);
-  
+
   textSize(20);
   text("FLOOR : " + floorNum, width/2, height/2 + 105);
   text("ENEMIES KILLED : " + enemiesKilled, width/2, height/2 + 125);
@@ -693,3 +698,4 @@ void setupNewFloor() {
 
   player.spawn();
 }
+
