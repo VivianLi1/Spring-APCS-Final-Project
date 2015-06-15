@@ -2,6 +2,45 @@
 Vivian Li and Mindy Ruan's Final Project for APCS
 
 TEAM NAME: Ocean Ravioli
+PROJECT NAME: Ocean Ravioli
+(sorry)
+
+PROJECT DESCRIPTION:
+We plan to create a dungeon crawler game. It will consist of the player navigating and battling through an interconnected series of rooms (floors). The player will be equipped with one knife and must kill monsters to reach the next floor. After thrown, the player must retrieve the knife to be able to use it again.  Currently, we plan for the dungeon to be endless, however this feature is subject to change. There is also going to be a scoreboard that keeps track of the number of kills, floors/rooms completed, etc.
+
+GOALS
+- MINIMUM FEATURES
+  - rooms connected to each other
+  - monsters that actively tries to kill the player
+  - a player that moves
+  - the knife must kill the enemies
+
+- TO BE COMPLETED FIRST
+  - room generation
+  - walls/boundaries
+  - connecting rooms
+  - player
+  - movement
+  - staying in the map
+  - enemies
+    - killable with weapon
+    - must want to kill player
+
+- CAN BE WORKED ON CONCURRENTLY
+  - graphics/AI of the enemies
+  - rooms/player/enemies + their graphics
+
+- STEPS THAT ARE DETERMINED BY OTHER STEPS
+  - must generate monsters before the weapon can be tested
+  - individual rooms must be created before they can be connected
+  - scoreboard will be completed at the end (hopefully)
+
+- OK WITH LEAVING OUT
+  - multiple enemies with different AIs
+  - endless dungeon
+  - power ups
+  - more variations of room shape/style
+
 
 VERSIONS
 - version 1 - https://github.com/VivianLi1/Spring-APCS-Final-Project/tree/version1
@@ -76,9 +115,9 @@ LOG
 10/6
 - loaded ravioli images onto player :^)
 - changed some dimensions to make things work the same
+- testing: using 2d arrays for room generation
 
 13/6
-- testing: using 2d arrays for room generation
 - enemy buddy system: enemies don't overlap anymore!
   - (still gotta fix overlap in y-direction; shouldn't be too hard)
 - buddy system now works for both x and y directions
@@ -91,3 +130,8 @@ LOG
 - invincibility period after player is hit by enemy
 - new enemies spawned when player enters new room
 - made start and how to play screens
+- knives that aren't picked up remain in the room they were thrown in
+- made enemy: Squid : stationary, shoots ink pellets at player
+- Ink class: squid knives B^)
+- made pixels for squids, ink pellets, player knives
+- made a scoreboard: keeps track of lives, knives, floor #
