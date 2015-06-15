@@ -125,6 +125,7 @@ LOG
 - knives now stop at doors
 - added restart option at gameover (spacebar to restart)
 - drew jellyfish and walls and cave things
+- 2d array room generation - done
 
 14/6
 - invincibility period after player is hit by enemy
@@ -134,4 +135,5 @@ LOG
 - made enemy: Squid : stationary, shoots ink pellets at player
 - Ink class: squid knives B^)
 - made pixels for squids, ink pellets, player knives
-- made a scoreboard: keeps track of lives, knives, floor #
+- made a scoreboard: keeps track of lives, knives, floor #, kills
+- player can now move down floors (using exit)
