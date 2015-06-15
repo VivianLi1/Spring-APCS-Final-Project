@@ -283,7 +283,7 @@ void play() {
   fill(000, 140, 174);
   currRoom.drawDoors();
 
-info();
+  info();
 
   if (currRoom.equals(exit)) {
     currRoom.getExit().drawExit();

@@ -2,6 +2,7 @@ public class Squid extends Enemy {
 
   ArrayList<Ink> shot = new ArrayList<Ink>();
   int time4 = millis();
+  PImage squid = loadImage("squid.png");
   //private int ink;
 
   public Squid() {
@@ -16,9 +17,12 @@ public class Squid extends Enemy {
 
   void spawn() {
     setIsDead(false);
+    image(squid,x-20,y-20);
+    /*
     ellipseMode(RADIUS);
     fill(255,0,0); 
     ellipse(x, y, sizeY, sizeX);
+    */
   }
 
   void shoot(float px, float py) {

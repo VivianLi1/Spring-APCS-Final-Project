@@ -145,7 +145,7 @@ public class Room {
     }
     int makeSquid = r.nextInt(2);
     if (makeSquid == 1) {
-      Squid s = new Squid(player.getX()+(r.nextInt(300)-100), player.getY()+(r.nextInt(300)-100), 15, 15);
+      Squid s = new Squid(player.getX()+(r.nextInt(300)-100), player.getY()+(r.nextInt(300)-100), 20, 20);
       relocate(s);
       enemies.add(s);
     } else {
