@@ -204,7 +204,7 @@ public class Room {
   boolean getIsExit() {
     return isExit;
   }
-
+  
   void setIsKnifeRoom(boolean b) {
     isKnifeRoom = b;
   }
@@ -212,5 +212,5 @@ public class Room {
   boolean getIsKnifeRoom() {
     return isKnifeRoom;
   }
-}
 
+}
