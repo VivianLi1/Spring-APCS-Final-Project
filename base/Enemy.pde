@@ -12,7 +12,7 @@ public class Enemy extends Killable {
     super(x_, y_, sx, sy);
   }  
 
-  public void move(int roomx, int roomy, float xx, float yy) {
+  public boolean move(int roomx, int roomy, float xx, float yy) {
     super.move(roomx, roomy);
     if (x != xx || y != yy) {
       dx = xx - x;
@@ -24,6 +24,7 @@ public class Enemy extends Killable {
       y += speed * Math.sin(angle);
 
     }
+    return false;
   }
 
   void spawn() {
@@ -52,7 +53,4 @@ public class Enemy extends Killable {
     }
   }
 
-  
-  
 }
-
