@@ -45,6 +45,7 @@ GOALS
 VERSIONS
 - version 1 - https://github.com/VivianLi1/Spring-APCS-Final-Project/tree/version1
 - version 2 - https://github.com/VivianLi1/Spring-APCS-Final-Project/tree/version2
+- FINAL VERSION - https://github.com/VivianLi1/Spring-APCS-Final-Project/tree/final
 
 LOG
 
