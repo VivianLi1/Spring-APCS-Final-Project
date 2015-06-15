@@ -137,3 +137,4 @@ LOG
 - made pixels for squids, ink pellets, player knives
 - made a scoreboard: keeps track of lives, knives, floor #, kills
 - player can now move down floors (using exit)
+- made a cheat menu for losers
