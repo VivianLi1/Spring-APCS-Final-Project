@@ -35,6 +35,7 @@ Player player;
 //Room exitRoom;
 Exit exit;
 int floorNum;
+int enemiesKilled;
 
 PImage walls;
 PImage cave;
@@ -71,6 +72,7 @@ void setup() {
   player = new Player(width/2, height/2, 24, 24);
 
   floorNum = 1;
+  enemiesKilled = 0;
   currFloor = new Floor(floorNum, player);
   currFloor.generate();
   currRoom = currFloor.getSpawn();
@@ -225,9 +227,10 @@ void info() {
   fill(255, 255, 255);
   textSize(20);
   textAlign(LEFT);
+  text("FLOOR : " + floorNum, 50, height/2 - 180);
   text("LIVES : " + lives, 50, height/2-140);
   text("KNIVES REMAINING : " + player.getKnives(), 50, height/2-100);
-  text("FLOOR : " + floorNum, 50, height/2 - 180);
+  text("ENEMIES KILLED : " + enemiesKilled, 50, height/2 - 60);
 }
 
 
@@ -378,6 +381,7 @@ void reset() {
   //thrown = new ArrayList<Knife>();
   //enemies = new ArrayList<Enemy>();
   floorNum = 1;
+  enemiesKilled = 0;
   currFloor = new Floor(floorNum, player);  
   currFloor.generate();
   currRoom = currFloor.getSpawn();
@@ -482,6 +486,7 @@ boolean killEnemy(Knife k) {
       if (Math.abs(k.getX()-e.getX()) < overlap && Math.abs(k.getY()-e.getY()) < overlap) {
         e.setIsDead(true);
         enemies.remove(i);
+        enemiesKilled++;
         //println("numEnemies= " + enemies.size());
         return true;
       }
