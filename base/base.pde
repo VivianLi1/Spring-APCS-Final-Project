@@ -33,7 +33,8 @@ Floor currFloor;
 Room currRoom;
 Player player;
 //Room exitRoom;
-Exit exit;
+Special exit;
+Special newKnife;
 int floorNum;
 int enemiesKilled;
 
@@ -92,7 +93,8 @@ void setup() {
   time4 = millis();
   delay = 1000;
 
-  exit = new Exit(width/2, height/2);
+  exit = new Special(width/2, height/2);
+  newKnife = new Special(width/2, height/2);
 }
 
 void draw() {
@@ -299,7 +301,13 @@ void play() {
   info();
 
   if ( currRoom.getIsExit()) {
-    exit.drawExit();
+    fill(0);
+    exit.drawSpecial();
+  }
+
+  if ( currRoom.getIsKnifeRoom() && newKnife != null) {
+    fill(255);
+    newKnife.drawSpecial();
   }
 
   if (!player.getIsDead()) {
@@ -356,6 +364,9 @@ void play() {
 
     if (currRoom.getIsExit()) {
       exitCollision();
+    }
+    if ( currRoom.getIsKnifeRoom() && newKnife != null) {
+      newKnifeCollision();
     }
   } else {
     println ("GAME OVER");
@@ -632,10 +643,17 @@ void drawEnemies(boolean move) {
 }
 
 void exitCollision() {
-  if (exit.inExit(player)) {
+  if (exit.inSpecial(player)) {
     currFloor = new Floor(floorNum + 1, player);
     floorNum++;
     setupNewFloor();
+  }
+}
+
+void newKnifeCollision() {
+  if (newKnife.inSpecial(player)) {
+    player.setKnives(player.getKnives() + 1);
+    newKnife = null;
   }
 }
 
@@ -651,5 +669,4 @@ void setupNewFloor() {
 
   player.spawn();
 }
-
 

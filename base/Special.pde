@@ -1,9 +1,9 @@
-public class Exit {
+public class Special {
 
   float x, y;
   int sizeX, sizeY;
 
-  public Exit(float x_, float y_) {
+  public Special(float x_, float y_) {
     x = x_;
     y = y_;
 
@@ -11,8 +11,7 @@ public class Exit {
     sizeY = 50;
   }
 
-  void drawExit() {
-    fill(0);
+  void drawSpecial() {
     rect(x, y, sizeX, sizeY);
   }
 
@@ -32,7 +31,7 @@ public class Exit {
     return sizeY;
   }
 
-  boolean inExit(Player p) {
+  boolean inSpecial(Player p) {
     return (p.getX() + p.getSizeX() > x && p.getX() - p.getSizeX() < x + sizeX && 
       p.getY() + p.getSizeY() > y && p.getY() - p.getSizeY() < y + sizeY);
   }
