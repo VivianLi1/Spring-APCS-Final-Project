@@ -10,7 +10,7 @@ public class Player extends Killable {
 
   public Player(float x_, float y_, int sx, int sy) {
     super(x_, y_, sx, sy);
-    knives = 100;
+    knives = 1;
   } 
 
   void spawn() {
@@ -79,4 +79,3 @@ public class Player extends Killable {
   }
   
 }
-
